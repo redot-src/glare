@@ -1,0 +1,57 @@
+/* Slide-change effects, selected via data-transition on the container. */
+
+[data-transition="slide"] .glare-slide--out {
+  transform: translate3d(-40px, 0, 0);
+}
+
+[data-transition="circular"] .glare-slide--current {
+  animation: glare-circular var(--glare-transition-duration) var(--glare-ease);
+}
+
+[data-transition="tube"] .glare-slide--current {
+  animation: glare-tube var(--glare-transition-duration) var(--glare-ease);
+}
+
+[data-transition="rotate"] .glare-slide--current {
+  animation: glare-rotate var(--glare-transition-duration) var(--glare-ease);
+}
+
+[data-transition="zoom-in-out"] .glare-slide--current {
+  animation: glare-zoom-in-out var(--glare-transition-duration) var(--glare-ease);
+}
+
+@keyframes glare-circular {
+  from {
+    transform: scale(0.85) rotate(-8deg);
+    opacity: 0;
+  }
+}
+
+@keyframes glare-tube {
+  from {
+    transform: scaleX(0.2);
+    opacity: 0;
+  }
+}
+
+@keyframes glare-rotate {
+  from {
+    transform: rotate(12deg) scale(0.92);
+    opacity: 0;
+  }
+}
+
+@keyframes glare-zoom-in-out {
+  from {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glare-container,
+  .glare-container * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

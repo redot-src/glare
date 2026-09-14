@@ -1,21 +1,24 @@
-import './styles/glare.css'
+import './styles/index.css'
+
+import { Glare } from './core/Glare'
 
 export type {
-  AnimationEffect,
   AjaxOptions,
+  AnimationEffect,
   BoundGroup,
   ClickAction,
+  ClickActionName,
   ContentType,
   EventHandler,
   EventName,
   FullscreenOptions,
-  HashOptions,
+  GlareInstance,
+  GlareOptions,
+  GlareRefs,
   I18nDict,
   IframeOptions,
   ImageOptions,
   MediaProvider,
-  GlareInstance,
-  GlareOptions,
   ShareOptions,
   SlideItem,
   SlideSource,
@@ -27,10 +30,13 @@ export type {
   VideoOptions,
 } from './types'
 
-export { defaults, defaultMedia, i18nEn } from './defaults'
-export { Glare, autoBind } from './instance'
-export { detectType, normalizeItem, itemsFromElements } from './media'
+export { Glare }
+export { defaults } from './defaults'
+export { i18nEn } from './i18n'
+export { providers as defaultMedia } from './media/providers'
+export { detectType } from './media/detect'
+export { itemsFromElements, normalizeItem } from './media/items'
 
-import { Glare } from './instance'
+export const autoBind = Glare.autoBind
 
 export default Glare

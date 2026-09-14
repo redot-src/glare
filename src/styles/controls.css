@@ -1,0 +1,205 @@
+/* Buttons ---------------------------------------------------------------- */
+
+.glare-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--glare-button-size);
+  height: var(--glare-button-size);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--glare-button-bg);
+  color: var(--glare-fg);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.glare-button svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.glare-toolbar .glare-button {
+  background: transparent;
+}
+
+.glare-button:hover,
+.glare-button:focus-visible {
+  background: var(--glare-button-hover);
+  outline: none;
+}
+
+.glare-button:focus-visible {
+  box-shadow: 0 0 0 2px var(--glare-accent);
+}
+
+.glare-button.is-active {
+  background: var(--glare-accent-soft);
+  color: var(--glare-accent);
+}
+
+.glare-button.glare-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Toolbar and infobar ---------------------------------------------------- */
+
+.glare-toolbar,
+.glare-infobar {
+  position: absolute;
+  top: 12px;
+  z-index: 5;
+  border-radius: 999px;
+  background: var(--glare-toolbar-bg);
+  -webkit-backdrop-filter: var(--glare-blur);
+  backdrop-filter: var(--glare-blur);
+}
+
+.glare-toolbar {
+  right: 12px;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  box-shadow: var(--glare-shadow);
+}
+
+.glare-infobar {
+  top: 18px;
+  left: 18px;
+  padding: 8px 14px;
+  color: var(--glare-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* Navigation ------------------------------------------------------------- */
+
+.glare-navigation {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.glare-button--prev,
+.glare-button--next {
+  position: absolute;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  transform: translateY(-50%);
+  background: var(--glare-toolbar-bg);
+  -webkit-backdrop-filter: var(--glare-blur);
+  backdrop-filter: var(--glare-blur);
+  pointer-events: auto;
+}
+
+.glare-button--prev {
+  left: 16px;
+}
+
+.glare-button--next {
+  right: 16px;
+}
+
+.glare-button--prev:hover,
+.glare-button--next:hover {
+  transform: translateY(-50%) scale(1.04);
+}
+
+.glare-close-small {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 6;
+}
+
+/* Caption ---------------------------------------------------------------- */
+
+.glare-caption {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 5;
+  padding: 48px 24px 24px;
+  background: var(--glare-caption-bg);
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+  pointer-events: none;
+}
+
+.glare-caption a {
+  color: var(--glare-accent);
+  pointer-events: auto;
+}
+
+/* Idle state: chrome fades, the toolbar stays reachable ------------------ */
+
+.glare-infobar,
+.glare-navigation,
+.glare-caption {
+  transition: opacity 220ms var(--glare-ease);
+}
+
+.glare-is-idle .glare-infobar,
+.glare-is-idle .glare-navigation,
+.glare-is-idle .glare-caption:not(:hover) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Progress, spinner, error ---------------------------------------------- */
+
+.glare-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  height: 3px;
+  background: var(--glare-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0s linear;
+  pointer-events: none;
+}
+
+.glare-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 42px;
+  height: 42px;
+  margin: -21px 0 0 -21px;
+  border: 3px solid rgba(255, 255, 255, 0.18);
+  border-top-color: var(--glare-accent);
+  border-radius: 50%;
+  animation: glare-spin 0.8s linear infinite;
+}
+
+@keyframes glare-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.glare-error {
+  max-width: 420px;
+  padding: 28px 32px;
+  border: 1px solid var(--glare-border);
+  border-radius: var(--glare-radius);
+  background: var(--glare-surface);
+  color: var(--glare-muted);
+  text-align: center;
+}

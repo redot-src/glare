@@ -1,0 +1,30 @@
+/* Public theming hooks. Override on :root or on .glare-container. */
+:root {
+  --glare-z: 100000;
+  --glare-font: system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --glare-bg: rgba(12, 14, 18, 0.92);
+  --glare-fg: #f4f6f8;
+  --glare-muted: rgba(244, 246, 248, 0.62);
+  --glare-surface: #11151c;
+  --glare-border: rgba(255, 255, 255, 0.08);
+  --glare-accent: #ff4d4d;
+  --glare-accent-soft: rgba(255, 77, 77, 0.18);
+
+  --glare-toolbar-bg: rgba(12, 14, 18, 0.55);
+  --glare-button-bg: rgba(255, 255, 255, 0.08);
+  --glare-button-hover: rgba(255, 255, 255, 0.16);
+  --glare-button-size: 44px;
+  --glare-caption-bg: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.72));
+
+  --glare-radius: 14px;
+  --glare-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --glare-blur: blur(12px);
+  --glare-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --glare-duration: 366ms;
+  --glare-transition-duration: 366ms;
+
+  --glare-iframe-bg: #fff;
+  --glare-iframe-radius: 5px;
+  --glare-thumbs-size: 95px;
+}

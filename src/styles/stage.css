@@ -1,0 +1,164 @@
+/*
+ * Slide layout. The insets describe the space reserved for chrome; the media
+ * elements use the same values so they never overlap the toolbar or thumbs.
+ */
+.glare-container {
+  --glare-thumbs-inset: 0px;
+  --glare-inset-top: 64px;
+  --glare-inset-x: 72px;
+  --glare-inset-bottom: max(88px, var(--glare-thumbs-inset));
+}
+
+.glare-show-thumbs.glare-thumbs-axis-x {
+  --glare-thumbs-inset: calc(var(--glare-thumbs-size) + 16px);
+}
+
+.glare-show-thumbs.glare-thumbs-axis-y {
+  --glare-inset-x: 110px;
+}
+
+.glare-slide--video,
+.glare-slide--iframe,
+.glare-slide--html,
+.glare-slide--inline,
+.glare-slide--ajax {
+  --glare-inset-top: 30px;
+  --glare-inset-x: 30px;
+  --glare-inset-bottom: max(30px, var(--glare-thumbs-inset));
+}
+
+.glare-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  transition: transform 200ms var(--glare-ease);
+}
+
+.glare-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: var(--glare-inset-top) var(--glare-inset-x) var(--glare-inset-bottom);
+  opacity: 0;
+  transition:
+    opacity var(--glare-transition-duration) var(--glare-ease),
+    transform var(--glare-transition-duration) var(--glare-ease);
+}
+
+.glare-slide--current {
+  z-index: 2;
+  opacity: 1;
+}
+
+.glare-slide--out {
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glare-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Image ------------------------------------------------------------------ */
+
+.glare-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 2 * var(--glare-inset-x));
+  max-height: calc(100vh - var(--glare-inset-top) - var(--glare-inset-bottom));
+  max-height: calc(100dvh - var(--glare-inset-top) - var(--glare-inset-bottom));
+  border-radius: 8px;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform-origin: center;
+  transition:
+    transform var(--glare-duration) var(--glare-ease),
+    opacity var(--glare-duration) var(--glare-ease);
+}
+
+.glare-can-zoom-in .glare-image {
+  cursor: zoom-in;
+}
+
+.glare-can-zoom-out .glare-image {
+  cursor: zoom-out;
+}
+
+/* Video ------------------------------------------------------------------ */
+
+.glare-video {
+  display: block;
+  width: min(960px, 100vw - 2 * var(--glare-inset-x));
+  max-width: 100%;
+  max-height: calc(100vh - var(--glare-inset-top) - var(--glare-inset-bottom));
+  max-height: calc(100dvh - var(--glare-inset-top) - var(--glare-inset-bottom));
+  border-radius: var(--glare-iframe-radius);
+  background: #000;
+  box-shadow: var(--glare-shadow);
+  object-fit: contain;
+}
+
+/* Iframe ----------------------------------------------------------------- */
+
+.glare-content--iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.glare-iframe-wrap {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  border-radius: var(--glare-iframe-radius);
+  background: var(--glare-iframe-bg);
+  box-shadow: var(--glare-shadow);
+}
+
+.glare-iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* HTML, inline, AJAX ----------------------------------------------------- */
+
+.glare-content--html,
+.glare-content--inline,
+.glare-content--ajax {
+  display: block;
+  box-sizing: border-box;
+  max-width: min(720px, 100%);
+  padding: 28px;
+  overflow: auto;
+  border: 1px solid var(--glare-border);
+  border-radius: var(--glare-radius);
+  background: var(--glare-surface);
+  box-shadow: var(--glare-shadow);
+}
+
+.glare-content--html > :first-child,
+.glare-content--inline > :first-child,
+.glare-content--ajax > :first-child {
+  margin-top: 0;
+}
+
+.glare-content--html > :last-child,
+.glare-content--inline > :last-child,
+.glare-content--ajax > :last-child {
+  margin-bottom: 0;
+}

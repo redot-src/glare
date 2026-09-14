@@ -1,0 +1,49 @@
+@media (max-width: 720px) {
+  .glare-container {
+    --glare-button-size: 40px;
+    --glare-inset-top: 56px;
+    --glare-inset-x: 16px;
+    --glare-inset-bottom: max(96px, var(--glare-thumbs-inset));
+  }
+
+  .glare-slide--video,
+  .glare-slide--iframe,
+  .glare-slide--html,
+  .glare-slide--inline,
+  .glare-slide--ajax {
+    --glare-inset-top: 15px;
+    --glare-inset-x: 15px;
+    --glare-inset-bottom: max(15px, var(--glare-thumbs-inset));
+  }
+
+  .glare-toolbar {
+    top: 8px;
+    right: 8px;
+    gap: 4px;
+    padding: 4px;
+  }
+
+  .glare-infobar {
+    top: 12px;
+    left: 12px;
+    font-size: 12px;
+  }
+
+  .glare-button--prev,
+  .glare-button--next {
+    width: 44px;
+    height: 44px;
+  }
+
+  .glare-button--prev {
+    left: 8px;
+  }
+
+  .glare-button--next {
+    right: 8px;
+  }
+
+  .glare-thumbs--y {
+    display: none;
+  }
+}

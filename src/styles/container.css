@@ -1,0 +1,50 @@
+.glare-lock {
+  overflow: hidden !important;
+}
+
+.glare-container {
+  position: fixed;
+  inset: 0;
+  z-index: var(--glare-z);
+  color: var(--glare-fg);
+  font-family: var(--glare-font);
+  outline: none;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--glare-duration) var(--glare-ease),
+    visibility var(--glare-duration);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glare-container.glare-is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.glare-container.glare-is-closing {
+  opacity: 0;
+}
+
+.glare-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--glare-bg);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+}
+
+.glare-is-modal .glare-bg {
+  pointer-events: none;
+}
+
+.glare-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.glare-hidden {
+  display: none !important;
+}
