@@ -1,4 +1,4 @@
-import { Glare } from './core/Glare'
+import { Glare } from './core/glare'
 
 export type {
   AjaxOptions,
@@ -16,8 +16,12 @@ export type {
   I18nDict,
   IframeOptions,
   ImageOptions,
+  LifecycleEvent,
+  LifecycleHandler,
   MediaProvider,
+  ResolvedOptions,
   ShareOptions,
+  SlideEvent,
   SlideItem,
   SlideSource,
   SlideshowOptions,
@@ -27,13 +31,9 @@ export type {
   TransitionEffect,
   VideoOptions,
 } from './types'
+export type { Point, Zoom, ZoomState } from './core/zoom'
 
 export { Glare }
-export { defaults } from './defaults'
-export { i18nEn } from './i18n'
-export { providers as defaultMedia } from './media/providers'
-export { detectType } from './media/detect'
-export { itemsFromElements, normalizeItem } from './media/items'
 
 export const autoBind = Glare.autoBind
 

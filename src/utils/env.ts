@@ -6,6 +6,11 @@ export function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
+export function supportsFullscreen(): boolean {
+  const doc = document as Document & { webkitFullscreenEnabled?: boolean }
+  return Boolean(doc.fullscreenEnabled ?? doc.webkitFullscreenEnabled)
+}
+
 const LOCK_CLASS = 'glare-lock'
 
 /** Locks page scrolling while compensating for the scrollbar width. */

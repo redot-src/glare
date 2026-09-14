@@ -1,6 +1,6 @@
 import type {
   FullscreenOptions,
-  GlareOptions,
+  ResolvedOptions,
   SlideshowOptions,
   ThumbsOptions,
 } from './types'
@@ -15,22 +15,21 @@ import {
   videoTemplate,
 } from './templates'
 
-export const thumbsDefaults: ThumbsOptions = {
+export const thumbsDefaults: Required<Omit<ThumbsOptions, 'parentEl'>> & ThumbsOptions = {
   autoStart: false,
-  hideOnClose: true,
   axis: 'x',
 }
 
-export const slideshowDefaults: SlideshowOptions = {
+export const slideshowDefaults: Required<SlideshowOptions> = {
   autoStart: false,
   speed: 3000,
 }
 
-export const fullscreenDefaults: FullscreenOptions = {
+export const fullscreenDefaults: Required<FullscreenOptions> = {
   autoStart: false,
 }
 
-export const defaults: GlareOptions = {
+export const defaults: ResolvedOptions = {
   closeExisting: false,
   loop: false,
   keyboard: true,
@@ -84,9 +83,9 @@ export const defaults: GlareOptions = {
   media: providers,
 
   hash: true,
-  slideShow: slideshowDefaults,
+  slideshow: slideshowDefaults,
   thumbs: thumbsDefaults,
-  fullScreen: fullscreenDefaults,
+  fullscreen: fullscreenDefaults,
   share: true,
 
   lang: 'en',

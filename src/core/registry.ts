@@ -1,4 +1,4 @@
-import type { Glare } from './Glare'
+import type { Glare } from './glare'
 
 /** Stack of open instances, topmost last. */
 const stack: Glare[] = []

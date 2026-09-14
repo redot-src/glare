@@ -23,6 +23,12 @@ export function fromHtml(html: string): HTMLElement {
   return wrapper.firstElementChild as HTMLElement
 }
 
+/** Strips markup from an HTML string, for labels that must be plain text. */
+export function toText(html: string): string {
+  if (!/[<&]/.test(html)) return html.trim()
+  return new DOMParser().parseFromString(html, 'text/html').body.textContent?.trim() ?? ''
+}
+
 /** Resolves a selector or element, searching `root` first and then the document. */
 export function resolveElement(
   target: string | HTMLElement | null | undefined,

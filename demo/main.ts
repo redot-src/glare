@@ -21,24 +21,19 @@ const nature = [
   },
 ]
 
-// Declarative galleries. Hash deep links (#nature-3) are restored automatically.
 Glare.bind('[data-glare="nature"]', { loop: true })
 Glare.bind('[data-glare="media"]', { loop: true })
-Glare.bind('[data-glare="inline"]', { smallBtn: true })
+Glare.bind('[data-glare="inline"]')
 
-// Buttons that open the lightbox programmatically, keyed by element id.
 const examples: Record<string, () => void> = {
   'open-html': () =>
-    Glare.open(
-      [
-        {
-          type: 'html',
-          html: '<h3>Hello from HTML</h3><p>Pass any markup string as a slide. Great for confirmations, pricing cards, or custom widgets.</p>',
-          caption: 'HTML content slide',
-        },
-      ],
-      { smallBtn: true },
-    ),
+    Glare.open([
+      {
+        type: 'html',
+        html: '<h3>Hello from HTML</h3><p>Pass any markup string as a slide. Great for confirmations, pricing cards, or custom widgets.</p>',
+        caption: 'HTML content slide',
+      },
+    ]),
 
   'open-ajax': () =>
     Glare.open([{ type: 'ajax', src: 'ajax-snippet.html', caption: 'Loaded via fetch()' }]),
@@ -46,7 +41,7 @@ const examples: Record<string, () => void> = {
   'open-programmatic': () => Glare.open(nature, { loop: true }, 1),
 
   'open-slideshow': () =>
-    Glare.open(nature, { loop: true, slideShow: { autoStart: true, speed: 2200 }, idleTime: 2 }),
+    Glare.open(nature, { loop: true, slideshow: { autoStart: true, speed: 2200 }, idleTime: 2 }),
 
   'open-thumbs': () => Glare.open(nature, { loop: true, thumbs: { autoStart: true } }),
 
@@ -61,10 +56,10 @@ const examples: Record<string, () => void> = {
       [
         {
           type: 'html',
-          html: '<h3>Modal mode</h3><p>Only the close button dismisses this dialog. Keyboard navigation is disabled.</p>',
+          html: '<h3>Modal mode</h3><p>Only the close button dismisses this dialog. Keyboard shortcuts and backdrop clicks are ignored.</p>',
         },
       ],
-      { modal: true, keyboard: false, clickSlide: false, smallBtn: true, toolbar: false },
+      { modal: true },
     ),
 
   'open-iframe': () =>

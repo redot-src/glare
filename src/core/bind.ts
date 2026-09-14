@@ -1,12 +1,12 @@
 import type { BoundGroup, GlareOptions } from '../types'
-import { defaults } from '../defaults'
 import { parseHash } from '../modules/hash'
 import { $$, on } from '../utils/dom'
+import { resolveOptions } from './options'
 
 export type BindTarget = string | HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>
 
 /** Opens `elements` as a gallery named `gallery`, starting at `index`. */
-export type Opener = (elements: HTMLElement[], index: number, gallery: string) => void
+type Opener = (elements: HTMLElement[], index: number, gallery: string) => void
 
 const groups: BoundGroup[] = []
 
@@ -36,8 +36,6 @@ export function bind(target: BindTarget, options: GlareOptions, open: Opener): B
   )
 
   const group: BoundGroup = {
-    selector: typeof target === 'string' ? target : '',
-    options,
     elements,
     destroy() {
       offs.forEach((off) => off())
@@ -47,7 +45,7 @@ export function bind(target: BindTarget, options: GlareOptions, open: Opener): B
   }
   groups.push(group)
 
-  if (options.hash ?? defaults.hash) restoreFromHash(elements, openFrom)
+  if (resolveOptions(options).hash) restoreFromHash(elements, openFrom)
   return group
 }
 
@@ -59,6 +57,7 @@ export function unbindAll(): void {
 function restoreFromHash(elements: HTMLElement[], openFrom: (el: HTMLElement) => void): void {
   const parsed = parseHash()
   if (!parsed) return
+
   const members = elements.filter((el) => galleryOf(el) === parsed.gallery)
   const el = members[parsed.index]
   if (el) openFrom(el)

@@ -1,4 +1,4 @@
-import type { Glare } from '../core/Glare'
+import type { Glare } from '../core/glare'
 import { on } from '../utils/dom'
 
 const HASH_PATTERN = /^(.+)-(\d+)$/
@@ -10,36 +10,49 @@ export function parseHash(hash = window.location.hash): { gallery: string; index
   return { gallery: match[1], index: Math.max(0, parseInt(match[2], 10) - 1) }
 }
 
-export function formatHash(gallery: string, index: number): string {
+function formatHash(gallery: string, index: number): string {
   return `${gallery}-${index + 1}`
 }
 
-/** Keeps the URL hash in sync with the current slide of a named gallery. */
+/**
+ * Keeps the URL hash in sync with the current slide of a named gallery.
+ * Opening pushes one history entry so the browser's Back button closes the lightbox;
+ * slide changes replace it so Back never walks through every slide.
+ */
 export class Hash {
   private readonly off: () => void
+  private pushed = false
 
   constructor(
     private readonly glare: Glare,
     private readonly gallery: string,
   ) {
     this.off = on(window, 'hashchange', () => this.onHashChange())
-    this.update()
+
+    const next = formatHash(gallery, glare.currIndex)
+    if (currentHash() !== next) {
+      window.history.pushState(null, '', `#${next}`)
+      this.pushed = true
+    }
   }
 
   update(index = this.glare.currIndex): void {
     const next = formatHash(this.gallery, index)
-    if (window.location.hash.replace(/^#/, '') === next) return
-    this.replace(`#${next}`)
+    if (currentHash() !== next) this.replace(`#${next}`)
   }
 
   destroy(): void {
     this.off()
-    if (parseHash()?.gallery === this.gallery) this.replace('')
+    if (parseHash()?.gallery !== this.gallery) return
+
+    if (this.pushed) window.history.back()
+    else this.replace('')
   }
 
   private onHashChange(): void {
     const parsed = parseHash()
     if (!parsed || parsed.gallery !== this.gallery) {
+      this.pushed = false
       this.glare.close()
     } else if (parsed.index !== this.glare.currIndex) {
       this.glare.jumpTo(parsed.index)
@@ -51,3 +64,5 @@ export class Hash {
     window.history.replaceState(null, '', `${pathname}${search}${hash}`)
   }
 }
+
+const currentHash = (): string => window.location.hash.replace(/^#/, '')

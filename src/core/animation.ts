@@ -1,29 +1,26 @@
-import type { GlareOptions, SlideItem } from '../types'
+import type { ResolvedOptions, SlideItem } from '../types'
 import { nextFrame } from '../utils/dom'
 import { prefersReducedMotion } from '../utils/env'
 
 /** Writes the effect and duration settings onto the container for the stylesheet to use. */
-export function applyMotionSettings(container: HTMLElement, opts: GlareOptions): void {
+export function applyMotionSettings(container: HTMLElement, opts: ResolvedOptions): void {
   const reduced = prefersReducedMotion()
   const effect = reduced ? false : opts.animationEffect
   const transition = reduced ? false : opts.transitionEffect
 
   container.dataset.animation = effect || 'none'
-  container.style.setProperty('--glare-duration', `${effect ? opts.animationDuration ?? 0 : 0}ms`)
-  container.style.setProperty(
-    '--glare-transition-duration',
-    `${transition ? opts.transitionDuration ?? 0 : 0}ms`,
-  )
+  container.style.setProperty('--glare-duration', `${effect ? opts.animationDuration : 0}ms`)
+  container.style.setProperty('--glare-transition-duration', `${transition ? opts.transitionDuration : 0}ms`)
 }
 
 /** Marks the container so slide-change keyframes apply from now on. */
-export function enableTransitions(container: HTMLElement, opts: GlareOptions): void {
+export function enableTransitions(container: HTMLElement, opts: ResolvedOptions): void {
   const transition = prefersReducedMotion() ? false : opts.transitionEffect
   container.dataset.transition = transition || 'none'
 }
 
 /** Flies the opened image in from its trigger element. */
-export function animateOpen(container: HTMLElement, item: SlideItem, opts: GlareOptions): void {
+export function animateOpen(container: HTMLElement, item: SlideItem, opts: ResolvedOptions): void {
   const image = item.$image
   const trigger = item.$trigger
   if (container.dataset.animation !== 'zoom' || !image || !trigger) return
@@ -36,7 +33,7 @@ export function animateOpen(container: HTMLElement, item: SlideItem, opts: Glare
 
   Object.assign(image.style, {
     transform: `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`,
-    opacity: opts.zoomOpacity === false ? '1' : '0.2',
+    opacity: opts.zoomOpacity ? '0.2' : '1',
     transitionDuration: '0ms',
   })
   nextFrame(() => {

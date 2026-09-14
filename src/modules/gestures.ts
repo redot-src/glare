@@ -7,16 +7,23 @@ import { ZOOM_MAX, ZOOM_MIN } from '../core/zoom'
 export interface GestureHost {
   zoom: Zoom
   touch: TouchOptions
+  /** The backdrop, dimmed while the stage is dragged vertically. */
+  bg: HTMLElement | null
   /** Whether the current slide can be panned when zoomed. */
   canPan(): boolean
-  onSwipeMove(dx: number, dy: number): void
-  onSwipeEnd(dx: number, dy: number, velocity: Point): void
+  close(): void
+  next(): void
+  prev(): void
 }
 
 type Mode = 'idle' | 'swipe' | 'pan' | 'pinch'
 
 const MOVE_THRESHOLD = 6
 const MOMENTUM = 120
+const SWIPE_CLOSE_DISTANCE = 100
+const SWIPE_CLOSE_VELOCITY = 0.5
+const SWIPE_NAV_DISTANCE = 80
+const SWIPE_NAV_VELOCITY = 0.4
 const IGNORED_TARGETS = 'a, button, input, textarea, select, video, .glare-thumbs'
 
 const distance = (a: Point, b: Point): number => Math.hypot(a.x - b.x, a.y - b.y)
@@ -36,7 +43,7 @@ export class Gestures {
   private startDistance = 0
 
   constructor(
-    stage: HTMLElement,
+    private readonly stage: HTMLElement,
     private readonly host: GestureHost,
   ) {
     this.offs = [
@@ -62,6 +69,7 @@ export class Gestures {
   private onDown(event: PointerEvent): void {
     if (event.pointerType === 'mouse' && event.button !== 0) return
     if ((event.target as Element).closest(IGNORED_TARGETS)) return
+
     this.pointers.set(event.pointerId, pointOf(event))
     if (this.pointers.size <= 2) this.begin()
   }
@@ -75,18 +83,21 @@ export class Gestures {
   private onUp(event: PointerEvent): void {
     if (!this.pointers.has(event.pointerId)) return
     this.pointers.delete(event.pointerId)
+
     if (this.pointers.size === 0) this.end(pointOf(event))
     else this.begin()
   }
 
   /** Anchors a new gesture on the currently pressed pointers. */
   private begin(): void {
-    if (this.mode === 'swipe') this.host.onSwipeEnd(0, 0, { x: 0, y: 0 })
+    if (this.mode === 'swipe') this.releaseStage()
+
     const points = [...this.pointers.values()]
     this.start = points
     this.startTime = performance.now()
     this.startZoom = this.host.zoom.state
     this.mode = points.length >= 2 ? 'pinch' : 'idle'
+
     if (points.length >= 2) {
       this.startDistance = distance(points[0], points[1])
       this.startMid = midpoint(points[0], points[1])
@@ -120,7 +131,7 @@ export class Gestures {
       const vertical = this.host.touch.vertical !== false
       if (!vertical && Math.abs(dy) > Math.abs(dx)) return
       event.preventDefault()
-      this.host.onSwipeMove(dx, vertical ? dy : 0)
+      this.dragStage(dx, vertical ? dy : 0)
     }
   }
 
@@ -134,6 +145,7 @@ export class Gestures {
       ZOOM_MIN,
       ZOOM_MAX,
     )
+
     // Image-space offset of the point that was under the starting midpoint.
     const ox = (this.startMid.x - center.x - this.startZoom.x) / this.startZoom.scale
     const oy = (this.startMid.y - center.y - this.startZoom.y) / this.startZoom.scale
@@ -142,13 +154,15 @@ export class Gestures {
 
   private end(last: Point): void {
     if (!this.start.length) return
+
     const elapsed = Math.max(performance.now() - this.startTime, 1)
     const dx = last.x - this.start[0].x
     const dy = last.y - this.start[0].y
     const velocity = { x: dx / elapsed, y: dy / elapsed }
 
     if (this.mode === 'swipe') {
-      this.host.onSwipeEnd(dx, dy, velocity)
+      this.releaseStage()
+      this.finishSwipe(dx, dy, velocity)
     } else if (this.mode === 'pan' && this.host.touch.momentum !== false) {
       const { zoom } = this.host
       zoom.apply(zoom.scale, zoom.x + velocity.x * MOMENTUM, zoom.y + velocity.y * MOMENTUM, 250)
@@ -158,5 +172,43 @@ export class Gestures {
     this.start = []
     // Let the click that follows this gesture see `moved`, then forget it.
     if (this.moved) setTimeout(() => (this.moved = false), 0)
+  }
+
+  /** Moves the whole stage with the finger and dims the backdrop on vertical drags. */
+  private dragStage(dx: number, dy: number): void {
+    this.stage.style.transitionDuration = '0ms'
+    this.stage.style.transform = `translate3d(${dx}px, ${dy}px, 0)`
+
+    const { bg } = this.host
+    if (bg) {
+      bg.style.transitionDuration = '0ms'
+      bg.style.opacity = String(clamp(1 - Math.abs(dy) / 400, 0.35, 1))
+    }
+  }
+
+  private releaseStage(): void {
+    this.stage.style.transitionDuration = ''
+    this.stage.style.transform = ''
+
+    const { bg } = this.host
+    if (bg) {
+      bg.style.transitionDuration = ''
+      bg.style.opacity = ''
+    }
+  }
+
+  /** A long or fast vertical swipe closes; a horizontal one navigates. */
+  private finishSwipe(dx: number, dy: number, velocity: Point): void {
+    const vertical = Math.abs(dy) > Math.abs(dx)
+
+    if (vertical) {
+      if (Math.abs(dy) > SWIPE_CLOSE_DISTANCE || Math.abs(velocity.y) > SWIPE_CLOSE_VELOCITY) this.host.close()
+      return
+    }
+
+    if (Math.abs(dx) > SWIPE_NAV_DISTANCE || Math.abs(velocity.x) > SWIPE_NAV_VELOCITY) {
+      if (dx < 0) this.host.next()
+      else this.host.prev()
+    }
   }
 }

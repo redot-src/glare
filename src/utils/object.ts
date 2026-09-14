@@ -1,11 +1,11 @@
-export function isPlainObject(value: unknown): value is Record<string, unknown> {
+function isPlainObject(value: unknown): value is Record<string, unknown> {
   if (typeof value !== 'object' || value === null) return false
   const proto = Object.getPrototypeOf(value)
   return proto === Object.prototype || proto === null
 }
 
 /** Recursively merges plain objects; other values (arrays, elements, RegExps) are replaced. */
-export function deepMerge<T extends object>(...sources: Array<Partial<T> | null | undefined | false>): T {
+export function deepMerge<T extends object>(...sources: Array<object | null | undefined | false>): T {
   const result: Record<string, unknown> = {}
 
   for (const source of sources) {

@@ -1,4 +1,6 @@
-import type { Glare } from '../core/Glare'
+import type { FullscreenOptions } from '../types'
+import type { Glare } from '../core/glare'
+import { setToggleState } from '../core/dom'
 import { icons } from '../icons'
 import { $, on } from '../utils/dom'
 
@@ -12,14 +14,19 @@ type FullscreenElement = HTMLElement & {
 }
 
 /** Fullscreen API wrapper with the WebKit fallback still needed by Safari. */
-export class FullScreen {
+export class Fullscreen {
   private readonly offs: Array<() => void>
 
-  constructor(private readonly glare: Glare) {
+  constructor(
+    private readonly glare: Glare,
+    private readonly container: HTMLElement,
+    opts: FullscreenOptions,
+  ) {
     this.offs = [
       on(document, 'fullscreenchange', () => this.sync()),
       on(document, 'webkitfullscreenchange', () => this.sync()),
     ]
+    if (opts.autoStart) this.request()
   }
 
   isFullscreen(): boolean {
@@ -28,7 +35,7 @@ export class FullScreen {
   }
 
   request(): void {
-    const el = (this.glare.$refs.container ?? document.documentElement) as FullscreenElement
+    const el = this.container as FullscreenElement
     const request = el.requestFullscreen ?? el.webkitRequestFullscreen
     void request?.call(el)
   }
@@ -51,15 +58,18 @@ export class FullScreen {
   }
 
   private sync(): void {
-    const container = this.glare.$refs.container
-    if (!container) return
     const active = this.isFullscreen()
-    container.classList.toggle('glare-is-fullscreen', active)
+    this.container.classList.toggle('glare-is-fullscreen', active)
 
-    const button = $('[data-glare-fullscreen]', container)
-    if (button) {
-      button.innerHTML = active ? icons.fullscreenExit : icons.fullscreen
-      button.classList.toggle('is-active', active)
-    }
+    const button = $('[data-glare-fullscreen]', this.container)
+    if (!button) return
+
+    const { dict } = this.glare
+    setToggleState(
+      button,
+      active,
+      active ? dict.FULL_SCREEN_EXIT : dict.FULL_SCREEN,
+      active ? icons.fullscreenExit : icons.fullscreen,
+    )
   }
 }
