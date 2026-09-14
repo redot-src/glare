@@ -33,6 +33,7 @@ export type ToolbarButton =
   | 'share'
   | 'download'
   | 'fullscreen'
+  | 'more'
   | 'close'
   | (string & {})
 
@@ -146,6 +147,7 @@ export type I18nDict = {
   THUMBS: string
   DOWNLOAD: string
   SHARE: string
+  MORE: string
   COPY: string
   ZOOM: string
   ZOOM_OUT: string

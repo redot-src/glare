@@ -13,10 +13,67 @@
   }
 
   .glare-toolbar {
+    --glare-toolbar-gap: 4px;
+    --glare-toolbar-padding: 3px;
     top: 8px;
     right: 8px;
+  }
+
+  .glare-button--more {
+    display: inline-flex;
+  }
+
+  .glare-toolbar-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    /* Anchor the flyout below More, leaving the Close column clear. */
+    right: calc(
+      var(--glare-button-size) + var(--glare-toolbar-gap) + var(--glare-toolbar-padding)
+    );
+    display: flex;
+    flex-direction: column;
     gap: 4px;
-    padding: 3px;
+    width: max-content;
+    max-width: calc(100vw - 2 * var(--glare-inset-x));
+    padding: 6px;
+    border: 1px solid var(--glare-border);
+    border-radius: 16px;
+    background: var(--glare-toolbar-bg);
+    -webkit-backdrop-filter: var(--glare-blur);
+    backdrop-filter: var(--glare-blur);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.96);
+    transform-origin: top right;
+    pointer-events: none;
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease,
+      visibility 160ms;
+  }
+
+  .glare-toolbar-menu .glare-button {
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0 12px;
+    border-radius: 10px;
+    gap: 10px;
+  }
+
+  .glare-toolbar-menu .glare-button::after {
+    content: attr(aria-label);
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .glare-toolbar--expanded .glare-toolbar-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
   }
 
   .glare-close-small {

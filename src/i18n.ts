@@ -16,6 +16,7 @@ export const i18nEn: I18nDict = {
   THUMBS: 'Thumbnails',
   DOWNLOAD: 'Download',
   SHARE: 'Share',
+  MORE: 'More options',
   COPY: 'Copy link',
   ZOOM: 'Zoom',
   ZOOM_OUT: 'Zoom out',

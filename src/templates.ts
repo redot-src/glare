@@ -26,6 +26,7 @@ export const buttonTemplates: Record<string, string> = {
   thumbs: button('thumbs', 'THUMBS', icons.thumbs, ' aria-expanded="false"'),
   share: button('share', 'SHARE', icons.share),
   fullscreen: button('fullscreen', 'FULL_SCREEN', icons.fullscreen),
+  more: button('more', 'MORE', icons.more, ' aria-expanded="false" aria-haspopup="true"'),
   close: button('close', 'CLOSE', icons.close),
   download: `<a class="glare-button glare-button--download" data-glare-download download target="_blank" rel="noopener" title="{{DOWNLOAD}}" aria-label="{{DOWNLOAD}}">${icons.download}</a>`,
   smallBtn: `<button type="button" class="glare-button glare-close-small" data-glare-close title="{{CLOSE}}" aria-label="{{CLOSE}}">${icons.close}</button>`,

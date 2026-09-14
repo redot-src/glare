@@ -10,11 +10,13 @@
 
 Omit a button to hide it. `thumbs` and `slideshow` are skipped for single-item groups, and `fullscreen` is skipped where the browser has no Fullscreen API (iPhone Safari).
 
+On screens up to 720px wide, Close stays visible and every other available action moves into an animated More options menu. This keeps the toolbar clear of the slide counter without changing the configured `buttons` list.
+
 The download button targets `downloadSrc`, or the image URL for image slides. Browsers ignore the `download` attribute for cross-origin files unless the server sends `Content-Disposition: attachment`, so the link opens in a new tab rather than navigating away from your page.
 
 ## Toolbar visibility
 
-`toolbar: 'auto'` (the default) shows the full toolbar on images only. Video, iframe, and HTML slides get the compact close button instead. With `toolbar: true` the toolbar stays on every type and only the zoom button is hidden on non-image slides.
+`toolbar: 'auto'` (the default) shows the toolbar on images only. Video, embed, iframe, and HTML slides get the compact close button instead. With `toolbar: true` the toolbar stays on every type and only the zoom button is hidden on non-image slides.
 
 ## Caption
 

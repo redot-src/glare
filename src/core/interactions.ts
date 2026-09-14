@@ -38,6 +38,17 @@ export function bindInteractions(glare: Glare, container: HTMLElement, onActivit
       if (glare.consumeGesture()) return
 
       const target = event.target as HTMLElement
+      const more = target.closest<HTMLElement>('[data-glare-more]')
+
+      if (more) {
+        const toolbar = more.closest('.glare-toolbar')
+        const expanded = !toolbar?.classList.contains('glare-toolbar--expanded')
+        toolbar?.classList.toggle('glare-toolbar--expanded', expanded)
+        more.setAttribute('aria-expanded', String(expanded))
+        return
+      }
+
+      closeToolbarMenu(container)
       const button = BUTTONS.find(([selector]) => target.closest(selector))
       if (button) return button[1](glare)
       if (target.closest('.glare-button')) return
@@ -116,6 +127,11 @@ function runAction(glare: Glare, action: ClickAction | undefined, event: Event):
 function onKeydown(glare: Glare, event: KeyboardEvent): void {
   if (registry.top() !== glare) return
 
+  if (event.key === 'Escape' && closeToolbarMenu(glare.$refs?.container ?? null)) {
+    event.preventDefault()
+    return
+  }
+
   // The share overlay is its own small dialog: Escape dismisses it even from its input.
   if (event.key === 'Escape' && glare.share?.isOpen) {
     event.preventDefault()
@@ -147,6 +163,15 @@ function onKeydown(glare: Glare, event: KeyboardEvent): void {
     case 'F':
       return glare.fullscreen?.toggle()
   }
+}
+
+function closeToolbarMenu(container: HTMLElement | null): boolean {
+  const toolbar = container?.querySelector('.glare-toolbar--expanded')
+  if (!toolbar) return false
+
+  toolbar.classList.remove('glare-toolbar--expanded')
+  toolbar.querySelector('[data-glare-more]')?.setAttribute('aria-expanded', 'false')
+  return true
 }
 
 function trapFocus(container: HTMLElement, event: KeyboardEvent): void {

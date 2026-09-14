@@ -84,10 +84,20 @@
 }
 
 .glare-toolbar {
+  --glare-toolbar-gap: 6px;
+  --glare-toolbar-padding: 5px;
   right: 12px;
   display: flex;
-  gap: 6px;
-  padding: 5px;
+  gap: var(--glare-toolbar-gap);
+  padding: var(--glare-toolbar-padding);
+}
+
+.glare-toolbar-menu {
+  display: contents;
+}
+
+.glare-button--more {
+  display: none;
 }
 
 .glare-infobar {

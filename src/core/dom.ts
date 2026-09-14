@@ -40,12 +40,30 @@ function buildToolbar(toolbar: HTMLElement, opts: ResolvedOptions, dict: I18nDic
     return
   }
 
+  const menu = createEl('div', 'glare-toolbar-menu')
+  menu.id = `glare-toolbar-menu-${toolbar.closest<HTMLElement>('.glare-container')?.dataset.glareId ?? ''}`
+
   for (const name of opts.buttons) {
     if (single && (name === 'thumbs' || name === 'slideshow')) continue
     if (name === 'fullscreen' && !supportsFullscreen()) continue
+    if (name === 'more' || name === 'close') continue
 
     const tpl = opts.btnTpl[name]
-    if (tpl) toolbar.insertAdjacentHTML('beforeend', translate(tpl, dict))
+    if (tpl) menu.insertAdjacentHTML('beforeend', translate(tpl, dict))
+  }
+
+  if (menu.childElementCount) {
+    toolbar.appendChild(menu)
+    const moreTpl = opts.btnTpl.more
+    if (moreTpl) {
+      toolbar.insertAdjacentHTML('beforeend', translate(moreTpl, dict))
+      toolbar.querySelector('[data-glare-more]')?.setAttribute('aria-controls', menu.id)
+    }
+  }
+
+  if (opts.buttons.includes('close')) {
+    const closeTpl = opts.btnTpl.close
+    if (closeTpl) toolbar.insertAdjacentHTML('beforeend', translate(closeTpl, dict))
   }
 }
 
@@ -136,6 +154,9 @@ export function syncChrome(refs: GlareRefs, opts: ResolvedOptions, dict: I18nDic
 /** Shows the toolbar for images; with `toolbar: true` other types keep everything except zoom. */
 function syncToolbar(toolbar: HTMLElement, opts: ResolvedOptions, item: SlideItem): void {
   if (opts.toolbar === false) return
+
+  toolbar.classList.remove('glare-toolbar--expanded')
+  toolbar.querySelector('[data-glare-more]')?.setAttribute('aria-expanded', 'false')
 
   const visible = isToolbarVisible(opts, item)
   toolbar.classList.toggle(HIDDEN, !visible)
