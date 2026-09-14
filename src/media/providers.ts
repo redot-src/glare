@@ -5,14 +5,14 @@ export const providers: Record<string, MediaProvider> = {
   youtube: {
     matcher:
       /(?:youtube\.com|youtu\.be|youtube-nocookie\.com)\/(?:watch\?(?:.*&)?v=|v\/|u\/\w\/|embed\/|shorts\/)?([\w-]{11})/i,
-    type: 'iframe',
+    type: 'embed',
     url: 'https://www.youtube-nocookie.com/embed/$1',
     thumb: 'https://img.youtube.com/vi/$1/hqdefault.jpg',
     params: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1 },
   },
   vimeo: {
     matcher: /vimeo\.com\/(?:video\/)?(\d+)/i,
-    type: 'iframe',
+    type: 'embed',
     url: 'https://player.vimeo.com/video/$1',
     params: { autoplay: 1, title: 0, byline: 0, portrait: 0 },
   },

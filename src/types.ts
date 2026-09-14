@@ -4,7 +4,7 @@ import type { Share } from './modules/share'
 import type { Slideshow } from './modules/slideshow'
 import type { Thumbs } from './modules/thumbs'
 
-export type ContentType = 'image' | 'video' | 'iframe' | 'inline' | 'ajax' | 'html'
+export type ContentType = 'image' | 'video' | 'embed' | 'iframe' | 'inline' | 'ajax' | 'html'
 
 /** Effect played when the lightbox opens. */
 export type AnimationEffect = false | 'fade' | 'zoom'
@@ -56,6 +56,8 @@ export interface SlideSource {
   thumb?: string
   width?: number | string
   height?: number | string
+  /** Video/embed ratio, such as `16 / 9`. Explicit width and height take precedence. */
+  ratio?: number | string
   poster?: string
   format?: string
   autoStart?: boolean

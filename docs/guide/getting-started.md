@@ -72,10 +72,11 @@ instance.close()
 
 - `data-glare` — group name (empty for a single item)
 - `data-src` — content URL, overrides `href`
-- `data-type` — force `image`, `video`, `iframe`, `inline`, `ajax`, or `html`
+- `data-type` — force `image`, `video`, `embed`, `iframe`, `inline`, `ajax`, or `html`
 - `data-caption` — caption HTML/text (falls back to `title`)
 - `data-thumb` — thumbnail URL (falls back to a nested `<img>`)
 - `data-width` / `data-height` — iframe size
+- `data-ratio` — video/embed ratio, such as `4 / 3`
 - `data-poster` — video poster image
 - `data-download-src` — download button target
 - `data-html` — inline HTML string

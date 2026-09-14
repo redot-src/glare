@@ -49,6 +49,7 @@ export function itemsFromElements(elements: HTMLElement[], opts: GlareOptions): 
         thumb: attr(el, 'data-thumb') ?? img?.getAttribute('src') ?? undefined,
         width: attr(el, 'data-width'),
         height: attr(el, 'data-height'),
+        ratio: attr(el, 'data-ratio'),
         poster: attr(el, 'data-poster'),
         downloadSrc: attr(el, 'data-download-src'),
         html: attr(el, 'data-html'),

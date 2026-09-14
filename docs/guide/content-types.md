@@ -5,7 +5,7 @@ Glare detects the type from the URL when possible. You can always force it with 
 ## Detection rules
 
 1. An explicit `type` / `data-type` wins
-2. A `src` matching a [media provider](/guide/modules#media-providers) (YouTube, Vimeo, Google Maps) → the provider's type, `iframe` for the built-in ones. The provider also rewrites `src` and fills `thumb`
+2. A `src` matching a [media provider](/guide/modules#media-providers) → the provider's type. YouTube and Vimeo use a responsive 16:9 `embed`; Google Maps uses `iframe`. The provider also rewrites `src` and fills `thumb`
 3. `html` or `content` present → `html`
 4. Empty `src` → `html`
 5. `#id` or `.class` → `inline`
@@ -44,7 +44,7 @@ Web pages have no telling extension, so set `type: 'iframe'` explicitly for them
 }
 ```
 
-Iframe slides fill the stage with 30px padding (15px on small screens) and use `--glare-iframe-bg` behind the frame.
+Iframe slides fill the padded stage. The stage provides an even 30px cutout on every side (15px on small screens). They use `--glare-iframe-bg` behind the frame.
 
 ## YouTube / Vimeo / Maps
 
@@ -55,6 +55,8 @@ Paste a normal watch or place URL and Glare rewrites it to an embed:
 { src: 'https://vimeo.com/1084537' }
 { src: 'https://www.google.com/maps/place/Tokyo+Tower/@35.6585805,139.7454389,17z' }
 ```
+
+YouTube and Vimeo are fitted inside the available stage at 16:9 by default. Explicit `width` and `height` define both the maximum player size and its ratio; `ratio` (or `data-ratio`) overrides the default when dimensions are omitted. The iframe fills this fitted wrapper. Generic iframes remain independent and fill the padded stage.
 
 ## Inline
 

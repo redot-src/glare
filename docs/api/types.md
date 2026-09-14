@@ -72,7 +72,7 @@ A normalized slide, as seen in event handlers and `instance.group`. Adds `index`
 
 ## `ContentType`
 
-`'image' | 'video' | 'iframe' | 'inline' | 'ajax' | 'html'`
+`'image' | 'video' | 'embed' | 'iframe' | 'inline' | 'ajax' | 'html'`
 
 ## `AnimationEffect`
 

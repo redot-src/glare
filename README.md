@@ -8,7 +8,7 @@ Open images, HTML5 video, YouTube/Vimeo, maps, iframes, inline nodes, AJAX fragm
 
 - **Vanilla JS / TypeScript**, no jQuery, no framework lock-in
 - **Galleries** with loop, arrows, keyboard, mouse wheel, and swipe
-- **Content types**: image, video, iframe, inline, AJAX, HTML
+- **Content types**: image, video, responsive embed, iframe, inline, AJAX, HTML
 - **Media helpers** for YouTube, Vimeo, and Google Maps URLs
 - **Pinch-zoom and pan**, click-to-zoom, protect mode
 - **Thumbnails**, **slideshow**, **fullscreen**, **share**, **hash** deep links
