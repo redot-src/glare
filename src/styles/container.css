@@ -36,8 +36,11 @@
 }
 
 .glare-is-closing .glare-bg,
-.glare-is-closing .glare-inner {
+.glare-is-closing .glare-inner,
+.glare-is-closing .glare-thumbs,
+.glare-is-closing .glare-share-overlay {
   opacity: 0;
+  pointer-events: none;
 }
 
 .glare-bg {
@@ -46,10 +49,6 @@
   background: var(--glare-bg);
   -webkit-backdrop-filter: var(--glare-backdrop);
   backdrop-filter: var(--glare-backdrop);
-}
-
-.glare-is-modal .glare-bg {
-  pointer-events: none;
 }
 
 .glare-inner {
@@ -61,4 +60,14 @@
 
 .glare-hidden {
   display: none !important;
+}
+
+/* Visually hidden but still read by screen readers. */
+.glare-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

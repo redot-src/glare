@@ -1,4 +1,4 @@
-/* Buttons ---------------------------------------------------------------- */
+/* Buttons */
 
 .glare-button {
   appearance: none;
@@ -41,17 +41,17 @@
   box-shadow: 0 0 0 2px var(--glare-accent);
 }
 
-.glare-button.is-active {
+.glare-button.glare-is-active {
   background: var(--glare-accent-soft);
   color: var(--glare-accent);
 }
 
-.glare-button.glare-disabled {
+.glare-button.glare-is-disabled {
   opacity: 0.35;
   pointer-events: none;
 }
 
-/* Toolbar and infobar ---------------------------------------------------- */
+/* Toolbar and infobar */
 
 /* Shared glass surface for floating chrome. */
 .glare-toolbar,
@@ -100,7 +100,7 @@
   letter-spacing: 0.02em;
 }
 
-/* Navigation ------------------------------------------------------------- */
+/* Navigation */
 
 .glare-navigation {
   position: absolute;
@@ -134,7 +134,7 @@
   z-index: 6;
 }
 
-/* Caption ---------------------------------------------------------------- */
+/* Caption */
 
 .glare-caption {
   position: absolute;
@@ -153,22 +153,25 @@
   pointer-events: auto;
 }
 
-/* Idle state: chrome fades, the toolbar stays reachable ------------------ */
+/* Idle state: chrome fades and leaves the tab order; the toolbar stays reachable. */
 
 .glare-infobar,
 .glare-navigation,
 .glare-caption {
-  transition: opacity 220ms var(--glare-ease);
+  transition:
+    opacity 220ms var(--glare-ease),
+    visibility 220ms;
 }
 
 .glare-is-idle .glare-infobar,
 .glare-is-idle .glare-navigation,
 .glare-is-idle .glare-caption:not(:hover) {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
 
-/* Progress, spinner, error ---------------------------------------------- */
+/* Progress, spinner, error */
 
 .glare-progress {
   position: absolute;

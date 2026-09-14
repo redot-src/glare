@@ -6,11 +6,7 @@
     --glare-inset-bottom: max(96px, var(--glare-thumbs-inset));
   }
 
-  .glare-slide--video,
-  .glare-slide--iframe,
-  .glare-slide--html,
-  .glare-slide--inline,
-  .glare-slide--ajax {
+  .glare-slide:where(:not(.glare-slide--image)) {
     --glare-inset-top: 15px;
     --glare-inset-x: 15px;
     --glare-inset-bottom: max(15px, var(--glare-thumbs-inset));
@@ -48,7 +44,13 @@
     right: 8px;
   }
 
-  .glare-thumbs--y {
+  /* The side strip has no room on phones, so its button and insets go with it. */
+  .glare-thumbs--y,
+  .glare-thumbs-axis-y [data-glare-thumbs] {
     display: none;
+  }
+
+  .glare-show-thumbs.glare-thumbs-axis-y {
+    --glare-inset-x: 16px;
   }
 }

@@ -4,8 +4,8 @@
   opacity: 0;
   pointer-events: none;
   transition:
-    opacity 220ms ease,
-    transform 220ms ease;
+    opacity 220ms var(--glare-ease),
+    transform 220ms var(--glare-ease);
 }
 
 .glare-thumbs--active {
@@ -78,7 +78,7 @@
   object-fit: cover;
 }
 
-.glare-thumbs-item.is-active {
+.glare-thumbs-item.glare-is-active {
   border-color: var(--glare-accent);
 }
 
