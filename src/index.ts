@@ -1,5 +1,3 @@
-import './styles/index.css'
-
 import { Glare } from './core/Glare'
 
 export type {

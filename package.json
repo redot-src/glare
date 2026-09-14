@@ -36,7 +36,6 @@
   "sideEffects": [
     "**/*.css"
   ],
-  "main": "./dist/glare.js",
   "module": "./dist/glare.esm.js",
   "types": "./dist/index.d.ts",
   "unpkg": "./dist/glare.js",
@@ -45,7 +44,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/glare.esm.js",
-      "require": "./dist/glare.js",
       "default": "./dist/glare.esm.js"
     },
     "./style.css": "./dist/glare.css",
@@ -66,7 +64,6 @@
     "@types/node": "^26.5.1",
     "typescript": "^5.9.2",
     "vite": "^7.1.5",
-    "vitepress": "^1.6.4",
-    "vue": "^3.5.21"
+    "vitepress": "^1.6.4"
   }
 }

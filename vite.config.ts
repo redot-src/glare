@@ -9,7 +9,7 @@ const pagesBase = process.env.GITHUB_PAGES === 'true' ? '/glare/' : '/'
 const esm: UserConfig = {
   build: {
     lib: {
-      entry: resolve(root, 'src/index.ts'),
+      entry: resolve(root, 'src/esm.ts'),
       formats: ['es'],
       fileName: () => 'glare.esm.js',
     },

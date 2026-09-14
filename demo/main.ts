@@ -1,4 +1,5 @@
 import Glare from '../src/index'
+import '../src/styles/index.css'
 import './style.css'
 
 const nature = [
