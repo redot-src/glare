@@ -1,14 +1,20 @@
 import { defineConfig } from 'vitepress'
 
+const isGitHubPages = process.env.GITHUB_PAGES === 'true'
+
 export default defineConfig({
   title: 'Glare',
   description: 'Modern, touch-enabled lightbox for the web — zero dependencies.',
-  cleanUrls: true,
+  // GitHub Pages has no extensionless-URL rewrite, so production links keep `.html`.
+  cleanUrls: !isGitHubPages,
+  base: isGitHubPages ? '/glare/' : '/',
+  ignoreDeadLinks: ['/demo', '/demo/'],
   themeConfig: {
     logo: undefined,
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'API', link: '/api/' },
+      { text: 'Demo', link: '/demo/', target: '_self' },
       { text: 'GitHub', link: 'https://github.com/redot-src/glare' },
     ],
     sidebar: [

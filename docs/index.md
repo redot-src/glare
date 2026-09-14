@@ -10,11 +10,12 @@ hero:
       text: Get started
       link: /guide/getting-started
     - theme: alt
+      text: Live demo
+      link: /demo/
+      target: _self
+    - theme: alt
       text: API reference
       link: /api/
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/redot-src/glare
 
 features:
   - title: Any media

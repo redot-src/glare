@@ -63,13 +63,16 @@ Glare.open(
 
 ## Demo & docs
 
-Repository: [github.com/redot-src/glare](https://github.com/redot-src/glare)
+- Docs: [redot-src.github.io/glare](https://redot-src.github.io/glare/)
+- Live demo: [redot-src.github.io/glare/demo](https://redot-src.github.io/glare/demo/)
+- Repository: [github.com/redot-src/glare](https://github.com/redot-src/glare)
 
 ```bash
 npm install
 npm run dev          # interactive demo
 npm run docs:dev     # VitePress documentation
 npm run build        # library build → dist/
+npm run pages:build  # docs + demo for GitHub Pages
 ```
 
 ## License
