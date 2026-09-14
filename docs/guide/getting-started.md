@@ -23,6 +23,8 @@ Or from a CDN:
 </script>
 ```
 
+The ESM build is `dist/glare.esm.js` and the browser script is `dist/glare.js`. Both share `dist/glare.css`.
+
 ## Declarative usage
 
 Mark anchors (or buttons) with `data-glare`. Elements with the same group name form a gallery.

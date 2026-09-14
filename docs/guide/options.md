@@ -8,13 +8,19 @@ Pass options to `Glare.bind()`, `Glare.open()`, or mutate `Glare.defaults` befor
 - `loop` (`false`) — wrap around gallery ends
 - `keyboard` (`true`) — enable keyboard shortcuts
 - `protect` (`false`) — block the context menu and image dragging
-- `modal` (`false`) — modal mode: no keyboard shortcuts, no idle fade, backdrop ignores clicks
+- `modal` (`false`) — modal mode: no keyboard shortcuts, no idle fade, clicks on the backdrop and around the media are ignored
 - `idleTime` (`3`) — seconds before arrows, infobar, and caption fade; the toolbar stays visible. `false` disables it
 - `hideScrollbar` (`true`) — lock page scroll while open
 - `autoFocus` / `backFocus` / `trapFocus` (`true`) — focus management
 - `defaultType` (`'image'`) — type used when a URL has no recognizable extension
 - `parentEl` (`'body'`) — mount node
 - `baseClass` / `slideClass` — extra classes for the container and each slide
+
+A single-item modal dialog:
+
+```js
+Glare.open([{ type: 'html', html: '...' }], { modal: true })
+```
 
 ## Chrome
 
@@ -42,7 +48,7 @@ Pass options to `Glare.bind()`, `Glare.open()`, or mutate `Glare.defaults` befor
 - `touch` (`{ vertical: true, momentum: true }`) — gestures; `false` disables them
 - `mobile` — option overrides applied on touch-first devices
 
-Click actions accept `false`, `'close'`, `'next'`, `'nextOrClose'`, `'toggleControls'`, `'zoom'`, or a function `(current, event)` returning one of those.
+Click actions accept `false`, `'close'`, `'next'`, `'nextOrClose'`, `'toggleControls'`, `'zoom'`, or a function `(current, event)` returning one of those. When a double-click action is set, single clicks wait briefly so a double-tap does not trigger both.
 
 ## Content
 
@@ -55,16 +61,18 @@ Click actions accept `false`, `'close'`, `'next'`, `'nextOrClose'`, `'toggleCont
 ## Modules
 
 - `hash` (`true`) — sync the URL hash with the current slide of a named gallery
-- `slideShow` (`{ autoStart: false, speed: 3000 }`) — `true` for defaults, `false` to disable
-- `thumbs` (`{ autoStart: false, axis: 'x', hideOnClose: true }`) — `axis: 'y'` for a side strip
-- `fullScreen` (`{ autoStart: false }`)
+- `slideshow` (`{ autoStart: false, speed: 3000 }`) — `true` for defaults, `false` to disable
+- `thumbs` (`{ autoStart: false, axis: 'x' }`) — `axis: 'y'` for a side strip
+- `fullscreen` (`{ autoStart: false }`)
 - `share` (`true`) — share overlay; accepts `{ url, tpl }`
+
+Partial module objects are merged over the module defaults.
 
 ## Text and templates
 
 - `lang` (`'en'`) — dictionary key
-- `i18n` — dictionaries, default `{ en: { ... } }`
-- `baseTpl`, `btnTpl`, `spinnerTpl`, `errorTpl` — markup templates; see [Toolbar & UI](/guide/toolbar)
+- `i18n` — dictionaries, default `{ en: { ... } }`; see [Accessibility](/guide/accessibility#labels)
+- `baseTpl`, `btnTpl`, `spinnerTpl`, `errorTpl` — markup templates; see [Templates](/guide/toolbar#templates)
 
 ## Changing defaults globally
 

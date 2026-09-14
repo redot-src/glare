@@ -8,25 +8,13 @@
 }
 ```
 
-Omit a button to hide it. `thumbs` and `slideshow` are skipped for single-item groups.
+Omit a button to hide it. `thumbs` and `slideshow` are skipped for single-item groups, and `fullscreen` is skipped where the browser has no Fullscreen API (iPhone Safari).
+
+The download button targets `downloadSrc`, or the image URL for image slides. Browsers ignore the `download` attribute for cross-origin files unless the server sends `Content-Disposition: attachment`, so the link opens in a new tab rather than navigating away from your page.
 
 ## Toolbar visibility
 
-`toolbar: 'auto'` (the default) shows the full toolbar on images only. Video, iframe, and HTML slides get the compact close button instead. With `toolbar: true` the toolbar stays on every type, but image-only controls are hidden on non-image slides.
-
-## Custom button templates
-
-Override markup via `btnTpl`. The `data-glare-*` attribute is what wires the click:
-
-```js
-{
-  btnTpl: {
-    close: `<button type="button" class="glare-button" data-glare-close>✕</button>`,
-  },
-}
-```
-
-Placeholders like `{{CLOSE}}` are replaced from the active `i18n` dictionary.
+`toolbar: 'auto'` (the default) shows the full toolbar on images only. Video, iframe, and HTML slides get the compact close button instead. With `toolbar: true` the toolbar stays on every type and only the zoom button is hidden on non-image slides.
 
 ## Caption
 
@@ -41,10 +29,36 @@ Placeholders like `{{CLOSE}}` are replaced from the active `i18n` dictionary.
 }
 ```
 
+Captions are HTML. Where a plain string is needed (the dialog label, image `alt`, share text) the markup is stripped.
+
 ## Idle chrome
 
-After `idleTime` seconds without pointer activity the arrows, infobar, and caption fade. The toolbar stays visible so Close remains reachable. Set `idleTime: false` to keep everything visible.
+After `idleTime` seconds without pointer or keyboard activity the arrows, infobar, and caption fade. The toolbar stays visible so Close remains reachable. Set `idleTime: false` to keep everything visible.
 
 ## Infobar
 
 Shows `current / total`. Hide with `infobar: false`.
+
+## Templates
+
+Every piece of markup is an option. Placeholders in `{{UPPER_CASE}}` come from the active [i18n dictionary](/guide/accessibility#labels); lower-case ones are filled per slide.
+
+| Option | Placeholders | Must contain |
+| --- | --- | --- |
+| `baseTpl` | dictionary | `.glare-bg`, `.glare-inner`, `.glare-stage`, plus `.glare-toolbar`, `.glare-infobar`, `.glare-navigation`, `.glare-caption`, `.glare-live` for the matching features |
+| `btnTpl[name]` | dictionary | a `data-glare-{name}` attribute, which wires the click; `smallBtn` is the compact close button |
+| `spinnerTpl` | dictionary | — |
+| `errorTpl` | dictionary | — |
+| `video.tpl` | dictionary, `{{src}}`, `{{format}}`, `{{poster}}` | a `<video>` |
+| `iframe.tpl` | — | an `<iframe>` |
+| `share.tpl` | dictionary, `{{url_direct}}`, `{{url_facebook}}`, `{{url_twitter}}`, `{{url_pinterest}}` | `data-glare-share-close` and `data-glare-share-copy` for the close and copy buttons |
+
+```js
+{
+  btnTpl: {
+    close: `<button type="button" class="glare-button" data-glare-close aria-label="{{CLOSE}}">✕</button>`,
+  },
+}
+```
+
+The defaults live in `src/templates.ts`.

@@ -38,14 +38,15 @@ On desktop, clicking an image zooms it to its natural size around the pointer (a
 
 ```js
 const box = Glare.getInstance()
-box?.scaleToActual()
-box?.scaleToFit()
+box?.toggleZoom()
+box?.zoom.toActual({ x, y })
+box?.zoom.toFit()
 box?.zoom.isZoomed
 ```
 
 ## Mouse wheel
 
-`wheel: 'auto'` (the default) moves between slides when scrolling over an image that is not zoomed. `true` navigates on every slide type, `false` disables it.
+`wheel: 'auto'` (the default) moves between slides when scrolling over an image that is not zoomed. One wheel gesture moves one slide, including trackpad flicks with inertia. `true` navigates on every slide type, `false` disables it.
 
 ## Styling hooks
 

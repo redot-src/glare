@@ -6,7 +6,6 @@
 {
   thumbs: {
     autoStart: false,
-    hideOnClose: true,
     axis: 'x', // or 'y' for a vertical strip
     parentEl: undefined, // defaults to the lightbox container
   },
@@ -16,14 +15,16 @@
 Toggle from the toolbar or:
 
 ```js
-instance.Thumbs?.toggle()
+instance.thumbs?.toggle()
 ```
+
+The vertical strip is hidden on screens narrower than 720px, together with its toolbar button.
 
 ## Slideshow
 
 ```js
 {
-  slideShow: {
+  slideshow: {
     autoStart: false,
     speed: 3000,
   },
@@ -31,30 +32,30 @@ instance.Thumbs?.toggle()
 ```
 
 ```js
-instance.SlideShow?.start()
-instance.SlideShow?.stop()
-instance.SlideShow?.toggle()
+instance.slideshow?.start()
+instance.slideshow?.stop()
+instance.slideshow?.toggle()
 ```
 
-Space toggles the slideshow. A progress bar at the top animates with `--glare-accent` for the duration of `speed`.
+Space toggles the slideshow. A progress bar at the top animates with `--glare-accent` for the duration of `speed`. Without `loop`, the slideshow stops on the last slide.
 
 ## Fullscreen
 
 ```js
 {
-  fullScreen: { autoStart: false },
+  fullscreen: { autoStart: false },
 }
 ```
 
 ```js
-instance.FullScreen?.toggle()
+instance.fullscreen?.toggle()
 ```
 
-Press `F` while open.
+Press `F` while open. Where the browser has no Fullscreen API the module is not created, so `instance.fullscreen` is `undefined`.
 
 ## Share
 
-Opens an overlay with Facebook, X/Twitter, Pinterest, and a copyable URL.
+Opens an overlay with Facebook, X/Twitter, Pinterest, a copyable URL, and a Copy button. Escape or the close button dismisses it.
 
 ```js
 {
@@ -70,7 +71,7 @@ Opens an overlay with Facebook, X/Twitter, Pinterest, and a copyable URL.
 { hash: true }
 ```
 
-Writes `#group-1` style fragments and restores them on load. Requires a gallery name from `data-glare="group"`.
+Writes `#group-1` style fragments and restores them on load. Requires a gallery name from `data-glare="group"`. Opening adds one history entry, so the browser's Back button closes the lightbox; moving between slides replaces that entry.
 
 ## Media providers
 

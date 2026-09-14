@@ -10,7 +10,7 @@ A gallery is any set of elements that share the same `data-glare` group name, or
 <a data-glare="portfolio" href="3.jpg"></a>
 ```
 
-Clicking any item opens the group at that index.
+Clicking any item opens the group at that index. Use real links with `href` pointing at the full media URL so the content stays reachable without JavaScript.
 
 ## Looping
 
@@ -39,7 +39,7 @@ With `hash: true` (the default) and a group name, Glare writes the current slide
 #portfolio-2
 ```
 
-`Glare.bind()` also reads the hash: loading a page with `#portfolio-2` opens that slide right away. Browser back/forward navigation updates the slide or closes the lightbox. Disable with `hash: false`.
+`Glare.bind()` also reads the hash: loading a page with `#portfolio-2` opens that slide right away. Opening adds one history entry, so the Back button closes the lightbox; editing the hash by hand jumps to that slide. Disable with `hash: false`.
 
 ## Mixed content galleries
 
@@ -51,4 +51,18 @@ Glare.open([
   { src: 'https://www.youtube.com/watch?v=XXXXXXXXXXX' },
   { type: 'html', html: '<p>Credits</p>' },
 ])
+```
+
+## Multiple instances
+
+`closeExisting: true` ensures only one lightbox is visible. Otherwise instances stack and `Glare.close()` closes the topmost one.
+
+## Re-binding
+
+Call `Glare.bind()` after your list renders, and `destroy()` the returned handle before binding again:
+
+```js
+const handle = Glare.bind('.gallery a', { loop: true })
+// later
+handle.destroy()
 ```

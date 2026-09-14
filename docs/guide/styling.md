@@ -19,7 +19,6 @@ Override on `:root` or `.glare-container`:
   --glare-accent-soft: rgba(94, 234, 212, 0.18);
   --glare-radius: 18px;
   --glare-button-size: 46px;
-  --glare-duration: 280ms;
   --glare-font: "Your Font", system-ui, sans-serif;
   --glare-iframe-bg: #fff;
   --glare-iframe-radius: 5px;
@@ -27,7 +26,7 @@ Override on `:root` or `.glare-container`:
 }
 ```
 
-The full list lives in `src/styles/tokens.css`.
+The full list lives in `src/styles/tokens.css`. Durations are not CSS tokens: set the `animationDuration` and `transitionDuration` options instead, and the runtime writes them to the container.
 
 If the host app already has design tokens (for example Tabler), map them:
 
@@ -61,8 +60,13 @@ On `.glare-container`:
 - `.glare-show-thumbs` with `.glare-thumbs-axis-x` or `.glare-thumbs-axis-y`
 - `.glare-type-image` (and other `.glare-type-*`) — current slide type
 - `[data-animation]` / `[data-transition]` — active effects
+- `[data-glare-id]` — the instance id, for `Glare.getInstance(id)`
 
-Per slide: `.glare-slide--image` (and other `--type` variants) on the slide, `.glare-content--image` on the content box.
+On elements:
+
+- `.glare-is-active` — toolbar toggles (zoom, slideshow, thumbs, fullscreen) while on, and the current thumbnail
+- `.glare-is-disabled` — prev/next at the ends of a non-looping gallery
+- `.glare-slide--image` (and other `--type` variants) on the slide, `.glare-content--image` on the content box
 
 ## Class hooks
 

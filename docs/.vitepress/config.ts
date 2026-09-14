@@ -30,7 +30,6 @@ export default defineConfig({
           { text: 'Events', link: '/guide/events' },
           { text: 'Styling', link: '/guide/styling' },
           { text: 'Accessibility', link: '/guide/accessibility' },
-          { text: 'Tips', link: '/guide/tips' },
         ],
       },
       {

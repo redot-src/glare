@@ -80,18 +80,24 @@ npm run pages:build  # docs + demo, as deployed to GitHub Pages
 
 ```
 src/
-  index.ts        public entry point and exports
+  index.ts        public API and type exports
+  esm.ts          ESM build entry: the API plus the stylesheet
+  umd.ts          UMD/CDN build entry: exposes the class as window.Glare
   types.ts        public types
   defaults.ts     default options
   i18n.ts         built-in strings
   icons.ts        inline SVG icons
   templates.ts    HTML templates for the dialog and buttons
   core/           the Glare class and its collaborators
-    Glare.ts        lifecycle, navigation, public API
+    glare.ts        lifecycle, navigation, public API
     dom.ts          building and updating the dialog markup
     loaders.ts      one loader per content type
     interactions.ts clicks, keyboard, focus trap
+    animation.ts    open animation and slide-transition settings
     zoom.ts         image zoom and pan maths
+    idle.ts         idle timer that hides the controls
+    options.ts      merges defaults, mobile overrides, and module shorthands
+    registry.ts     stack of open instances
     bind.ts         declarative `Glare.bind()` and hash restore
   media/          URL type detection, providers (YouTube, Vimeo, Maps), item normalization
   modules/        optional features: fullscreen, gestures, hash, share, slideshow, thumbs, wheel

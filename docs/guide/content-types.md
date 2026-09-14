@@ -4,13 +4,15 @@ Glare detects the type from the URL when possible. You can always force it with 
 
 ## Detection rules
 
-1. `#id` or `.class` → `inline`
-2. Image extensions (`avif`, `bmp`, `gif`, `jpg`, `jpeg`, `png`, `svg`, `webp`, `ico`) → `image`
-3. Video extensions (`mp4`, `webm`, `ogg`, `ogv`, `mov`, `m4v`) → `video`
-4. `.pdf` → `iframe`
-5. A matching [media provider](/guide/modules#media-providers) (YouTube, Vimeo, Google Maps) → `iframe`
-6. `html` or `content` provided without `src` → `html`
-7. Anything else → `defaultType` (`'image'`)
+1. An explicit `type` / `data-type` wins
+2. A `src` matching a [media provider](/guide/modules#media-providers) (YouTube, Vimeo, Google Maps) → the provider's type, `iframe` for the built-in ones. The provider also rewrites `src` and fills `thumb`
+3. `html` or `content` present → `html`
+4. Empty `src` → `html`
+5. `#id` or `.class` → `inline`
+6. Image extensions (`avif`, `bmp`, `gif`, `jpg`, `jpeg`, `png`, `svg`, `webp`, `ico`) → `image`
+7. Video extensions (`mp4`, `webm`, `ogg`, `ogv`, `mov`, `m4v`) → `video`
+8. `.pdf` → `iframe`
+9. Anything else → `defaultType` (`'image'`)
 
 Web pages have no telling extension, so set `type: 'iframe'` explicitly for them.
 
@@ -50,7 +52,7 @@ Paste a normal watch or place URL and Glare rewrites it to an embed:
 
 ```js
 { src: 'https://www.youtube.com/watch?v=XXXXXXXXXXX' }
-{ src: 'https://vimeo.com/148751763' }
+{ src: 'https://vimeo.com/1084537' }
 { src: 'https://www.google.com/maps/place/Tokyo+Tower/@35.6585805,139.7454389,17z' }
 ```
 
@@ -76,3 +78,7 @@ Uses `fetch()`. Tune the request with `ajax.settings`.
 ```js
 { type: 'html', html: '<h3>Thanks!</h3><p>Your order is confirmed.</p>' }
 ```
+
+## Errors
+
+When content fails to load, the slide shows `errorTpl`, `current.hasError` is set, and `current.error` holds the reason. Handle it with the [`onError` event](/guide/events).
