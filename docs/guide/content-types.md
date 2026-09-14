@@ -32,7 +32,7 @@ Extensions recognized: `avif`, `bmp`, `gif`, `jpg`, `jpeg`, `png`, `svg`, `webp`
 }
 ```
 
-PDFs and unknown remote URLs default to iframe.
+PDFs and unknown remote URLs default to iframe. Iframe slides fill the stage with 30px padding (15px on small screens) and use `--glare-iframe-bg` behind the frame.
 
 ## YouTube / Vimeo / Maps
 

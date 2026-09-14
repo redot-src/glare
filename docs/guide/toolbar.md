@@ -41,7 +41,9 @@ Placeholders like `{{CLOSE}}` are replaced from the active `i18n` dictionary.
 
 ## Idle chrome
 
-After `idleTime` seconds without pointer activity, toolbar/arrows fade. Move the pointer to restore. Set `idleTime: false` to keep UI visible.
+After `idleTime` seconds without pointer activity, arrows, infobar, and caption fade. The toolbar stays visible so Close remains reachable. Move the pointer to restore the rest. Set `idleTime: false` to keep all UI visible.
+
+`toolbar: 'auto'` (the default) shows the full toolbar on images only. Video, iframe, and HTML slides get the compact close button instead. Pass `toolbar: true` to keep a toolbar on every type — image-only controls such as zoom are still hidden on non-image slides.
 
 ## Infobar
 

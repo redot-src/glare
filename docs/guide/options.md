@@ -10,10 +10,10 @@ Pass options to `Glare.bind()`, `Glare.open()`, or mutate `Glare.defaults` befor
 - `keyboard` (`true`) — enable keyboard shortcuts
 - `arrows` (`true`) — show prev/next
 - `infobar` (`true`) — show index indicator
-- `toolbar` (`'auto'`) — show toolbar
-- `smallBtn` (`'auto'`) — compact close on non-image content
+- `toolbar` (`'auto'`) — show the full toolbar for images; hide it for video/iframe/HTML (the compact close button is used instead). `true` always shows it; `false` never does
+- `smallBtn` (`'auto'`) — compact close when the toolbar is hidden
 - `buttons` — toolbar controls; default `['zoom','slideshow','thumbs','share','download','fullscreen','close']`
-- `idleTime` (`3`) — seconds before chrome hides; `false` to disable
+- `idleTime` (`3`) — seconds before arrows/infobar/caption fade; the toolbar stays visible. `false` to disable
 - `protect` (`false`) — block context menu / image drag
 - `modal` (`false`) — modal styling; pairs well with disabled outside click
 - `parentEl` (`'body'`) — mount node
@@ -37,7 +37,7 @@ Pass options to `Glare.bind()`, `Glare.open()`, or mutate `Glare.defaults` befor
 - `video.autoStart` (`true`) — autoplay HTML5 video
 - `iframe.preload` (`true`) — wait for iframe load
 - `slideShow` (`{ autoStart: false, speed: 3000 }`) — slideshow module
-- `thumbs` (`{ autoStart: false, axis: 'y', ... }`) — thumbnails module
+- `thumbs` (`{ autoStart: false, axis: 'x', ... }`) — thumbnails module; `axis: 'y'` for a side strip
 - `fullScreen` (`{ autoStart: false }`) — fullscreen module
 - `share` (`true`) — share overlay
 - `media` — URL matchers for embeds (built-ins included)

@@ -1,5 +1,6 @@
 import type { GlareInstance, SlideshowOptions } from './types'
 import { icons } from './icons'
+import { prefersReducedMotion } from './utils'
 
 export class Slideshow {
   private instance: GlareInstance
@@ -31,6 +32,7 @@ export class Slideshow {
   stop(): void {
     this.active = false
     this.clear()
+    this.resetProgress(true)
     this.instance.$refs.container?.classList.remove('glare-is-slideshow')
     this.updateButton()
   }
@@ -40,13 +42,18 @@ export class Slideshow {
     else this.start()
   }
 
+  onIndexChange(): void {
+    if (!this.active) return
+    this.queue()
+  }
+
   private queue(): void {
     this.clear()
     if (!this.active) return
+    this.restartProgress()
     this.timer = setTimeout(() => {
       if (!this.active) return
       this.instance.next()
-      this.queue()
     }, this.opts.speed || 3000)
   }
 
@@ -55,6 +62,29 @@ export class Slideshow {
       clearTimeout(this.timer)
       this.timer = null
     }
+  }
+
+  private progressEl(): HTMLElement | null {
+    return this.instance.$refs.container?.querySelector('.glare-progress') as HTMLElement | null
+  }
+
+  private resetProgress(hide = false): void {
+    const el = this.progressEl()
+    if (!el) return
+    el.hidden = hide
+    el.style.transitionDuration = '0ms'
+    el.style.transform = 'scaleX(0)'
+  }
+
+  private restartProgress(): void {
+    const el = this.progressEl()
+    if (!el) return
+    el.hidden = false
+    this.resetProgress(false)
+    if (prefersReducedMotion()) return
+    void el.offsetWidth
+    el.style.transitionDuration = `${this.opts.speed || 3000}ms`
+    el.style.transform = 'scaleX(1)'
   }
 
   private updateButton(): void {

@@ -28,14 +28,13 @@ const natureItems = [
 // Declarative galleries
 Glare.bind('[data-glare="nature"]', {
   loop: true,
-  thumbs: { autoStart: false, axis: 'y' },
+  thumbs: { autoStart: false },
   hash: true,
   buttons: ['zoom', 'slideshow', 'thumbs', 'share', 'download', 'fullscreen', 'close'],
 })
 
 Glare.bind('[data-glare="media"]', {
   loop: true,
-  toolbar: true,
 })
 
 Glare.bind('[data-glare]:not([data-glare="nature"]):not([data-glare="media"])', {
@@ -135,8 +134,6 @@ document.getElementById('open-iframe')?.addEventListener('click', () => {
         type: 'iframe',
         src: 'https://example.com',
         caption: 'example.com in an iframe',
-        width: '90%',
-        height: '80%',
       },
     ],
     { smallBtn: true },

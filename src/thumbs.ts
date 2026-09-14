@@ -5,6 +5,7 @@ export class Thumbs {
   isActive = false
   private instance: GlareInstance
   private opts: ThumbsOptions
+  private axis: 'x' | 'y'
   private $container: HTMLElement | null = null
   private $list: HTMLElement | null = null
   private cleanups: Array<() => void> = []
@@ -12,6 +13,7 @@ export class Thumbs {
   constructor(instance: GlareInstance, opts: ThumbsOptions) {
     this.instance = instance
     this.opts = opts
+    this.axis = opts.axis === 'y' ? 'y' : 'x'
   }
 
   init(): void {
@@ -24,9 +26,10 @@ export class Thumbs {
 
     if (!parent) return
 
-    this.$container = createEl('div', `glare-thumbs glare-thumbs--${this.opts.axis || 'y'}`)
+    this.$container = createEl('div', `glare-thumbs glare-thumbs--${this.axis}`)
     this.$list = createEl('div', 'glare-thumbs-list')
     this.$container.appendChild(this.$list)
+    this.instance.$refs.container?.classList.add(`glare-thumbs-axis-${this.axis}`)
 
     for (const item of this.instance.group) {
       const btn = createEl('button', 'glare-thumbs-item') as HTMLButtonElement
@@ -90,6 +93,10 @@ export class Thumbs {
     if (this.opts.hideOnClose !== false) this.hide()
     this.cleanups.forEach((fn) => fn())
     this.cleanups = []
+    this.instance.$refs.container?.classList.remove(
+      `glare-thumbs-axis-${this.axis}`,
+      'glare-show-thumbs',
+    )
     this.$container?.remove()
     this.$container = null
     this.$list = null

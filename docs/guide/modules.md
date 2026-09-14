@@ -7,7 +7,7 @@
   thumbs: {
     autoStart: false,
     hideOnClose: true,
-    axis: 'y', // or 'x'
+    axis: 'x', // or 'y' for a vertical strip
   },
 }
 ```
@@ -35,7 +35,7 @@ instance.SlideShow?.stop()
 instance.SlideShow?.toggle()
 ```
 
-Spacebar toggles slideshow when the instance is active.
+Spacebar toggles slideshow when the instance is active. A top progress bar animates with `--glare-accent` for the duration of `speed`.
 
 ## Fullscreen
 

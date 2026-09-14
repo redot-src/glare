@@ -17,6 +17,9 @@
   --glare-caption-bg: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.72));
   --glare-z: 100000;
   --glare-font: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --glare-iframe-bg: #fff;
+  --glare-iframe-radius: 5px;
+  --glare-thumbs-size: 95px;
 }
 
 .glare-lock {
@@ -71,7 +74,6 @@
   transition: opacity 220ms var(--glare-ease), transform 220ms var(--glare-ease);
 }
 
-.glare-container.glare-is-idle .glare-toolbar,
 .glare-container.glare-is-idle .glare-infobar,
 .glare-container.glare-is-idle .glare-navigation,
 .glare-container.glare-is-idle .glare-caption:not(:hover) {
@@ -107,6 +109,10 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
   color: var(--glare-muted);
+}
+
+.glare-toolbar .glare-button {
+  background: transparent;
 }
 
 .glare-button {
@@ -265,10 +271,16 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.glare-content--video,
-.glare-content--iframe {
+.glare-content--video {
   background: #000;
   overflow: hidden;
+  border-radius: var(--glare-iframe-radius);
+}
+
+.glare-content--iframe {
+  background: var(--glare-iframe-bg);
+  overflow: hidden;
+  border-radius: var(--glare-iframe-radius);
 }
 
 .glare-video {
@@ -277,6 +289,7 @@
   max-height: min(80vh, calc(100vh - 160px));
   width: 100%;
   background: #000;
+  object-fit: contain;
 }
 
 .glare-iframe-wrap {
@@ -290,7 +303,7 @@
   height: 100%;
   border: 0;
   display: block;
-  background: #000;
+  background: var(--glare-iframe-bg);
 }
 
 .glare-caption {
@@ -314,9 +327,24 @@
 
 .glare-close-small {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 5px;
+  right: 5px;
   z-index: 6;
+}
+
+.glare-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 30;
+  background: var(--glare-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+  transition-property: transform;
+  transition-timing-function: linear;
 }
 
 .glare-spinner {
@@ -378,11 +406,11 @@
 }
 
 .glare-thumbs--x {
-  left: 12px;
-  right: 12px;
-  bottom: 72px;
-  height: 78px;
-  transform: translateY(12px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--glare-thumbs-size);
+  transform: translateY(8px);
 }
 
 .glare-thumbs--x.glare-thumbs--active {
@@ -407,15 +435,21 @@
 
 .glare-thumbs--x .glare-thumbs-list {
   flex-direction: row;
+  height: 100%;
+  padding: 10px 10px 5px;
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
 }
 
 .glare-thumbs-item {
   appearance: none;
-  border: 2px solid transparent;
+  box-sizing: border-box;
+  border: 4px solid transparent;
   padding: 0;
   margin: 0;
-  width: 64px;
-  height: 64px;
+  width: 70px;
+  height: 70px;
   border-radius: 10px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.06);
@@ -436,9 +470,53 @@
   border-color: var(--glare-accent);
 }
 
-.glare-container.glare-show-thumbs.glare-thumbs-axis-y .glare-space,
-.glare-show-thumbs .glare-space {
+.glare-container.glare-show-thumbs.glare-thumbs-axis-x .glare-space {
+  padding-bottom: calc(var(--glare-thumbs-size) + 16px);
+}
+
+.glare-container.glare-show-thumbs.glare-thumbs-axis-x .glare-caption {
+  bottom: var(--glare-thumbs-size);
+}
+
+.glare-container.glare-show-thumbs.glare-thumbs-axis-y .glare-space {
   padding-right: 110px;
+}
+
+.glare-slide--iframe .glare-space,
+.glare-slide--video .glare-space,
+.glare-slide--html .glare-space,
+.glare-slide--inline .glare-space,
+.glare-slide--ajax .glare-space {
+  padding: 30px;
+}
+
+.glare-slide--iframe .glare-space {
+  align-items: stretch;
+}
+
+.glare-slide--iframe .glare-content,
+.glare-slide--iframe .glare-iframe-wrap {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  min-width: 0;
+  min-height: 0;
+}
+
+.glare-slide--iframe .glare-content {
+  flex: 1 1 auto;
+}
+
+.glare-slide--video .glare-content {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.glare-slide--video .glare-video {
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /* Share */
@@ -551,6 +629,11 @@
     padding: 56px 16px 96px;
   }
 
+  .glare-slide--iframe .glare-space,
+  .glare-slide--video .glare-space {
+    padding: 15px;
+  }
+
   .glare-button--prev,
   .glare-button--next {
     width: 44px;
@@ -591,7 +674,8 @@
   .glare-infobar,
   .glare-navigation,
   .glare-caption,
-  .glare-thumbs {
+  .glare-thumbs,
+  .glare-progress {
     transition: none !important;
     animation: none !important;
   }

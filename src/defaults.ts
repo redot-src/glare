@@ -134,7 +134,7 @@ export const defaults: GlareOptions = {
     autoStart: false,
     hideOnClose: true,
     parentEl: '.glare-container',
-    axis: 'y',
+    axis: 'x',
   },
   share: true,
   wheel: 'auto',
@@ -170,6 +170,7 @@ export const defaults: GlareOptions = {
   errorTpl: '<div class="glare-error"><p>{{ERROR}}</p></div>',
   baseTpl: `
     <div class="glare-container" role="dialog" aria-modal="true" tabindex="-1">
+      <div class="glare-progress" hidden></div>
       <div class="glare-bg"></div>
       <div class="glare-inner">
         <div class="glare-infobar"><span class="glare-infobar-index"></span></div>

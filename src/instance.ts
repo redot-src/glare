@@ -1,5 +1,6 @@
 import type {
   ClickAction,
+  ContentType,
   EventHandler,
   EventName,
   I18nDict,
@@ -221,6 +222,7 @@ export class Glare implements GlareInstance {
     this.updateChrome()
     this.Thumbs?.focus(nextIndex)
     this.hash?.update(nextIndex)
+    this.SlideShow?.onIndexChange()
     this.trigger('onUpdate', this.current)
   }
 
@@ -359,7 +361,7 @@ export class Glare implements GlareInstance {
     const toolbar = this.$refs.toolbar
     if (!toolbar) return
 
-    const showToolbar = this.opts.toolbar === true || this.opts.toolbar === 'auto'
+    const showToolbar = this.opts.toolbar !== false
     if (!showToolbar) {
       toolbar.classList.add('glare-hidden')
       return
@@ -625,8 +627,12 @@ export class Glare implements GlareInstance {
 
     let slide = stage.querySelector(`.glare-slide[data-index="${index}"]`) as HTMLElement | null
     if (!slide) {
-      slide = createEl('div', `glare-slide${this.opts.slideClass ? ` ${this.opts.slideClass}` : ''}`)
+      slide = createEl(
+        'div',
+        `glare-slide glare-slide--${item.type}${this.opts.slideClass ? ` ${this.opts.slideClass}` : ''}`,
+      )
       slide.dataset.index = String(index)
+      slide.dataset.type = item.type
       slide.innerHTML = `
         <div class="glare-space">
           <div class="glare-content"></div>
@@ -689,10 +695,66 @@ export class Glare implements GlareInstance {
     }
   }
 
+  private isToolbarVisible(item: SlideItem): boolean {
+    switch (this.opts.toolbar) {
+      case false:
+        return false
+      case true:
+        return true
+      case 'auto':
+      case undefined:
+        return item.type === 'image'
+      default: {
+        const _exhaustive: never = this.opts.toolbar
+        return _exhaustive
+      }
+    }
+  }
+
   private shouldSmallBtn(item: SlideItem): boolean {
-    if (this.opts.smallBtn === true) return true
-    if (this.opts.smallBtn === false) return false
-    return item.type !== 'image'
+    switch (this.opts.smallBtn) {
+      case true:
+        return true
+      case false:
+        return false
+      case 'auto':
+      case undefined:
+        return !this.isToolbarVisible(item)
+      default: {
+        const _exhaustive: never = this.opts.smallBtn
+        return _exhaustive
+      }
+    }
+  }
+
+  private setTypeClass(el: HTMLElement | null, prefix: string, type: ContentType): void {
+    if (!el) return
+    const prev = el.dataset.type
+    if (prev) el.classList.remove(`${prefix}${prev}`)
+    el.dataset.type = type
+    el.classList.add(`${prefix}${type}`)
+  }
+
+  private updateToolbarVisibility(item: SlideItem): void {
+    const toolbar = this.$refs.toolbar
+    if (!toolbar || this.opts.toolbar === false) return
+
+    const show = this.isToolbarVisible(item)
+    toolbar.classList.toggle('glare-hidden', !show)
+    if (!show) return
+
+    const compact = item.type !== 'image'
+    $$('.glare-button', toolbar).forEach((btn) => {
+      const isClose =
+        btn.hasAttribute('data-glare-close') || btn.classList.contains('glare-button--close')
+      if (compact) {
+        btn.classList.toggle('glare-hidden', !isClose)
+        return
+      }
+      if (btn.hasAttribute('data-glare-download')) return
+      btn.classList.remove('glare-hidden')
+    })
+    this.updateDownload(item)
   }
 
   private async resolveContent(item: SlideItem): Promise<void> {
@@ -906,6 +968,10 @@ export class Glare implements GlareInstance {
   private updateChrome(): void {
     const item = this.current
     if (!item) return
+
+    this.setTypeClass(this.$refs.container, 'glare-type-', item.type)
+    this.setTypeClass(item.$slide || null, 'glare-slide--', item.type)
+    this.updateToolbarVisibility(item)
 
     if (this.$refs.infobar) {
       const el = $('.glare-infobar-index', this.$refs.infobar)
