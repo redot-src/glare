@@ -21,6 +21,7 @@ body {
   min-height: 100%;
   background:
     radial-gradient(1200px 600px at 10% -10%, rgba(255, 77, 77, 0.18), transparent 55%),
+    radial-gradient(720px 520px at 16% 240px, rgba(255, 77, 77, 0.26), transparent 62%),
     radial-gradient(900px 500px at 90% 0%, rgba(255, 138, 91, 0.12), transparent 50%),
     var(--bg);
   color: var(--fg);
@@ -44,17 +45,6 @@ a {
 .hero {
   position: relative;
   padding: 48px 0 64px;
-  overflow: hidden;
-}
-
-.hero-glow {
-  position: absolute;
-  inset: auto auto -40% -10%;
-  width: 420px;
-  height: 420px;
-  background: radial-gradient(circle, rgba(255, 77, 77, 0.25), transparent 70%);
-  filter: blur(10px);
-  pointer-events: none;
 }
 
 .eyebrow {
