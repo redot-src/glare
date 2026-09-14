@@ -1,14 +1,24 @@
 # Content types
 
-Glare detects content from the URL when possible. You can always force a type with `type` / `data-type`.
+Glare detects the type from the URL when possible. You can always force it with `type` or `data-type`.
+
+## Detection rules
+
+1. `#id` or `.class` → `inline`
+2. Image extensions (`avif`, `bmp`, `gif`, `jpg`, `jpeg`, `png`, `svg`, `webp`, `ico`) → `image`
+3. Video extensions (`mp4`, `webm`, `ogg`, `ogv`, `mov`, `m4v`) → `video`
+4. `.pdf` → `iframe`
+5. A matching [media provider](/guide/modules#media-providers) (YouTube, Vimeo, Google Maps) → `iframe`
+6. `html` or `content` provided without `src` → `html`
+7. Anything else → `defaultType` (`'image'`)
+
+Web pages have no telling extension, so set `type: 'iframe'` explicitly for them.
 
 ## Image
 
 ```js
 { src: 'photo.jpg', caption: 'Hello', alt: 'Description' }
 ```
-
-Extensions recognized: `avif`, `bmp`, `gif`, `jpg`, `jpeg`, `png`, `svg`, `webp`, `ico`.
 
 ## HTML5 video
 
@@ -17,7 +27,7 @@ Extensions recognized: `avif`, `bmp`, `gif`, `jpg`, `jpeg`, `png`, `svg`, `webp`
   type: 'video',
   src: 'clip.mp4',
   poster: 'poster.jpg',
-  format: 'video/mp4',
+  format: 'video/mp4', // inferred from the extension when omitted
 }
 ```
 
@@ -32,11 +42,11 @@ Extensions recognized: `avif`, `bmp`, `gif`, `jpg`, `jpeg`, `png`, `svg`, `webp`
 }
 ```
 
-PDFs and unknown remote URLs default to iframe. Iframe slides fill the stage with 30px padding (15px on small screens) and use `--glare-iframe-bg` behind the frame.
+Iframe slides fill the stage with 30px padding (15px on small screens) and use `--glare-iframe-bg` behind the frame.
 
 ## YouTube / Vimeo / Maps
 
-Paste a normal watch or place URL — Glare rewrites it to an embed:
+Paste a normal watch or place URL and Glare rewrites it to an embed:
 
 ```js
 { src: 'https://www.youtube.com/watch?v=XXXXXXXXXXX' }
@@ -44,11 +54,9 @@ Paste a normal watch or place URL — Glare rewrites it to an embed:
 { src: 'https://www.google.com/maps/place/Tokyo+Tower/@35.6585805,139.7454389,17z' }
 ```
 
-Customize providers via the `media` option.
-
 ## Inline
 
-Clone an existing DOM node (the original stays in place):
+Clones an existing DOM node; the original stays in place:
 
 ```html
 <div id="signup" hidden>...</div>
@@ -58,19 +66,13 @@ Clone an existing DOM node (the original stays in place):
 ## AJAX
 
 ```js
-{
-  type: 'ajax',
-  src: '/partials/details.html',
-}
+{ type: 'ajax', src: '/partials/details.html' }
 ```
 
-Uses `fetch()`. Tune request options with `ajax.settings`.
+Uses `fetch()`. Tune the request with `ajax.settings`.
 
 ## HTML string
 
 ```js
-{
-  type: 'html',
-  html: '<h3>Thanks!</h3><p>Your order is confirmed.</p>',
-}
+{ type: 'html', html: '<h3>Thanks!</h3><p>Your order is confirmed.</p>' }
 ```

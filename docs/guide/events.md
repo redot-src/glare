@@ -1,18 +1,18 @@
 # Events
 
-Provide callbacks in the options object. Each receives `(instance, current?, ...args)`.
+Provide callbacks in the options object. Each receives `(instance, current?)`.
 
-- `onInit` — instance constructed / about to build
-- `beforeLoad` — before slide content loads
+- `onInit` — instance about to mount
+- `onActivate` — instance mounted and on top of the stack
+- `beforeShow` — before the first slide is shown
+- `beforeLoad` — before a slide's content loads
 - `afterLoad` — content ready
-- `beforeShow` — before open presentation
 - `afterShow` — slide visible
-- `beforeClose` — return `false` to cancel close
-- `afterClose` — fully closed
-- `onActivate` — instance becomes topmost
-- `onDeactivate` — instance deactivated
+- `onReveal` — after `afterShow`, once per slide
 - `onUpdate` — after `jumpTo`
-- `onReveal` — content revealed
+- `beforeClose` — return `false` to cancel closing
+- `afterClose` — fully closed and removed from the DOM
+- `onDeactivate` — instance removed from the stack
 - `onDestroy` — teardown finished
 
 ## Example

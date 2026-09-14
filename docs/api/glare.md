@@ -1,11 +1,13 @@
 # Glare
 
-## `Glare.bind(selector, options?)`
+## `Glare.bind(target, options?)`
 
-Attaches click handlers to matching elements.
+Attaches click handlers to elements. Elements sharing a `data-glare` value form a gallery.
 
-- `selector`: CSS string, element, array, or NodeList
-- returns `{ destroy() }`
+- `target`: CSS selector, element, array of elements, or NodeList
+- returns `{ selector, options, elements, destroy() }`
+
+If the page URL already contains a hash for one of the bound galleries (for example `#portfolio-3`), that slide opens immediately.
 
 ```js
 const binding = Glare.bind('[data-glare]', { loop: true })
@@ -14,11 +16,10 @@ binding.destroy()
 
 ## `Glare.open(items, options?, index?)`
 
-Opens a new instance.
+Opens a new instance and returns it.
 
-- `items`: array of slide objects / URL strings, **or** an array of HTMLElements
+- `items`: array of slide objects / URL strings, **or** an array of elements
 - `index`: starting slide (default `0`)
-- returns the `Glare` instance
 
 ## `Glare.close(all = false)`
 
@@ -26,20 +27,16 @@ Closes the topmost instance, or every instance when `all` is `true`.
 
 ## `Glare.getInstance(id?)`
 
-Returns the topmost active instance, or a specific id.
+Returns the topmost open instance, or the instance with the given id.
 
 ## `Glare.getInstances()`
 
-Returns a shallow copy of the active stack.
+Returns a copy of the open-instance stack.
 
 ## `Glare.destroy()`
 
-Closes everything and removes declarative bindings created via `bind`.
+Closes every instance and removes all handlers created by `bind()`.
 
 ## `Glare.defaults`
 
-Mutable defaults object. Changes apply to future instances.
-
-## `Glare.fromSelector(selector, options?)`
-
-Convenience helper: query elements and open immediately.
+Mutable defaults object. Changes apply to instances created afterwards.

@@ -13,7 +13,7 @@ import Glare from '@redot-src/glare'
 import '@redot-src/glare/style.css'
 ```
 
-Via CDN (plain browser script):
+Or from a CDN:
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/@redot-src/glare/dist/glare.css" />
@@ -25,7 +25,7 @@ Via CDN (plain browser script):
 
 ## Declarative usage
 
-Mark anchors (or buttons) with `data-glare`. Matching group names become a gallery.
+Mark anchors (or buttons) with `data-glare`. Elements with the same group name form a gallery.
 
 ```html
 <a data-glare="cities" href="paris.jpg" data-caption="Paris">
@@ -36,20 +36,17 @@ Mark anchors (or buttons) with `data-glare`. Matching group names become a galle
 </a>
 ```
 
-Bind explicitly (recommended):
+Bind explicitly:
 
 ```js
-Glare.bind('[data-glare="cities"]', {
-  loop: true,
-  thumbs: { autoStart: false },
-})
+Glare.bind('[data-glare="cities"]', { loop: true })
 ```
 
-Or auto-bind every declarative trigger after the DOM is ready:
+Or bind every `[data-glare]` element once the DOM is ready:
 
 ```js
 import { autoBind } from '@redot-src/glare'
-autoBind()
+autoBind({ loop: true })
 ```
 
 ## Programmatic usage
@@ -61,10 +58,7 @@ const instance = Glare.open(
     { src: '/media/2.jpg', caption: 'Two' },
     { src: 'https://www.youtube.com/watch?v=XXXXXXXXXXX' },
   ],
-  {
-    loop: true,
-    animationEffect: 'zoom',
-  },
+  { loop: true },
   0,
 )
 
@@ -72,21 +66,21 @@ instance.next()
 instance.close()
 ```
 
-## Useful data attributes
+## Data attributes
 
-- `data-glare` — group name (empty = single item)
-- `data-src` — override `href` as content URL
+- `data-glare` — group name (empty for a single item)
+- `data-src` — content URL, overrides `href`
 - `data-type` — force `image`, `video`, `iframe`, `inline`, `ajax`, or `html`
-- `data-caption` — caption HTML/text
-- `data-thumb` — thumbnail URL for the strip
-- `data-width` / `data-height` — preferred iframe/content size
+- `data-caption` — caption HTML/text (falls back to `title`)
+- `data-thumb` — thumbnail URL (falls back to a nested `<img>`)
+- `data-width` / `data-height` — iframe size
 - `data-poster` — video poster image
 - `data-download-src` — download button target
 - `data-html` — inline HTML string
 
 ## TypeScript
 
-Glare ships with declaration files. Import types as needed:
+Glare ships declaration files:
 
 ```ts
 import Glare, { type GlareOptions, type SlideSource } from '@redot-src/glare'

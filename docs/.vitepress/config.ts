@@ -10,7 +10,6 @@ export default defineConfig({
   base: isGitHubPages ? '/glare/' : '/',
   ignoreDeadLinks: ['/demo', '/demo/'],
   themeConfig: {
-    logo: undefined,
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'API', link: '/api/' },

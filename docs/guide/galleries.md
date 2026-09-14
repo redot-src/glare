@@ -1,6 +1,6 @@
 # Galleries
 
-A gallery is any set of items that share the same `data-glare` group name, or an array passed to `Glare.open()`.
+A gallery is any set of elements that share the same `data-glare` group name, or an array passed to `Glare.open()`.
 
 ## Grouped markup
 
@@ -15,12 +15,10 @@ Clicking any item opens the group at that index.
 ## Looping
 
 ```js
-Glare.bind('[data-glare="portfolio"]', {
-  loop: true,
-})
+Glare.bind('[data-glare="portfolio"]', { loop: true })
 ```
 
-When `loop` is `false`, previous/next buttons disable at the ends.
+When `loop` is `false`, the previous/next buttons are disabled at the ends.
 
 ## Infobar & arrows
 
@@ -31,15 +29,17 @@ When `loop` is `false`, previous/next buttons disable at the ends.
 }
 ```
 
+Both are hidden automatically for single-item groups.
+
 ## Hash deep links
 
-With `hash: true` (default) and a group name, Glare updates the URL:
+With `hash: true` (the default) and a group name, Glare writes the current slide to the URL:
 
 ```
 #portfolio-2
 ```
 
-Opening a page with that hash can restore the slide (see the demo for a pattern). Disable with `hash: false`.
+`Glare.bind()` also reads the hash: loading a page with `#portfolio-2` opens that slide right away. Browser back/forward navigation updates the slide or closes the lightbox. Disable with `hash: false`.
 
 ## Mixed content galleries
 

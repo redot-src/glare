@@ -2,50 +2,69 @@
 
 Pass options to `Glare.bind()`, `Glare.open()`, or mutate `Glare.defaults` before opening.
 
-## Core
+## Behaviour
 
 - `closeExisting` (`false`) — close other instances before opening
 - `loop` (`false`) — wrap around gallery ends
-- `gutter` (`50`) — spacing hint between slides
 - `keyboard` (`true`) — enable keyboard shortcuts
-- `arrows` (`true`) — show prev/next
-- `infobar` (`true`) — show index indicator
-- `toolbar` (`'auto'`) — show the full toolbar for images; hide it for video/iframe/HTML (the compact close button is used instead). `true` always shows it; `false` never does
-- `smallBtn` (`'auto'`) — compact close when the toolbar is hidden
-- `buttons` — toolbar controls; default `['zoom','slideshow','thumbs','share','download','fullscreen','close']`
-- `idleTime` (`3`) — seconds before arrows/infobar/caption fade; the toolbar stays visible. `false` to disable
-- `protect` (`false`) — block context menu / image drag
-- `modal` (`false`) — modal styling; pairs well with disabled outside click
-- `parentEl` (`'body'`) — mount node
+- `protect` (`false`) — block the context menu and image dragging
+- `modal` (`false`) — modal mode: no keyboard shortcuts, no idle fade, backdrop ignores clicks
+- `idleTime` (`3`) — seconds before arrows, infobar, and caption fade; the toolbar stays visible. `false` disables it
 - `hideScrollbar` (`true`) — lock page scroll while open
 - `autoFocus` / `backFocus` / `trapFocus` (`true`) — focus management
-- `lang` (`'en'`) — i18n language key
-- `i18n` — dictionaries, default `{ en: {...} }`
-- `animationEffect` (`'zoom'`) — open animation: `fade`, `zoom`, `slide`, `circular`, `tube`, `rotate`, `zoom-in-out`, or `false`
-- `animationDuration` (`366`) — open animation duration in ms
-- `transitionEffect` (`'fade'`) — slide change animation
-- `transitionDuration` (`366`) — transition duration in ms
-- `clickContent` — click action on content (default zooms images)
-- `clickSlide` (`'close'`) — click on empty slide area
-- `clickOutside` (`'close'`) — click on backdrop
-- `dblclickContent` / `dblclickSlide` / `dblclickOutside` (`false`) — double-click actions
-- `mobile` — overrides applied on coarse pointers
-- `wheel` (`'auto'`) — mouse-wheel navigation
-- `touch` (`{ vertical: true, momentum: true }`) — gestures; `false` to disable
-- `hash` (`true`) — URL hash sync
-- `image.preload` (`false`) — preload neighbors
-- `video.autoStart` (`true`) — autoplay HTML5 video
-- `iframe.preload` (`true`) — wait for iframe load
-- `slideShow` (`{ autoStart: false, speed: 3000 }`) — slideshow module
-- `thumbs` (`{ autoStart: false, axis: 'x', ... }`) — thumbnails module; `axis: 'y'` for a side strip
-- `fullScreen` (`{ autoStart: false }`) — fullscreen module
-- `share` (`true`) — share overlay
-- `media` — URL matchers for embeds (built-ins included)
-- `caption` — string or `(instance, current) => string`
+- `defaultType` (`'image'`) — type used when a URL has no recognizable extension
+- `parentEl` (`'body'`) — mount node
+- `baseClass` / `slideClass` — extra classes for the container and each slide
 
-## Click actions
+## Chrome
 
-Allowed values: `false`, `'close'`, `'next'`, `'nextOrClose'`, `'toggleControls'`, `'zoom'`, or a function returning one of those.
+- `arrows` (`true`) — show prev/next buttons
+- `infobar` (`true`) — show the `2 / 12` counter
+- `toolbar` (`'auto'`) — `'auto'` shows the toolbar for images only; `true` always; `false` never
+- `smallBtn` (`'auto'`) — compact close button on the slide; `'auto'` uses it whenever the toolbar is hidden
+- `buttons` — toolbar controls; default `['zoom', 'slideshow', 'thumbs', 'share', 'download', 'fullscreen', 'close']`
+- `caption` — string or `(instance, current) => string` overriding the item caption
+
+## Motion
+
+- `animationEffect` (`'zoom'`) — open animation: `'zoom'` flies the image in from its trigger, `'fade'` cross-fades, `false` disables it
+- `animationDuration` (`366`) — open/close duration in ms
+- `zoomOpacity` (`true`) — dim the image while it flies in
+- `transitionEffect` (`'fade'`) — slide change: `'fade'`, `'slide'`, `'circular'`, `'tube'`, `'rotate'`, `'zoom-in-out'`, or `false`
+- `transitionDuration` (`366`) — slide change duration in ms
+
+## Interaction
+
+- `clickContent` — click on the media itself; default zooms images
+- `clickSlide` (`'close'`) — click on the empty area around the media or on the backdrop
+- `dblclickContent` / `dblclickSlide` (`false`) — double-click actions
+- `wheel` (`'auto'`) — mouse-wheel navigation: `'auto'` on images only, `true` on every slide, `false` off
+- `touch` (`{ vertical: true, momentum: true }`) — gestures; `false` disables them
+- `mobile` — option overrides applied on touch-first devices
+
+Click actions accept `false`, `'close'`, `'next'`, `'nextOrClose'`, `'toggleControls'`, `'zoom'`, or a function `(current, event)` returning one of those.
+
+## Content
+
+- `image.preload` (`false`) — preload neighbouring images
+- `video` — `{ tpl, format, autoStart: true }`
+- `iframe` — `{ preload: true, css, attr, tpl }`; `preload: false` reveals the slide before the frame loads
+- `ajax.settings` — `fetch()` options for AJAX slides
+- `media` — URL matchers for embeds; see [Modules](/guide/modules#media-providers)
+
+## Modules
+
+- `hash` (`true`) — sync the URL hash with the current slide of a named gallery
+- `slideShow` (`{ autoStart: false, speed: 3000 }`) — `true` for defaults, `false` to disable
+- `thumbs` (`{ autoStart: false, axis: 'x', hideOnClose: true }`) — `axis: 'y'` for a side strip
+- `fullScreen` (`{ autoStart: false }`)
+- `share` (`true`) — share overlay; accepts `{ url, tpl }`
+
+## Text and templates
+
+- `lang` (`'en'`) — dictionary key
+- `i18n` — dictionaries, default `{ en: { ... } }`
+- `baseTpl`, `btnTpl`, `spinnerTpl`, `errorTpl` — markup templates; see [Toolbar & UI](/guide/toolbar)
 
 ## Changing defaults globally
 

@@ -2,16 +2,16 @@
 
 Modern, touch-enabled lightbox for the web. **Zero dependencies.** MIT licensed.
 
-Open images, HTML5 video, YouTube/Vimeo, maps, iframes, inline nodes, AJAX fragments, and custom HTML — with galleries, zoom, thumbnails, slideshow, fullscreen, deep links, and a polished toolbar.
+Open images, HTML5 video, YouTube/Vimeo, maps, iframes, inline nodes, AJAX fragments, and custom HTML, with galleries, zoom, thumbnails, slideshow, fullscreen, deep links, and a polished toolbar.
 
 ## Features
 
-- **Vanilla JS / TypeScript** — no jQuery, no framework lock-in
+- **Vanilla JS / TypeScript**, no jQuery, no framework lock-in
 - **Galleries** with loop, arrows, keyboard, mouse wheel, and swipe
 - **Content types**: image, video, iframe, inline, AJAX, HTML
 - **Media helpers** for YouTube, Vimeo, and Google Maps URLs
-- **Pinch-zoom & pan**, click-to-zoom, protect mode
-- **Thumbnails**, **slideshow**, **fullscreen**, **share**, **hash** deep-linking
+- **Pinch-zoom and pan**, click-to-zoom, protect mode
+- **Thumbnails**, **slideshow**, **fullscreen**, **share**, **hash** deep links
 - **Accessible** dialog: focus trap, ARIA, Escape, restored focus
 - **Theming** via CSS custom properties
 - ESM + UMD builds, full type declarations
@@ -65,14 +65,40 @@ Glare.open(
 
 - Docs: [redot-src.github.io/glare](https://redot-src.github.io/glare/)
 - Live demo: [redot-src.github.io/glare/demo](https://redot-src.github.io/glare/demo/)
-- Repository: [github.com/redot-src/glare](https://github.com/redot-src/glare)
+
+## Development
 
 ```bash
 npm install
-npm run dev          # interactive demo
+npm run dev          # interactive demo with live reload
+npm run build        # typecheck + library build → dist/
 npm run docs:dev     # VitePress documentation
-npm run build        # library build → dist/
-npm run pages:build  # docs + demo for GitHub Pages
+npm run pages:build  # docs + demo, as deployed to GitHub Pages
+```
+
+### Project structure
+
+```
+src/
+  index.ts        public entry point and exports
+  types.ts        public types
+  defaults.ts     default options
+  i18n.ts         built-in strings
+  icons.ts        inline SVG icons
+  templates.ts    HTML templates for the dialog and buttons
+  core/           the Glare class and its collaborators
+    Glare.ts        lifecycle, navigation, public API
+    dom.ts          building and updating the dialog markup
+    loaders.ts      one loader per content type
+    interactions.ts clicks, keyboard, focus trap
+    zoom.ts         image zoom and pan maths
+    bind.ts         declarative `Glare.bind()` and hash restore
+  media/          URL type detection, providers (YouTube, Vimeo, Maps), item normalization
+  modules/        optional features: fullscreen, gestures, hash, share, slideshow, thumbs, wheel
+  styles/         stylesheet split by concern; tokens.css holds the public CSS variables
+  utils/          small DOM, object, environment, and template helpers
+demo/             Vite demo site (npm run dev)
+docs/             VitePress documentation
 ```
 
 ## License

@@ -2,19 +2,21 @@
 
 ## Buttons
 
-Configure which controls appear:
-
 ```js
 {
   buttons: ['zoom', 'slideshow', 'thumbs', 'share', 'download', 'fullscreen', 'close'],
 }
 ```
 
-Omit a button to hide it. `thumbs` and `slideshow` are skipped automatically for single-item groups.
+Omit a button to hide it. `thumbs` and `slideshow` are skipped for single-item groups.
+
+## Toolbar visibility
+
+`toolbar: 'auto'` (the default) shows the full toolbar on images only. Video, iframe, and HTML slides get the compact close button instead. With `toolbar: true` the toolbar stays on every type, but image-only controls are hidden on non-image slides.
 
 ## Custom button templates
 
-Override SVG/markup via `btnTpl`:
+Override markup via `btnTpl`. The `data-glare-*` attribute is what wires the click:
 
 ```js
 {
@@ -41,9 +43,7 @@ Placeholders like `{{CLOSE}}` are replaced from the active `i18n` dictionary.
 
 ## Idle chrome
 
-After `idleTime` seconds without pointer activity, arrows, infobar, and caption fade. The toolbar stays visible so Close remains reachable. Move the pointer to restore the rest. Set `idleTime: false` to keep all UI visible.
-
-`toolbar: 'auto'` (the default) shows the full toolbar on images only. Video, iframe, and HTML slides get the compact close button instead. Pass `toolbar: true` to keep a toolbar on every type — image-only controls such as zoom are still hidden on non-image slides.
+After `idleTime` seconds without pointer activity the arrows, infobar, and caption fade. The toolbar stays visible so Close remains reachable. Set `idleTime: false` to keep everything visible.
 
 ## Infobar
 

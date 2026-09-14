@@ -8,6 +8,7 @@
     autoStart: false,
     hideOnClose: true,
     axis: 'x', // or 'y' for a vertical strip
+    parentEl: undefined, // defaults to the lightbox container
   },
 }
 ```
@@ -35,7 +36,7 @@ instance.SlideShow?.stop()
 instance.SlideShow?.toggle()
 ```
 
-Spacebar toggles slideshow when the instance is active. A top progress bar animates with `--glare-accent` for the duration of `speed`.
+Space toggles the slideshow. A progress bar at the top animates with `--glare-accent` for the duration of `speed`.
 
 ## Fullscreen
 
@@ -66,16 +67,14 @@ Opens an overlay with Facebook, X/Twitter, Pinterest, and a copyable URL.
 ## Hash
 
 ```js
-{
-  hash: true,
-}
+{ hash: true }
 ```
 
-Uses `#group-1` style fragments. Requires a gallery name from `data-glare="group"`.
+Writes `#group-1` style fragments and restores them on load. Requires a gallery name from `data-glare="group"`.
 
 ## Media providers
 
-Extend or replace matchers:
+Extend or replace the URL matchers. `url` and `thumb` accept a string with `$1`-style capture references or a function:
 
 ```js
 Glare.defaults.media = {
@@ -83,7 +82,7 @@ Glare.defaults.media = {
   custom: {
     matcher: /mysite\.com\/watch\/(\w+)/i,
     type: 'iframe',
-    url: (m) => `https://mysite.com/embed/${m[1]}`,
+    url: 'https://mysite.com/embed/$1',
     params: { autoplay: 1 },
   },
 }

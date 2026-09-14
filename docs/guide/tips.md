@@ -2,7 +2,7 @@
 
 ## Keep markup progressive
 
-Use real links with `href` pointing at the full media URL so content remains usable without JavaScript.
+Use real links with `href` pointing at the full media URL so content stays usable without JavaScript.
 
 ## Prefer group names for deep links
 
@@ -12,19 +12,19 @@ Hash sync needs a gallery name:
 <a data-glare="album" href="..."></a>
 ```
 
-## Single-item “modal”
+## Single-item modal
 
 ```js
 Glare.open([{ type: 'html', html: '...' }], {
+  modal: true,
   smallBtn: true,
   toolbar: false,
-  clickOutside: 'close',
 })
 ```
 
 ## Multiple instances
 
-`closeExisting: true` ensures only one lightbox is visible. Otherwise instances stack; `Glare.close()` closes the topmost.
+`closeExisting: true` ensures only one lightbox is visible. Otherwise instances stack and `Glare.close()` closes the topmost one.
 
 ## Framework usage
 
@@ -36,11 +36,6 @@ const handle = Glare.bind('.gallery a', { loop: true })
 handle.destroy()
 ```
 
-## Bundlers
+## Builds
 
-```js
-import Glare from '@redot-src/glare'
-import '@redot-src/glare/style.css'
-```
-
-Tree-shaking friendly ESM build lives at `dist/glare.esm.js`. Browser/CDN script is `dist/glare.js`.
+The ESM build is `dist/glare.esm.js` and the browser/CDN script is `dist/glare.js`. Both share `dist/glare.css`.

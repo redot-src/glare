@@ -8,30 +8,29 @@ An instance is returned from `Glare.open()` and available via `Glare.getInstance
 - `group` (`SlideItem[]`) — normalized slides
 - `opts` (`GlareOptions`) — resolved options
 - `current` (`SlideItem | null`) — active slide
-- `currIndex` (`number`) — active index
-- `isActive` (`boolean`) — open flag
-- `$refs` — DOM references
-- `SlideShow` — slideshow controls
-- `Thumbs` — thumbnail controls
-- `FullScreen` — fullscreen controls
+- `currIndex` / `prevIndex` (`number`) — active and previous index
+- `isActive` / `isClosing` / `isIdle` (`boolean`) — state flags
+- `$refs` — DOM references: `container`, `bg`, `inner`, `stage`, `caption`, `toolbar`, `infobar`, `navigation`
+- `zoom` — zoom controller (`scale`, `x`, `y`, `isZoomed`)
+- `SlideShow`, `Thumbs`, `FullScreen`, `Share` — module handles, present when enabled
 
 ## Methods
 
 ```ts
 instance.open(index?)
-instance.close(event?, duration?)
-instance.next(duration?)
-instance.prev(duration?)
-instance.previous(duration?)
-instance.jumpTo(index, duration?)
-instance.scaleToFit(duration?)
-instance.scaleToActual(x?, y?, duration?)
+instance.close()
+instance.next()
+instance.prev()
+instance.jumpTo(index)
+instance.scaleToFit()
+instance.scaleToActual(x?, y?)
+instance.toggleZoom(point?)
 instance.update()
 instance.focus()
 instance.toggleControls(force?)
 ```
 
-### Modules
+## Modules
 
 ```ts
 instance.SlideShow?.start()
@@ -48,4 +47,7 @@ instance.FullScreen?.request()
 instance.FullScreen?.exit()
 instance.FullScreen?.toggle()
 instance.FullScreen?.isFullscreen()
+
+instance.Share?.open()
+instance.Share?.close()
 ```

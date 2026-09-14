@@ -2,13 +2,15 @@
 
 ## Touch & pointer
 
-With `touch` enabled (default):
+With `touch` enabled (the default):
 
 - **Swipe horizontally** to change slides
-- **Swipe vertically** (with enough distance) to close
-- **Pinch** to zoom images
-- **Drag** to pan while zoomed
-- Optional **momentum** after release
+- **Swipe vertically** to close
+- **Pinch** to zoom images; the content under your fingers stays put
+- **Drag** to pan while zoomed; the image never leaves the stage
+- Optional **momentum** after releasing a pan
+
+Mouse users get the same swipe and pan behaviour by dragging.
 
 ```js
 {
@@ -19,11 +21,11 @@ With `touch` enabled (default):
 }
 ```
 
-Set `touch: false` to disable.
+Set `touch: false` to disable all of it.
 
 ## Click / double-click zoom
 
-Default desktop behavior zooms an image on content click. Mobile defaults toggle controls on tap and zoom on double-tap (via `mobile` overrides).
+On desktop, clicking an image zooms it to its natural size around the pointer (at least 1.5x). On touch devices the `mobile` defaults tap to toggle the controls and double-tap to zoom.
 
 ```js
 {
@@ -38,8 +40,13 @@ Default desktop behavior zooms an image on content click. Mobile defaults toggle
 const box = Glare.getInstance()
 box?.scaleToActual()
 box?.scaleToFit()
+box?.zoom.isZoomed
 ```
 
 ## Mouse wheel
 
-`wheel: 'auto'` advances slides on wheel for fitted images. Zoomed images keep native-feel pan priority (wheel does not navigate while zoomed out affordance is active).
+`wheel: 'auto'` (the default) moves between slides when scrolling over an image that is not zoomed. `true` navigates on every slide type, `false` disables it.
+
+## Styling hooks
+
+The container carries `.glare-can-zoom-in` or `.glare-can-zoom-out` so you can style the cursor or add affordances.
