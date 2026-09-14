@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glare — Interactive Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <p class="eyebrow">MIT · Zero dependencies · TypeScript</p>
+        <h1>Glare</h1>
+        <p class="lede">
+          A modern, touch-first lightbox for images, video, embeds, HTML, and galleries —
+          built for the web of today.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#gallery">Open gallery</a>
+          <a class="btn btn-ghost" href="../docs/">Documentation</a>
+        </div>
+      </header>
+
+      <main>
+        <section id="gallery" class="section">
+          <div class="section-head">
+            <h2>Image gallery</h2>
+            <p>Grouped items with captions, zoom, keyboard & swipe navigation.</p>
+          </div>
+          <div class="grid gallery-grid">
+            <a
+              data-glare="nature"
+              href="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80"
+              data-caption="Alpine lake at dusk"
+              data-thumb="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=400&q=60"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=70"
+                alt="Alpine lake"
+              />
+            </a>
+            <a
+              data-glare="nature"
+              href="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80"
+              data-caption="Sunlit forest path"
+              data-thumb="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=60"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=70"
+                alt="Forest path"
+              />
+            </a>
+            <a
+              data-glare="nature"
+              href="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80"
+              data-caption="Fog over rolling hills"
+              data-thumb="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=60"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=70"
+                alt="Foggy hills"
+              />
+            </a>
+            <a
+              data-glare="nature"
+              href="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80"
+              data-caption="Sunbeams through trees"
+              data-thumb="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=400&q=60"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=70"
+                alt="Forest sunbeams"
+              />
+            </a>
+            <a
+              data-glare="nature"
+              href="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1600&q=80"
+              data-caption="Green valley after rain"
+              data-thumb="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=400&q=60"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=600&q=70"
+                alt="Green valley"
+              />
+            </a>
+            <a
+              data-glare="nature"
+              href="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80"
+              data-caption="Desert dunes at golden hour"
+              data-thumb="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=60"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=70"
+                alt="Desert dunes"
+              />
+            </a>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Video & embeds</h2>
+            <p>HTML5 video, YouTube, Vimeo, and Google Maps — auto-detected from URLs.</p>
+          </div>
+          <div class="row cards">
+            <a
+              class="card-link"
+              data-glare="media"
+              data-type="video"
+              data-caption="Sample HTML5 video"
+              href="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+            >
+              <span class="card-kicker">Video</span>
+              <strong>HTML5 MP4</strong>
+            </a>
+            <a
+              class="card-link"
+              data-glare="media"
+              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              data-caption="YouTube embed"
+            >
+              <span class="card-kicker">YouTube</span>
+              <strong>Watch in lightbox</strong>
+            </a>
+            <a
+              class="card-link"
+              data-glare="media"
+              href="https://vimeo.com/148751763"
+              data-caption="Vimeo embed"
+            >
+              <span class="card-kicker">Vimeo</span>
+              <strong>Player embed</strong>
+            </a>
+            <a
+              class="card-link"
+              data-glare="media"
+              href="https://www.google.com/maps/place/Tokyo+Tower/@35.6585805,139.7454389,17z"
+              data-caption="Tokyo Tower on Google Maps"
+            >
+              <span class="card-kicker">Maps</span>
+              <strong>Google Maps place</strong>
+            </a>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>HTML, inline & AJAX</h2>
+            <p>Render arbitrary markup, clone inline nodes, or fetch remote fragments.</p>
+          </div>
+          <div class="row cards">
+            <button type="button" class="card-link" id="open-html">
+              <span class="card-kicker">HTML</span>
+              <strong>Custom markup modal</strong>
+            </button>
+            <a class="card-link" data-glare data-type="inline" href="#inline-demo" data-caption="Inline content">
+              <span class="card-kicker">Inline</span>
+              <strong>Clone #inline-demo</strong>
+            </a>
+            <button type="button" class="card-link" id="open-ajax">
+              <span class="card-kicker">AJAX</span>
+              <strong>Fetch remote HTML</strong>
+            </button>
+            <button type="button" class="card-link" id="open-programmatic">
+              <span class="card-kicker">API</span>
+              <strong>Programmatic open()</strong>
+            </button>
+          </div>
+
+          <div id="inline-demo" class="inline-source" hidden>
+            <h3>Inline panel</h3>
+            <p>
+              This node lives in the page and is cloned into Glare when opened.
+              Forms, buttons, and rich HTML all work.
+            </p>
+            <label class="field">
+              Name
+              <input type="text" placeholder="Type something…" />
+            </label>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Features playground</h2>
+            <p>Slideshow, thumbnails, hash deep-links, transitions, protect mode, and more.</p>
+          </div>
+          <div class="row cards">
+            <button type="button" class="card-link" id="open-slideshow">
+              <span class="card-kicker">Slideshow</span>
+              <strong>Autoplay gallery</strong>
+            </button>
+            <button type="button" class="card-link" id="open-thumbs">
+              <span class="card-kicker">Thumbs</span>
+              <strong>Thumbnail strip open</strong>
+            </button>
+            <button type="button" class="card-link" id="open-transition">
+              <span class="card-kicker">Motion</span>
+              <strong>Circular transitions</strong>
+            </button>
+            <button type="button" class="card-link" id="open-protected">
+              <span class="card-kicker">Protect</span>
+              <strong>Disable context menu</strong>
+            </button>
+            <button type="button" class="card-link" id="open-modal">
+              <span class="card-kicker">Modal</span>
+              <strong>Keyboard-disabled modal</strong>
+            </button>
+            <button type="button" class="card-link" id="open-iframe">
+              <span class="card-kicker">Iframe</span>
+              <strong>External page</strong>
+            </button>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Keyboard cheat sheet</h2>
+          </div>
+          <ul class="keys">
+            <li><kbd>Esc</kbd> Close</li>
+            <li><kbd>←</kbd> <kbd>→</kbd> Navigate</li>
+            <li><kbd>Space</kbd> Slideshow</li>
+            <li><kbd>F</kbd> Fullscreen</li>
+            <li>Click image / toolbar zoom to zoom</li>
+            <li>Pinch / drag when zoomed · swipe to change</li>
+          </ul>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>Glare · MIT License</span>
+        <a href="https://github.com/redot-src/glare">GitHub</a>
+      </footer>
+    </div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

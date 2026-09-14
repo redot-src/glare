@@ -1,0 +1,69 @@
+{
+  "name": "glare",
+  "version": "1.0.0",
+  "description": "Modern, touch-enabled, fully customizable lightbox for the web — zero dependencies.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Glare Contributors",
+  "homepage": "https://github.com/redot-src/glare",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redot-src/glare.git"
+  },
+  "bugs": {
+    "url": "https://github.com/redot-src/glare/issues"
+  },
+  "keywords": [
+    "lightbox",
+    "gallery",
+    "modal",
+    "zoom",
+    "image",
+    "video",
+    "touch",
+    "responsive",
+    "typescript",
+    "vanilla"
+  ],
+  "main": "./dist/glare.js",
+  "module": "./dist/glare.esm.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/glare.js",
+  "jsdelivr": "./dist/glare.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/glare.esm.js",
+      "require": "./dist/glare.js",
+      "default": "./dist/glare.esm.js"
+    },
+    "./style.css": "./dist/glare.css",
+    "./dist/glare.css": "./dist/glare.css",
+    "./dist/glare.js": "./dist/glare.js",
+    "./dist/glare.esm.js": "./dist/glare.esm.js"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build && tsc -p tsconfig.build.json",
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.21"
+  }
+}
