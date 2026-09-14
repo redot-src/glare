@@ -2,6 +2,11 @@
   overflow: hidden !important;
 }
 
+/*
+ * The container itself never animates opacity: fading an ancestor of a
+ * backdrop-filter layer flickers in Chromium. The backdrop and the content
+ * layer fade independently instead.
+ */
 .glare-container {
   position: fixed;
   inset: 0;
@@ -9,20 +14,29 @@
   color: var(--glare-fg);
   font-family: var(--glare-font);
   outline: none;
-  opacity: 0;
   visibility: hidden;
-  transition:
-    opacity var(--glare-duration) var(--glare-ease),
-    visibility var(--glare-duration);
+  transition: visibility var(--glare-duration);
   -webkit-tap-highlight-color: transparent;
 }
 
 .glare-container.glare-is-open {
-  opacity: 1;
   visibility: visible;
 }
 
-.glare-container.glare-is-closing {
+.glare-bg,
+.glare-inner {
+  opacity: 0;
+  transition: opacity var(--glare-duration) var(--glare-ease);
+  will-change: opacity;
+}
+
+.glare-is-open .glare-bg,
+.glare-is-open .glare-inner {
+  opacity: 1;
+}
+
+.glare-is-closing .glare-bg,
+.glare-is-closing .glare-inner {
   opacity: 0;
 }
 
@@ -30,8 +44,8 @@
   position: absolute;
   inset: 0;
   background: var(--glare-bg);
-  -webkit-backdrop-filter: blur(18px) saturate(1.2);
-  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: var(--glare-backdrop);
+  backdrop-filter: var(--glare-backdrop);
 }
 
 .glare-is-modal .glare-bg {

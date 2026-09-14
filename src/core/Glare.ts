@@ -106,6 +106,7 @@ export class Glare implements GlareInstance {
     this.$refs = dom.buildContainer(this.opts, this.dict, this.id, this.group.length)
     const container = this.$refs.container as HTMLElement
     applyMotionSettings(container, this.opts)
+    this.syncChrome()
     dom.resolveParent(this.opts.parentEl).appendChild(container)
 
     this.isActive = true
@@ -133,12 +134,12 @@ export class Glare implements GlareInstance {
     this.SlideShow?.stop()
     this.idle.stop()
 
-    const container = this.$refs.container
+    const { container, bg } = this.$refs
     const duration = prefersReducedMotion() ? 0 : this.opts.animationDuration ?? 0
     if (container && duration > 0) {
       container.classList.remove('glare-is-open')
       container.classList.add('glare-is-closing')
-      afterTransition(container, duration, () => this.teardown())
+      afterTransition(bg ?? container, duration, () => this.teardown())
     } else {
       this.teardown()
     }
@@ -162,6 +163,7 @@ export class Glare implements GlareInstance {
     this.currIndex = target
     this.zoom.reset()
     this.current = this.group[target]
+    this.syncChrome()
     this.showSlide(target, false)
 
     this.Thumbs?.focus(target)
@@ -218,29 +220,35 @@ export class Glare implements GlareInstance {
     if (!container || !stage || !item) return
 
     const slide = dom.mountSlide(stage, item, this.opts)
-    dom.retireSlides(stage, slide, this.opts.transitionDuration ?? 0)
     item.$slide = slide
     item.$content = $('.glare-content', slide)
 
     if (dom.usesSmallButton(this.opts, item)) dom.addSmallButton(slide, this.opts, this.dict)
-    dom.showSpinner(slide, this.opts.spinnerTpl)
+    dom.showSpinner(stage, this.opts.spinnerTpl)
     this.emit('beforeLoad', item)
+
+    // The previous slide stays visible until the new content is ready, then they cross-fade.
+    const reveal = () => {
+      dom.hideSpinner(stage)
+      if (!opening) enableTransitions(container, this.opts)
+      dom.revealSlide(slide, opening)
+      dom.retireSlides(stage, slide, this.opts.transitionDuration ?? 0)
+      this.syncZoomState(this.zoom.isZoomed)
+    }
 
     loadContent(item, this.opts)
       .then(() => {
-        if (this.isStale(index)) return
-        dom.hideSpinner(slide)
+        if (this.isStale(index)) return slide.remove()
         this.emit('afterLoad', item)
-        this.syncChrome()
+        reveal()
         if (opening) animateOpen(container, item, this.opts)
-        else enableTransitions(container, this.opts)
         this.emit('afterShow', item)
         this.emit('onReveal', item)
       })
       .catch(() => {
-        if (this.isStale(index)) return
-        dom.hideSpinner(slide)
+        if (this.isStale(index)) return slide.remove()
         dom.showError(item, this.opts, this.dict)
+        reveal()
       })
 
     if (this.opts.image?.preload) preloadNeighbours(this.group, index)
@@ -291,7 +299,9 @@ export class Glare implements GlareInstance {
     container.classList.toggle('glare-can-zoom-in', !zoomed && !!this.current?.$image)
 
     const button = $('[data-glare-zoom]', container)
-    if (button) {
+    const state = zoomed ? 'out' : 'in'
+    if (button && button.dataset.state !== state) {
+      button.dataset.state = state
       button.innerHTML = zoomed ? icons.zoomOut : icons.zoomIn
       button.classList.toggle('is-active', zoomed)
     }
@@ -354,7 +364,10 @@ export class Glare implements GlareInstance {
     if (!stage) return
     stage.style.transitionDuration = '0ms'
     stage.style.transform = `translate3d(${dx}px, ${dy}px, 0)`
-    if (bg) bg.style.opacity = String(clamp(1 - Math.abs(dy) / 400, 0.35, 1))
+    if (bg) {
+      bg.style.transitionDuration = '0ms'
+      bg.style.opacity = String(clamp(1 - Math.abs(dy) / 400, 0.35, 1))
+    }
   }
 
   private releaseStage(dx: number, dy: number, velocity: Point): void {
@@ -362,7 +375,10 @@ export class Glare implements GlareInstance {
     if (!stage) return
     stage.style.transitionDuration = ''
     stage.style.transform = ''
-    if (bg) bg.style.opacity = ''
+    if (bg) {
+      bg.style.transitionDuration = ''
+      bg.style.opacity = ''
+    }
 
     const vertical = Math.abs(dy) > Math.abs(dx)
     if (vertical && (Math.abs(dy) > SWIPE_CLOSE_DISTANCE || Math.abs(velocity.y) > SWIPE_CLOSE_VELOCITY)) {

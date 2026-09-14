@@ -69,13 +69,25 @@ export function resolveParent(parentEl: GlareOptions['parentEl']): HTMLElement {
   return resolveElement(parentEl) ?? document.body
 }
 
-/** Creates a fresh slide element for `item` and appends it to the stage. */
+/** Creates a hidden slide element for `item` and appends it to the stage. */
 export function mountSlide(stage: HTMLElement, item: SlideItem, opts: GlareOptions): HTMLElement {
-  const slide = createEl('div', `glare-slide glare-slide--${item.type} glare-slide--current`, slideTemplate)
+  const slide = createEl('div', `glare-slide glare-slide--${item.type}`, slideTemplate)
   if (opts.slideClass) slide.classList.add(opts.slideClass)
   slide.dataset.index = String(item.index)
   stage.appendChild(slide)
   return slide
+}
+
+/** Makes a mounted slide the current one, fading it in unless `instant`. */
+export function revealSlide(slide: HTMLElement, instant: boolean): void {
+  if (instant) slide.style.transition = 'none'
+  // Force a style flush so the opacity change below is transitioned (or not) as intended.
+  void slide.offsetWidth
+  slide.classList.add('glare-slide--current')
+  if (instant) {
+    void slide.offsetWidth
+    slide.style.transition = ''
+  }
 }
 
 /** Fades out every slide except `keep` and removes it after `delay`. */
@@ -93,12 +105,12 @@ export function addSmallButton(slide: HTMLElement, opts: GlareOptions, dict: Rec
   slide.insertAdjacentHTML('beforeend', translate(opts.btnTpl?.smallBtn ?? '', dict))
 }
 
-export function showSpinner(slide: HTMLElement, tpl = ''): void {
-  if (!slide.querySelector('.glare-spinner')) slide.insertAdjacentHTML('beforeend', tpl)
+export function showSpinner(stage: HTMLElement, tpl = ''): void {
+  if (!stage.querySelector(':scope > .glare-spinner')) stage.insertAdjacentHTML('beforeend', tpl)
 }
 
-export function hideSpinner(slide: HTMLElement): void {
-  slide.querySelector('.glare-spinner')?.remove()
+export function hideSpinner(stage: HTMLElement): void {
+  stage.querySelector(':scope > .glare-spinner')?.remove()
 }
 
 export function showError(item: SlideItem, opts: GlareOptions, dict: Record<string, string>): void {

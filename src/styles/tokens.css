@@ -12,6 +12,7 @@
   --glare-accent-soft: rgba(255, 77, 77, 0.18);
 
   --glare-toolbar-bg: rgba(12, 14, 18, 0.55);
+  --glare-toolbar-bg-hover: rgba(12, 14, 18, 0.8);
   --glare-button-bg: rgba(255, 255, 255, 0.08);
   --glare-button-hover: rgba(255, 255, 255, 0.16);
   --glare-button-size: 44px;
@@ -19,6 +20,7 @@
 
   --glare-radius: 14px;
   --glare-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --glare-backdrop: blur(14px);
   --glare-blur: blur(12px);
   --glare-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --glare-duration: 366ms;

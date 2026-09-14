@@ -17,6 +17,7 @@
   --glare-inset-x: 110px;
 }
 
+/* Non-image slides fill the stage; the compact close button overlays their corner. */
 .glare-slide--video,
 .glare-slide--iframe,
 .glare-slide--html,
@@ -83,6 +84,7 @@
   user-select: none;
   -webkit-user-drag: none;
   transform-origin: center;
+  will-change: transform;
   transition:
     transform var(--glare-duration) var(--glare-ease),
     opacity var(--glare-duration) var(--glare-ease);

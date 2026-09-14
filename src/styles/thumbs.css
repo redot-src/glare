@@ -49,6 +49,7 @@
 .glare-thumbs--y .glare-thumbs-list {
   flex-direction: column;
   padding: 8px;
+  border: 1px solid var(--glare-border);
   border-radius: 16px;
   background: var(--glare-toolbar-bg);
 }
