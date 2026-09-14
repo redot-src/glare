@@ -19,12 +19,12 @@ Open images, HTML5 video, YouTube/Vimeo, maps, iframes, inline nodes, AJAX fragm
 ## Quick start
 
 ```bash
-npm install glare
+npm install @redot-src/glare
 ```
 
 ```js
-import Glare from 'glare'
-import 'glare/style.css'
+import Glare from '@redot-src/glare'
+import '@redot-src/glare/style.css'
 
 Glare.bind('[data-glare]', { loop: true })
 ```
@@ -54,8 +54,8 @@ Glare.open(
 ## CDN
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/glare/dist/glare.css" />
-<script src="https://unpkg.com/glare/dist/glare.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@redot-src/glare/dist/glare.css" />
+<script src="https://unpkg.com/@redot-src/glare/dist/glare.js"></script>
 <script>
   Glare.bind('[data-glare]', { loop: true })
 </script>

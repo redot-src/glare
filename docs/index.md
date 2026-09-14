@@ -28,12 +28,12 @@ features:
 ## Quick start
 
 ```bash
-npm install glare
+npm install @redot-src/glare
 ```
 
 ```js
-import Glare from 'glare'
-import 'glare/style.css'
+import Glare from '@redot-src/glare'
+import '@redot-src/glare/style.css'
 
 Glare.bind('[data-glare]', { loop: true })
 ```
@@ -47,8 +47,8 @@ Glare.bind('[data-glare]', { loop: true })
 Or drop it in from a CDN:
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/glare/dist/glare.css" />
-<script src="https://unpkg.com/glare/dist/glare.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@redot-src/glare/dist/glare.css" />
+<script src="https://unpkg.com/@redot-src/glare/dist/glare.js"></script>
 <script>
   Glare.bind('[data-glare]')
 </script>

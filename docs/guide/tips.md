@@ -39,8 +39,8 @@ handle.destroy()
 ## Bundlers
 
 ```js
-import Glare from 'glare'
-import 'glare/style.css'
+import Glare from '@redot-src/glare'
+import '@redot-src/glare/style.css'
 ```
 
 Tree-shaking friendly ESM build lives at `dist/glare.esm.js`. Browser/CDN script is `dist/glare.js`.

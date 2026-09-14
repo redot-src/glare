@@ -20,7 +20,7 @@ import type {
   ShareOptions,
   I18nDict,
   EventHandler,
-} from 'glare'
+} from '@redot-src/glare'
 ```
 
 ## `SlideSource`

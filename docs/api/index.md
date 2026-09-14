@@ -3,7 +3,7 @@
 The default export is the `Glare` class. Static helpers cover the common cases; instance methods control an open lightbox.
 
 ```ts
-import Glare from 'glare'
+import Glare from '@redot-src/glare'
 
 Glare.bind(selector, options?)
 Glare.open(items, options?, index?)

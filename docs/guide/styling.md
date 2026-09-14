@@ -3,7 +3,7 @@
 Import the stylesheet once:
 
 ```js
-import 'glare/style.css'
+import '@redot-src/glare/style.css'
 ```
 
 ## CSS variables

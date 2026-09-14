@@ -3,21 +3,21 @@
 ## Install
 
 ```bash
-npm install glare
+npm install @redot-src/glare
 ```
 
 ## Import
 
 ```js
-import Glare from 'glare'
-import 'glare/style.css'
+import Glare from '@redot-src/glare'
+import '@redot-src/glare/style.css'
 ```
 
 Via CDN (plain browser script):
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/glare/dist/glare.css" />
-<script src="https://unpkg.com/glare/dist/glare.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@redot-src/glare/dist/glare.css" />
+<script src="https://unpkg.com/@redot-src/glare/dist/glare.js"></script>
 <script>
   Glare.bind('[data-glare]')
 </script>
@@ -48,7 +48,7 @@ Glare.bind('[data-glare="cities"]', {
 Or auto-bind every declarative trigger after the DOM is ready:
 
 ```js
-import { autoBind } from 'glare'
+import { autoBind } from '@redot-src/glare'
 autoBind()
 ```
 
@@ -89,5 +89,5 @@ instance.close()
 Glare ships with declaration files. Import types as needed:
 
 ```ts
-import Glare, { type GlareOptions, type SlideSource } from 'glare'
+import Glare, { type GlareOptions, type SlideSource } from '@redot-src/glare'
 ```
