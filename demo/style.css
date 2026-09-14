@@ -10,6 +10,8 @@
   --radius: 18px;
   --font: "Instrument Sans", "Segoe UI", sans-serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --glare-font: var(--font);
 }
 
 * {
@@ -39,7 +41,7 @@ a {
   padding: 48px 0 72px;
 }
 
-/* Hero ------------------------------------------------------------------- */
+/* Hero */
 
 .hero {
   padding: 48px 0 64px;
@@ -117,7 +119,7 @@ a {
   background: rgba(255, 255, 255, 0.07);
 }
 
-/* Sections --------------------------------------------------------------- */
+/* Sections */
 
 .section {
   margin: 56px 0;
