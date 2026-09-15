@@ -8,7 +8,7 @@
     "name": "Redot",
     "url": "https://redot.dev"
   },
-  "homepage": "https://redot-src.github.io/glare/",
+  "homepage": "https://glare.redot.dev/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/redot-src/glare.git"

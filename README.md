@@ -2,7 +2,7 @@
 
 A lightbox for the web that opens anything: images, video, YouTube and Vimeo, maps, iframes, nodes from the page, fetched fragments, and plain HTML. Vanilla TypeScript, zero dependencies, MIT.
 
-**[Docs and live demo →](https://redot-src.github.io/glare/)**
+**[Docs and live demo →](https://glare.redot.dev/)**
 
 ## Why Glare
 
@@ -61,7 +61,7 @@ No bundler? Load it from a CDN and use the global `Glare`:
 <script src="https://unpkg.com/@redot-src/glare/dist/glare.js"></script>
 ```
 
-The [Getting started](https://redot-src.github.io/glare/guide/getting-started.html) guide continues from here.
+The [Getting started](https://glare.redot.dev/guide/getting-started.html) guide continues from here.
 
 ## Built by Redot
 

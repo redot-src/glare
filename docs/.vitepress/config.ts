@@ -5,8 +5,9 @@ import { version } from '../../package.json'
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
 
+// The site is served from the custom domain glare.redot.dev, at the root.
 const isGitHubPages = process.env.GITHUB_PAGES === 'true'
-const base = isGitHubPages ? '/glare/' : '/'
+const base = '/'
 
 // Archivo (display), IBM Plex Sans (body), IBM Plex Mono (code and labels).
 const fontsHref =
