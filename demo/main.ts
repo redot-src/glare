@@ -2,6 +2,27 @@ import Glare from '../src/index'
 import '../src/styles/index.css'
 import './style.css'
 
+const themeToggle = document.querySelector<HTMLButtonElement>('#toggle-theme')!
+
+function setTheme(theme: 'light' | 'dark'): void {
+  document.documentElement.dataset.theme = theme
+  themeToggle.textContent = `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`
+}
+
+let initialTheme: 'light' | 'dark' = 'dark'
+try {
+  if (localStorage.getItem('glare-demo-theme') === 'light') initialTheme = 'light'
+} catch { /* The toggle still works when storage is unavailable. */ }
+setTheme(initialTheme)
+
+themeToggle.addEventListener('click', () => {
+  const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+  setTheme(theme)
+  try {
+    localStorage.setItem('glare-demo-theme', theme)
+  } catch { /* The toggle still works when storage is unavailable. */ }
+})
+
 const nature = [
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80',

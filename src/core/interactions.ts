@@ -71,6 +71,7 @@ export function bindInteractions(glare: Glare, container: HTMLElement, onActivit
     }),
     on(document, 'keydown', (event) => onKeydown(glare, event)),
     on(document, 'keydown', onActivity),
+    on(document, 'click', onActivity, { capture: true }),
     on(document, 'mousemove', onActivity),
     on(document, 'touchstart', onActivity, { passive: true }),
   ]

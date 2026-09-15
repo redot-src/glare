@@ -8,7 +8,7 @@ Glare mounts a `role="dialog"` container with `aria-modal="true"`. Slide changes
 - `trapFocus` cycles Tab within the dialog
 - `backFocus` restores the previously focused trigger on close
 
-Controls hidden by the idle fade leave the tab order until the next key press or pointer move.
+Controls hidden by the idle fade leave the tab order until the next key press, pointer move, click, or touch.
 
 ## Keyboard
 

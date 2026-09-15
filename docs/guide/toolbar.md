@@ -35,7 +35,7 @@ Captions are HTML. Where a plain string is needed (the dialog label, image `alt`
 
 ## Idle chrome
 
-After `idleTime` seconds without pointer or keyboard activity the arrows, infobar, and caption fade. The toolbar stays visible so Close remains reachable. Set `idleTime: false` to keep everything visible.
+After `idleTime` seconds without pointer movement, clicks, touches, or keyboard activity the arrows, infobar, and caption fade. The toolbar stays visible so Close remains reachable. Set `idleTime: false` to keep everything visible.
 
 ## Infobar
 
