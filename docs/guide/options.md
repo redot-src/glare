@@ -1,80 +1,129 @@
 # Options
 
-Pass options to `Glare.bind()`, `Glare.open()`, or mutate `Glare.defaults` before opening.
-
-## Behaviour
-
-- `closeExisting` (`false`) — close other instances before opening
-- `loop` (`false`) — wrap around gallery ends
-- `keyboard` (`true`) — enable keyboard shortcuts
-- `protect` (`false`) — block the context menu and image dragging
-- `modal` (`false`) — modal mode: no keyboard shortcuts, no idle fade, clicks on the backdrop and around the media are ignored
-- `idleTime` (`3`) — seconds before arrows, infobar, and caption fade; the toolbar stays visible. `false` disables it
-- `hideScrollbar` (`true`) — lock page scroll while open
-- `autoFocus` / `backFocus` / `trapFocus` (`true`) — focus management
-- `defaultType` (`'image'`) — type used when a URL has no recognizable extension
-- `parentEl` (`'body'`) — mount node
-- `baseClass` / `slideClass` — extra classes for the container and each slide
-
-A single-item modal dialog:
+Every option, grouped the way you will reach for it. Pass options to `Glare.bind()` or `Glare.open()`, or change `Glare.defaults` once for the whole app.
 
 ```js
-Glare.open([{ type: 'html', html: '...' }], { modal: true })
+Glare.open(slides, { loop: true, buttons: ['zoom', 'close'] })
+```
+
+Options given to `bind()` or `open()` are merged over `Glare.defaults`. Module options (`slideshow`, `thumbs`, `fullscreen`, `share`) merge one level deeper, so `{ slideshow: { speed: 5000 } }` keeps `autoStart` at its default.
+
+## Behavior
+
+| Option          | Default    | What it does                                                                                                              |
+| --------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `loop`          | `false`    | Wrap around at the ends of a gallery. When off, the arrows are disabled on the first and last slide.                     |
+| `closeExisting` | `false`    | Close any open lightbox before opening this one. Otherwise instances stack.                                               |
+| `keyboard`      | `true`     | Keyboard shortcuts: <kbd>Esc</kbd>, arrows, <kbd>Space</kbd>, <kbd>F</kbd>.                                                |
+| `protect`       | `false`    | Block the context menu and image dragging, to discourage saving.                                                          |
+| `modal`         | `false`    | Dialog mode: no keyboard shortcuts, no idle fade, and clicks on the backdrop or around the media do nothing.              |
+| `idleTime`      | `3`        | Seconds without activity before arrows, counter, and caption fade. The toolbar stays. `false` keeps everything visible.  |
+| `hideScrollbar` | `true`     | Lock page scrolling while open, compensating for the scrollbar width so the page does not shift.                          |
+| `autoFocus`     | `true`     | Move focus into the dialog on open.                                                                                       |
+| `trapFocus`     | `true`     | Keep <kbd>Tab</kbd> inside the dialog.                                                                                    |
+| `backFocus`     | `true`     | Return focus to the trigger on close.                                                                                     |
+| `defaultType`   | `'image'`  | Type to assume when the URL has no recognizable extension. See [detection rules](/guide/content-types#detection-rules).  |
+| `parentEl`      | `'body'`   | Where the dialog is mounted: a selector or an element.                                                                    |
+| `baseClass`     | `''`       | Extra class for the container, for scoping your CSS.                                                                      |
+| `slideClass`    | `''`       | Extra class for every slide.                                                                                              |
+
+A one-slide dialog that only the close button can dismiss:
+
+```js
+Glare.open([{ type: 'html', html: '<h3>Saved</h3><p>Your changes are live.</p>' }], { modal: true })
 ```
 
 ## Chrome
 
-- `arrows` (`true`) — show prev/next buttons
-- `infobar` (`true`) — show the `2 / 12` counter
-- `toolbar` (`'auto'`) — `'auto'` shows the toolbar for images only; `true` always; `false` never
-- `smallBtn` (`'auto'`) — compact close button on the slide; `'auto'` uses it whenever the toolbar is hidden
-- `buttons` — toolbar controls; default `['zoom', 'slideshow', 'thumbs', 'share', 'download', 'fullscreen', 'close']`
-- `caption` — string or `(instance, current) => string` overriding the item caption
+The chrome is everything around the media: arrows, counter, caption, and toolbar.
+
+| Option     | Default    | What it does                                                                                                                                                  |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `arrows`   | `true`     | Previous and next buttons. Hidden automatically for single-slide groups.                                                                                     |
+| `infobar`  | `true`     | The `2 / 12` counter. Hidden automatically for single-slide groups.                                                                                          |
+| `toolbar`  | `'auto'`   | `'auto'` shows the toolbar on image slides only; `true` on every slide; `false` never. Slides without a toolbar get a compact close button.                  |
+| `smallBtn` | `'auto'`   | The compact close button on the slide itself. `'auto'` uses it whenever the toolbar is hidden.                                                                |
+| `buttons`  | see below  | Toolbar buttons, in order. Buttons that do not apply (thumbnails for one slide, fullscreen without browser support) are skipped.                              |
+| `caption`  | —          | A string, or `(instance, current) => string`, that replaces the slide's own caption.                                                                          |
+
+The default `buttons` list is `['zoom', 'slideshow', 'thumbs', 'share', 'download', 'fullscreen', 'close']`. Read more in [Toolbar & UI](/guide/toolbar).
 
 ## Motion
 
-- `animationEffect` (`'zoom'`) — open animation: `'zoom'` flies the image in from its trigger, `'fade'` cross-fades, `false` disables it
-- `animationDuration` (`366`) — open/close duration in ms
-- `zoomOpacity` (`true`) — dim the image while it flies in
-- `transitionEffect` (`'fade'`) — slide change: `'fade'`, `'slide'`, `'circular'`, `'tube'`, `'rotate'`, `'zoom-in-out'`, or `false`
-- `transitionDuration` (`366`) — slide change duration in ms
+| Option               | Default   | What it does                                                                                                                  |
+| -------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `animationEffect`    | `'zoom'`  | Open and close animation. `'zoom'` flies the image from its trigger; `'fade'` cross-fades; `false` opens instantly.          |
+| `animationDuration`  | `366`     | Open and close duration in milliseconds.                                                                                      |
+| `zoomOpacity`        | `true`    | Also fade the image while it flies in with `'zoom'`.                                                                          |
+| `transitionEffect`   | `'fade'`  | Effect between slides: `'fade'`, `'slide'`, `'circular'`, `'tube'`, `'rotate'`, `'zoom-in-out'`, or `false`.                 |
+| `transitionDuration` | `366`     | Slide change duration in milliseconds.                                                                                        |
+
+Both durations are written to the container as `--glare-duration` and `--glare-transition-duration`, so custom CSS can reuse them. Users with `prefers-reduced-motion` get instant changes regardless.
 
 ## Interaction
 
-- `clickContent` — click on the media itself; default zooms images
-- `clickSlide` (`'close'`) — click on the empty area around the media or on the backdrop
-- `dblclickContent` / `dblclickSlide` (`false`) — double-click actions
-- `wheel` (`'auto'`) — mouse-wheel navigation: `'auto'` on images only, `true` on every slide, `false` off
-- `touch` (`{ vertical: true, momentum: true }`) — gestures; `false` disables them
-- `mobile` — option overrides applied on touch-first devices
+| Option            | Default                              | What it does                                                                                        |
+| ----------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `clickContent`    | zoom images, ignore other types      | Click on the media itself.                                                                          |
+| `clickSlide`      | `'close'`                            | Click on the empty area around the media, or on the backdrop.                                       |
+| `dblclickContent` | `false`                              | Double-click on the media.                                                                          |
+| `dblclickSlide`   | `false`                              | Double-click around the media.                                                                      |
+| `wheel`           | `'auto'`                             | Mouse wheel changes slides. `'auto'` only over images that are not zoomed; `true` always; `false` never. |
+| `touch`           | `{ vertical: true, momentum: true }` | Swipe, pinch, and pan. `vertical` allows swipe-down to close; `momentum` keeps panning briefly after release. `false` disables gestures. |
+| `mobile`          | see below                            | Option overrides applied on touch-first devices.                                                    |
 
-Click actions accept `false`, `'close'`, `'next'`, `'nextOrClose'`, `'toggleControls'`, `'zoom'`, or a function `(current, event)` returning one of those. When a double-click action is set, single clicks wait briefly so a double-tap does not trigger both.
+Click actions accept `false`, `'close'`, `'next'`, `'nextOrClose'`, `'toggleControls'`, `'zoom'`, or a function `(current, event)` that returns one of those. When a double-click action is set, single clicks wait briefly so a double-tap does not trigger both.
+
+On touch-first devices the built-in `mobile` overrides change what a tap does: a tap on an image toggles the controls, a double tap zooms, a tap around non-image content closes, and `idleTime` is off so the controls never disappear on their own. Override any of them the same way:
+
+```js
+{
+  mobile: {
+    dblclickContent: false, // keep double-tap zoom off
+    idleTime: 3,
+  },
+}
+```
 
 ## Content
 
-- `image.preload` (`false`) — preload neighbouring images
-- `video` — `{ tpl, format, autoStart: true }`
-- `iframe` — `{ preload: true, css, attr, tpl }`; `preload: false` reveals the slide before the frame loads
-- `ajax.settings` — `fetch()` options for AJAX slides
-- `media` — URL matchers for embeds; see [Modules](/guide/modules#media-providers)
+| Option          | Default                                                     | What it does                                                                                             |
+| --------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `image.preload` | `false`                                                     | Start loading the previous and next image while the current one is shown.                                |
+| `video`         | `{ autoStart: true, format: '', tpl }`                      | HTML5 video. `format` is a MIME type; when empty it is inferred from the extension.                      |
+| `iframe`        | `{ preload: true, css: {}, attr: {…}, tpl }`                | Iframe slides. `preload: false` shows the slide before the frame has loaded. `attr` sets iframe attributes. |
+| `ajax.settings` | `{ headers: { 'X-Requested-With': 'XMLHttpRequest' } }`     | `fetch()` init for AJAX slides.                                                                          |
+| `media`         | YouTube, Vimeo, Google Maps                                 | URL matchers that turn share links into embeds. See [Media providers](/guide/modules#media-providers).  |
 
 ## Modules
 
-- `hash` (`true`) — sync the URL hash with the current slide of a named gallery
-- `slideshow` (`{ autoStart: false, speed: 3000 }`) — `true` for defaults, `false` to disable
-- `thumbs` (`{ autoStart: false, axis: 'x' }`) — `axis: 'y'` for a side strip
-- `fullscreen` (`{ autoStart: false }`)
-- `share` (`true`) — share overlay; accepts `{ url, tpl }`
+Each module accepts `true` for its defaults, `false` to turn it off, or an object that is merged over the defaults.
 
-Partial module objects are merged over the module defaults.
+| Option       | Default                              | What it does                                                                         |
+| ------------ | ------------------------------------ | ------------------------------------------------------------------------------------ |
+| `hash`       | `true`                               | Keep the URL hash in sync with the current slide of a named gallery.                 |
+| `slideshow`  | `{ autoStart: false, speed: 3000 }`  | Autoplay. `speed` is the time per slide in milliseconds.                             |
+| `thumbs`     | `{ autoStart: false, axis: 'x' }`    | Thumbnail strip. `axis: 'y'` places it on the side.                                  |
+| `fullscreen` | `{ autoStart: false }`               | Fullscreen toggle. Not created where the browser lacks the Fullscreen API.          |
+| `share`      | `true`                               | Share overlay. Accepts `{ url, tpl }`.                                               |
+
+Details for each live in [Modules](/guide/modules).
 
 ## Text and templates
 
-- `lang` (`'en'`) — dictionary key
-- `i18n` — dictionaries, default `{ en: { ... } }`; see [Accessibility](/guide/accessibility#labels)
-- `baseTpl`, `btnTpl`, `spinnerTpl`, `errorTpl` — markup templates; see [Templates](/guide/toolbar#templates)
+| Option                                        | Default                    | What it does                                                                                   |
+| --------------------------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------- |
+| `lang`                                        | `'en'`                     | Which `i18n` dictionary to use.                                                                |
+| `i18n`                                        | `{ en: { … } }`            | Dictionaries keyed by language. Missing keys fall back to English. See [Labels](/guide/accessibility#labels). |
+| `baseTpl`, `btnTpl`, `spinnerTpl`, `errorTpl` | built in                   | HTML templates for the dialog, each toolbar button, the spinner, and the error message. See [Templates](/guide/toolbar#templates). |
+
+## Events
+
+Callbacks such as `afterShow` and `beforeClose` are options too. They are listed in [Events](/guide/events).
 
 ## Changing defaults globally
+
+`Glare.defaults` is a plain object. Changes apply to every lightbox opened afterwards:
 
 ```js
 Glare.defaults.loop = true

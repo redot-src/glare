@@ -1,0 +1,95 @@
+/*
+ * Content shown inside the lightbox by the `inline` and `ajax` demo examples.
+ * These styles are global on purpose: the AJAX fragment is static HTML in
+ * public/demo/, and the inline node is cloned out of its component into the
+ * dialog. Colors come from Glare's own tokens, so the panel matches the stage.
+ */
+
+.demo-panel {
+  color: var(--glare-fg);
+  font-family: var(--glare-font);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.demo-panel__label {
+  margin: 0 0 12px;
+  color: var(--glare-accent);
+  font-family: var(--vp-font-family-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.demo-panel__title {
+  margin: 0 0 12px;
+  font-family: var(--g-font-display);
+  font-stretch: var(--g-font-display-stretch);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.demo-panel__text {
+  margin: 0;
+  color: var(--glare-muted);
+}
+
+.demo-panel code {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9em;
+  color: var(--glare-fg);
+}
+
+/* Facts: mono key/value rows, like the label but quieter. */
+.demo-panel__facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 20px;
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--glare-border);
+  font-family: var(--vp-font-family-mono);
+  font-size: 12.5px;
+}
+
+.demo-panel__facts dt {
+  color: var(--glare-muted);
+}
+
+.demo-panel__facts dd {
+  margin: 0;
+}
+
+.demo-panel__field {
+  display: grid;
+  gap: 8px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--glare-border);
+  font-size: 13px;
+}
+
+.demo-panel__field span {
+  color: var(--glare-muted);
+}
+
+.demo-panel__field input {
+  padding: 10px 12px;
+  border: 1px solid var(--glare-border);
+  border-radius: 8px;
+  background: var(--glare-button-bg);
+  color: var(--glare-fg);
+  font: inherit;
+  font-size: 15px;
+}
+
+.demo-panel__field input:focus-visible {
+  outline: 2px solid var(--glare-accent);
+  outline-offset: 2px;
+}
+
+.demo-panel__field small {
+  color: var(--glare-muted);
+  font-size: 12px;
+}

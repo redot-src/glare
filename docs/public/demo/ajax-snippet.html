@@ -1,5 +1,16 @@
-<h3>AJAX snippet</h3>
-<p>
-  This fragment was fetched with <code>fetch()</code> and injected into the lightbox.
-  Use it for remote help articles, product details, or CMS partials.
-</p>
+<article class="demo-panel">
+  <p class="demo-panel__label">ajax · /demo/ajax-snippet.html</p>
+  <h3 class="demo-panel__title">Fetched, then shown.</h3>
+  <p class="demo-panel__text">
+    Glare requested this file with <code>fetch()</code> and placed the response here. Use it for
+    help articles, product details, or CMS partials: anything your server already renders.
+  </p>
+  <dl class="demo-panel__facts">
+    <dt>Request</dt>
+    <dd>GET /demo/ajax-snippet.html</dd>
+    <dt>Header</dt>
+    <dd>X-Requested-With: XMLHttpRequest</dd>
+    <dt>Tune it</dt>
+    <dd>ajax.settings accepts any fetch() init</dd>
+  </dl>
+</article>

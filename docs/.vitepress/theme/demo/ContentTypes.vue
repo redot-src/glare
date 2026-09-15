@@ -24,15 +24,24 @@ function open(example: ContentExample): void {
     </button>
   </div>
 
-  <!-- Source node for the `inline` example. Glare clones it, so the page keeps its copy. -->
-  <div :id="inlineSourceId" hidden>
-    <h3>Inline panel</h3>
-    <p>This node lives in the page and is cloned into the lightbox when opened. Forms and buttons keep working.</p>
-    <label>
-      Name
-      <input type="text" placeholder="Type something" />
+  <!--
+    Source node for the `inline` example. Glare clones it into the lightbox and the
+    page keeps this hidden original. Styled by styles/demo-panel.css, shared with
+    the AJAX fragment in public/demo/.
+  -->
+  <article :id="inlineSourceId" class="demo-panel" hidden>
+    <p class="demo-panel__label">inline · #{{ inlineSourceId }}</p>
+    <h3 class="demo-panel__title">Cloned from this page.</h3>
+    <p class="demo-panel__text">
+      This node sits in the page, hidden. Glare copies it into the lightbox, so forms, buttons,
+      and event handlers you attach after opening all work.
+    </p>
+    <label class="demo-panel__field">
+      <span>Name</span>
+      <input type="text" placeholder="Type here" />
+      <small>The hidden original keeps its own value.</small>
     </label>
-  </div>
+  </article>
 </template>
 
 <style scoped>

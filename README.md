@@ -1,22 +1,30 @@
 # Glare
 
-Modern, touch-enabled lightbox for the web. **Zero dependencies.** MIT licensed.
+A lightbox for the web that opens anything: images, video, YouTube and Vimeo, maps, iframes, nodes from the page, fetched fragments, and plain HTML. Vanilla TypeScript, zero dependencies, MIT.
 
-Created by [Redot](https://redot.dev).
+**[Docs and live demo →](https://redot-src.github.io/glare/)**
 
-Open images, HTML5 video, YouTube/Vimeo, maps, iframes, inline nodes, AJAX fragments, and custom HTML, with galleries, zoom, thumbnails, slideshow, fullscreen, deep links, and a polished toolbar.
+## Why Glare
 
-## Features
+Most lightboxes were built for one job, images, and everything else got bolted on: a jQuery dependency here, a video plugin there, a second library for touch gestures. Glare starts from the other end. It is one small class with a single way to describe a slide, and the slide can be any kind of content.
 
-- **Vanilla JS / TypeScript**, no jQuery, no framework lock-in
-- **Galleries** with loop, arrows, keyboard, mouse wheel, and swipe
-- **Content types**: image, video, responsive embed, iframe, inline, AJAX, HTML
-- **Media helpers** for YouTube, Vimeo, and Google Maps URLs
-- **Pinch-zoom and pan**, click-to-zoom, protect mode
-- **Thumbnails**, **slideshow**, **fullscreen**, **share**, **hash** deep links
-- **Accessible** dialog: focus trap, ARIA, Escape, restored focus
-- **Theming** via CSS custom properties
-- ESM + UMD builds, full type declarations
+- **One API for every content type.** Point it at a URL and it works out whether that is an image, a video, a YouTube watch page, or a PDF. Set `type` for the cases it cannot guess.
+- **Touch-first.** Swipe to change slides, swipe down to close, pinch to zoom, drag to pan. Mouse and keyboard get the same behavior.
+- **Accessible by default.** A real `role="dialog"`, focus trap, restored focus on close, slide announcements in a live region, translatable labels, and `prefers-reduced-motion` support.
+- **Yours to style.** Colors, radius, blur, and fonts are CSS variables. State classes cover every mode. Every piece of markup is a template you can replace.
+- **Small and dependency-free.** About 16 kB of JavaScript and 3 kB of CSS, gzipped. No jQuery, no framework, no peer dependencies.
+- **Typed.** Written in TypeScript, shipped as ESM and UMD with declaration files.
+
+## What it does
+
+| Feature      | Details                                                                                  |
+| ------------ | ---------------------------------------------------------------------------------------- |
+| Galleries    | Group links with `data-glare="name"`, or pass an array. Loop, arrows, counter, captions. |
+| Content      | `image`, `video`, `embed`, `iframe`, `inline`, `ajax`, `html`. Providers for YouTube, Vimeo, Google Maps. |
+| Zoom         | Click or pinch to zoom, drag to pan, mouse wheel to change slides.                       |
+| Modules      | Thumbnail strip, slideshow with progress bar, fullscreen, share overlay, URL hash deep links. |
+| Toolbar      | Configurable buttons that collapse into a menu on small screens.                        |
+| Events       | Lifecycle and per-slide callbacks; `beforeClose` can cancel.                             |
 
 ## Quick start
 
@@ -32,44 +40,32 @@ Glare.bind('[data-glare]', { loop: true })
 ```
 
 ```html
-<a data-glare="gallery" href="photo-1.jpg" data-caption="Sunset">
-  <img src="photo-1-thumb.jpg" alt="Sunset" />
+<a data-glare="trip" href="lake.jpg" data-caption="Alpine lake at dusk">
+  <img src="lake-thumb.jpg" alt="Alpine lake at dusk" />
 </a>
-<a data-glare="gallery" href="photo-2.jpg">
-  <img src="photo-2-thumb.jpg" alt="Trail" />
+<a data-glare="trip" href="https://www.youtube.com/watch?v=XXXXXXXXXXX">
+  <img src="video-thumb.jpg" alt="Trip video" />
 </a>
 ```
 
-Or open programmatically:
+Or from code:
 
 ```js
-Glare.open(
-  [
-    { src: 'a.jpg', caption: 'A' },
-    { src: 'b.jpg', caption: 'B' },
-  ],
-  { loop: true },
-  0,
-)
+Glare.open([{ src: 'lake.jpg', caption: 'Alpine lake at dusk' }, { src: 'dunes.jpg' }], { loop: true })
 ```
 
-## CDN
+No bundler? Load it from a CDN and use the global `Glare`:
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/@redot-src/glare/dist/glare.css" />
 <script src="https://unpkg.com/@redot-src/glare/dist/glare.js"></script>
-<script>
-  Glare.bind('[data-glare]', { loop: true })
-</script>
 ```
 
-## Demo & docs
-
-Docs and live demo: [redot-src.github.io/glare](https://redot-src.github.io/glare/)
+The [Getting started](https://redot-src.github.io/glare/guide/getting-started.html) guide continues from here.
 
 ## Built by Redot
 
-Glare is created by [Redot](https://redot.dev). Building a Laravel app? [Redot Dashboard](https://redot.dev) is a production-ready admin foundation with auth, roles, CRUD, and datatables — so you ship faster.
+Glare is created by [Redot](https://redot.dev). Building a Laravel app? Redot ships production-ready admin dashboards with auth, roles, CRUD, and datatables.
 
 ## Development
 
@@ -80,9 +76,7 @@ npm run build        # typecheck + library build → dist/
 npm run docs:build   # static site, as deployed to GitHub Pages
 ```
 
-Inside the docs, `@/` resolves to `src/`, so the demo imports the library the same way users do (`import Glare from '@/index'`).
-
-### Project structure
+Inside the docs, `@/` resolves to `src/`, so the demo imports the library the same way users do.
 
 ```
 src/
@@ -92,31 +86,18 @@ src/
   types.ts        public types
   defaults.ts     default options
   i18n.ts         built-in strings
-  icons.ts        inline SVG icons
   templates.ts    HTML templates for the dialog and buttons
-  core/           the Glare class and its collaborators
-    glare.ts        lifecycle, navigation, public API
-    dom.ts          building and updating the dialog markup
-    loaders.ts      one loader per content type
-    interactions.ts clicks, keyboard, focus trap
-    animation.ts    open animation and slide-transition settings
-    zoom.ts         image zoom and pan maths
-    idle.ts         idle timer that hides the controls
-    options.ts      merges defaults, mobile overrides, and module shorthands
-    registry.ts     stack of open instances
-    bind.ts         declarative `Glare.bind()` and hash restore
+  core/           the Glare class and its collaborators (lifecycle, DOM, loaders, zoom, bind)
   media/          URL type detection, providers (YouTube, Vimeo, Maps), item normalization
   modules/        optional features: fullscreen, gestures, hash, share, slideshow, thumbs, wheel
   styles/         stylesheet split by concern; tokens.css holds the public CSS variables
   utils/          small DOM, object, environment, and template helpers
-docs/             VitePress site: guides, API reference, and the demo home page
-  index.md        the demo page; prose in markdown, interactive parts as components
+docs/
+  index.md        the demo page: prose in markdown, interactive parts as components
+  guide/, api/    documentation
   .vitepress/
     config.ts       site config and the `@` alias
-    theme/
-      index.ts        extends the default theme and registers the demo components
-      styles/         tokens.css (palette, type) and docs.css (default theme adjustments)
-      demo/           content.ts (what the demo shows) and the components that render it
+    theme/          restyled default theme; demo/ holds the demo data and components
   public/demo/    static files the demo fetches
 ```
 

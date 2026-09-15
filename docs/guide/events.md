@@ -1,35 +1,38 @@
 # Events
 
-Provide callbacks in the options object.
+Lifecycle callbacks are options on `Glare.bind()` and `Glare.open()`. Use them to sync UI, log failures, or cancel a close.
 
-Instance events receive `(instance)`:
+| Event         | When it fires                                              | Handler receives                          |
+| ------------- | ---------------------------------------------------------- | ----------------------------------------- |
+| `onInit`      | Instance about to mount.                                   | `(instance)`                              |
+| `onActivate`  | Instance mounted and on top of the stack.                  | `(instance)`                              |
+| `beforeShow`  | Before the first slide is shown.                           | `(instance, current)`                     |
+| `beforeLoad`  | Before a slide's content loads.                            | `(instance, current)`                     |
+| `afterLoad`   | Content ready.                                             | `(instance, current)`                     |
+| `afterShow`   | Slide visible.                                             | `(instance, current)`                     |
+| `onError`     | Content failed to load; `current.error` holds the reason. Without a handler, Glare logs a warning. | `(instance, current)` |
+| `onUpdate`    | After `jumpTo` changes the index.                          | `(instance, current)`                     |
+| `beforeClose` | About to close. Return `false` to cancel.                  | `(instance, current)`                     |
+| `afterClose`  | Fully closed and removed from the DOM.                     | `(instance, current)`                     |
 
-- `onInit` — instance about to mount
-- `onActivate` — instance mounted and on top of the stack
-
-Slide events receive `(instance, current)`:
-
-- `beforeShow` — before the first slide is shown
-- `beforeLoad` — before a slide's content loads
-- `afterLoad` — content ready
-- `afterShow` — slide visible
-- `onError` — content failed to load; `current.error` holds the reason. Without a handler, Glare logs a warning
-- `onUpdate` — after `jumpTo`
-- `beforeClose` — return `false` to cancel closing
-- `afterClose` — fully closed and removed from the DOM
-
-## Example
+Ask for confirmation before closing, and log load failures:
 
 ```js
-Glare.open(items, {
-  afterShow(instance, current) {
-    console.log('showing', current.src)
+Glare.open(
+  [
+    { src: '/media/hero.jpg', caption: 'Hero' },
+    { src: '/media/missing.jpg', caption: 'Broken link' },
+  ],
+  {
+    afterShow(instance, current) {
+      console.log('showing', current.src)
+    },
+    onError(instance, current) {
+      console.error('could not load', current.src, current.error)
+    },
+    beforeClose() {
+      return confirm('Close the lightbox?')
+    },
   },
-  onError(instance, current) {
-    console.error('could not load', current.src, current.error)
-  },
-  beforeClose() {
-    return confirm('Close the lightbox?')
-  },
-})
+)
 ```

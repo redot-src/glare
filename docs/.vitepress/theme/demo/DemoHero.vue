@@ -52,18 +52,12 @@ const startHref = computed(() =>
 .facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 0;
+  gap: 6px 20px;
   margin: 0 0 20px;
   color: var(--vp-c-text-2);
   font-family: var(--vp-font-family-mono);
   font-size: 12px;
   letter-spacing: 0.04em;
-}
-
-.facts span + span::before {
-  content: '·';
-  margin: 0 10px;
-  color: var(--vp-c-text-3);
 }
 
 /* Larger than .vp-doc h1; the type role (Archivo) comes from .g-display. */

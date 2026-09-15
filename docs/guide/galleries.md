@@ -1,68 +1,71 @@
 # Galleries
 
-A gallery is any set of elements that share the same `data-glare` group name, or an array passed to `Glare.open()`.
+A gallery is a set of slides you can move between with arrows, keyboard, swipe, or the thumbnail strip. You build one either by grouping markup with the same `data-glare` name, or by passing an array to `Glare.open()`.
 
 ## Grouped markup
 
+Links that share a `data-glare` value open as one gallery at the clicked index. Prefer real `href` values so the media stays reachable without JavaScript:
+
 ```html
-<a data-glare="portfolio" href="1.jpg"></a>
-<a data-glare="portfolio" href="2.jpg"></a>
-<a data-glare="portfolio" href="3.jpg"></a>
+<a data-glare="products" href="shoe.jpg" data-caption="Runner">
+  <img src="shoe-thumb.jpg" alt="Runner" />
+</a>
+<a data-glare="products" href="boot.jpg" data-caption="Boot">
+  <img src="boot-thumb.jpg" alt="Boot" />
+</a>
 ```
-
-Clicking any item opens the group at that index. Use real links with `href` pointing at the full media URL so the content stays reachable without JavaScript.
-
-## Looping
 
 ```js
-Glare.bind('[data-glare="portfolio"]', { loop: true })
+Glare.bind('[data-glare="products"]', { loop: true })
 ```
 
-When `loop` is `false`, the previous/next buttons are disabled at the ends.
+An empty `data-glare` (or a unique name used once) is a standalone item, not a multi-slide gallery.
 
-## Infobar & arrows
+## Looping and chrome
 
-```js
-{
-  arrows: true,
-  infobar: true, // shows "2 / 12"
-}
-```
+With `loop: true`, previous and next wrap at the ends. When `loop` is off, those buttons disable on the first and last slide.
 
-Both are hidden automatically for single-item groups.
+`arrows` and `infobar` (the `2 / 12` counter) default to on, and both hide automatically for single-item groups.
 
 ## Hash deep links
 
-With `hash: true` (the default) and a group name, Glare writes the current slide to the URL:
+With `hash: true` (the default) and a named gallery, Glare keeps the URL in sync:
 
 ```
-#portfolio-2
+#products-2
 ```
 
-`Glare.bind()` also reads the hash: loading a page with `#portfolio-2` opens that slide right away. Opening adds one history entry, so the Back button closes the lightbox; editing the hash by hand jumps to that slide. Disable with `hash: false`.
+`Glare.bind()` also reads the hash on load, so `#products-2` opens that slide immediately. Opening pushes one history entry, so the browser Back button closes the lightbox; changing slides replaces that entry instead of stacking. Editing the hash by hand jumps to that slide. Turn this off with `hash: false`.
 
-## Mixed content galleries
+::: warning Apps with a client-side router
+Closing the lightbox steps back through that history entry, which fires `popstate`. Routers such as Vue Router, VitePress, or Next.js treat that as a navigation and may re-render the page or reset its scroll position. In those apps set `hash: false`, globally with `Glare.defaults.hash = false` if you never need deep links.
+:::
 
-Groups may mix types:
+## Mixed content
+
+One gallery may mix images, embeds, HTML, and other types:
 
 ```js
 Glare.open([
-  { src: 'cover.jpg' },
+  { src: 'cover.jpg', caption: 'Cover' },
   { src: 'https://www.youtube.com/watch?v=XXXXXXXXXXX' },
-  { type: 'html', html: '<p>Credits</p>' },
+  { type: 'html', html: '<p>Credits and sizing notes.</p>' },
 ])
 ```
 
-## Multiple instances
+## Stacking vs closeExisting
 
-`closeExisting: true` ensures only one lightbox is visible. Otherwise instances stack and `Glare.close()` closes the topmost one.
+By default, opening another lightbox stacks on top of the current one; `Glare.close()` closes the topmost. Set `closeExisting: true` to close every open instance before opening this one.
 
 ## Re-binding
 
-Call `Glare.bind()` after your list renders, and `destroy()` the returned handle before binding again:
+`Glare.bind()` only attaches to elements that exist when it runs. After a dynamic list renders, destroy the previous handle before binding again:
 
 ```js
-const handle = Glare.bind('.gallery a', { loop: true })
-// later
-handle.destroy()
+let handle = Glare.bind('.product-grid a', { loop: true })
+
+function refreshGallery() {
+  handle.destroy()
+  handle = Glare.bind('.product-grid a', { loop: true })
+}
 ```

@@ -4,28 +4,54 @@ Glare mounts a `role="dialog"` container with `aria-modal="true"`. Slide changes
 
 ## Focus
 
-- `autoFocus` moves focus into the dialog on open
-- `trapFocus` cycles Tab within the dialog
-- `backFocus` restores the previously focused trigger on close
+| Option       | Default | What it does                                      |
+| ------------ | ------- | ------------------------------------------------- |
+| `autoFocus`  | `true`  | Move focus into the dialog on open.               |
+| `trapFocus`  | `true`  | Keep <kbd>Tab</kbd> inside the dialog.            |
+| `backFocus`  | `true`  | Return focus to the trigger on close.             |
 
 Controls hidden by the idle fade leave the tab order until the next key press, pointer move, click, or touch.
 
 ## Keyboard
 
-- `Escape` — close (closes the share overlay first when it is open)
-- `←` / `↑` — previous
-- `→` / `↓` — next
-- `Space` — toggle slideshow
-- `F` — toggle fullscreen
+| Key                         | Action                                                              |
+| --------------------------- | ------------------------------------------------------------------- |
+| <kbd>Esc</kbd>              | Close. Closes the share overlay first when it is open; also collapses the More options menu. |
+| <kbd>←</kbd> / <kbd>↑</kbd> | Previous slide.                                                     |
+| <kbd>→</kbd> / <kbd>↓</kbd> | Next slide.                                                         |
+| <kbd>Space</kbd>            | Toggle slideshow.                                                   |
+| <kbd>F</kbd>                | Toggle fullscreen.                                                  |
 
-Disable with `keyboard: false`, or use `modal: true` which also ignores backdrop clicks.
+Disable shortcuts with `keyboard: false`, or use `modal: true`, which also ignores backdrop clicks and turns off idle fade.
 
 ## Labels
 
-Every built-in string comes from the i18n dictionary. Provide translations:
+Every built-in string comes from the i18n dictionary. Provide translations under `i18n` and pick them with `lang`. Missing keys fall back to English. The full English key list:
+
+| Key                 | English default                                              |
+| ------------------- | ------------------------------------------------------------ |
+| `CLOSE`             | Close                                                        |
+| `NEXT`              | Next                                                         |
+| `PREV`              | Previous                                                     |
+| `ERROR`             | The requested content cannot be loaded…                      |
+| `LOADING`           | Loading                                                      |
+| `LIGHTBOX`          | Media lightbox                                               |
+| `GO_TO_SLIDE`       | Go to slide {{index}}                                        |
+| `VIDEO_UNSUPPORTED` | Your browser does not support HTML5 video.                   |
+| `PLAY_START`        | Start slideshow                                              |
+| `PLAY_STOP`         | Pause slideshow                                              |
+| `FULL_SCREEN`       | Full screen                                                  |
+| `FULL_SCREEN_EXIT`  | Exit full screen                                             |
+| `THUMBS`            | Thumbnails                                                   |
+| `DOWNLOAD`          | Download                                                     |
+| `SHARE`             | Share                                                        |
+| `MORE`              | More options                                                 |
+| `COPY`              | Copy link                                                    |
+| `ZOOM`              | Zoom                                                         |
+| `ZOOM_OUT`          | Zoom out                                                     |
 
 ```js
-{
+Glare.bind('[data-glare]', {
   lang: 'es',
   i18n: {
     es: {
@@ -44,16 +70,15 @@ Every built-in string comes from the i18n dictionary. Provide translations:
       THUMBS: 'Miniaturas',
       DOWNLOAD: 'Descargar',
       SHARE: 'Compartir',
+      MORE: 'Más opciones',
       COPY: 'Copiar enlace',
       ZOOM: 'Zoom',
       ZOOM_OUT: 'Alejar',
     },
   },
-}
+})
 ```
-
-Missing keys fall back to English.
 
 ## Reduced motion
 
-When `prefers-reduced-motion: reduce` is set, open/transition animations collapse to instant changes.
+When `prefers-reduced-motion: reduce` is set, open and transition animations collapse to instant changes.

@@ -20,6 +20,6 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src", "docs/.vitepress", "vite.config.ts"],
+  "include": ["src", "docs/.vitepress", "docs/.vitepress/**/*.vue", "vite.config.ts"],
   "exclude": ["docs/.vitepress/cache", "docs/.vitepress/dist"]
 }
