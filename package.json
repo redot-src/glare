@@ -68,5 +68,9 @@
     "typescript": "^5.9.2",
     "vite": "^7.1.5",
     "vitepress": "^1.6.4"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "esbuild@0.21.5": true
   }
 }
