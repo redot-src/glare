@@ -20,6 +20,8 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src", "docs/.vitepress", "docs/.vitepress/**/*.vue", "vite.config.ts"],
+  // A bare "docs/.vitepress" would match nothing: TypeScript skips dot-directories
+  // unless the pattern continues past them. The .vue glob is for the Vue language server.
+  "include": ["src", "docs/.vitepress/**/*", "docs/.vitepress/**/*.vue", "vite.config.ts"],
   "exclude": ["docs/.vitepress/cache", "docs/.vitepress/dist"]
 }
