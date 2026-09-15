@@ -1,0 +1,187 @@
+/*
+ * Adjustments to the VitePress default theme. Colors and fonts live in
+ * tokens.css; this file only changes shapes, sizes, and typography roles.
+ */
+
+/* Display type: headings and the wordmark use Archivo at an expanded width. */
+.g-display,
+.vp-doc h1,
+.vp-doc h2,
+.VPNavBarTitle .title {
+  font-family: var(--g-font-display);
+  font-stretch: var(--g-font-display-stretch);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Mono labels: small, tracked, uppercase. Used for section labels across the site. */
+.g-label,
+.VPSidebarItem.level-0 > .item .text,
+.VPDocAsideOutline .outline-title,
+.VPNavScreenMenuGroup .button-text {
+  font-family: var(--vp-font-family-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-2);
+}
+
+/* Buttons used by the demo components. VitePress's own button is not exported. */
+.g-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 18px;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 999px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.g-button:hover {
+  border-color: var(--vp-c-text-3);
+}
+
+.g-button--primary {
+  border-color: transparent;
+  background: var(--vp-button-brand-bg);
+  color: #fff;
+  font-weight: 600;
+}
+
+.g-button--primary:hover {
+  background: var(--vp-button-brand-hover-bg);
+  border-color: transparent;
+}
+
+/* Markdown link styles (.vp-doc a) would otherwise recolor and underline link buttons. */
+.vp-doc a.g-button,
+.vp-doc a.g-button:hover {
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+}
+
+.vp-doc a.g-button--primary,
+.vp-doc a.g-button--primary:hover {
+  color: #fff;
+}
+
+.g-button:focus-visible,
+.g-focus:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+}
+
+/* Nav */
+
+.VPNavBarTitle .title {
+  font-size: 18px;
+}
+
+/* Sidebar */
+
+.VPSidebar {
+  border-right: 1px solid var(--vp-c-divider);
+}
+
+.VPSidebarItem.level-0 > .item .text {
+  padding-bottom: 8px;
+}
+
+/* Document */
+
+.vp-doc h1 {
+  font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+  line-height: 1.05;
+}
+
+.vp-doc h2 {
+  margin: 56px 0 16px;
+  border-top: 0;
+  padding-top: 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.vp-doc h2 .header-anchor {
+  top: 0;
+}
+
+.vp-doc h3 {
+  font-size: 1.125rem;
+}
+
+.vp-doc div[class*='language-'] {
+  border: 1px solid var(--vp-c-divider);
+}
+
+@media (min-width: 640px) {
+  .vp-doc div[class*='language-'] {
+    border-radius: 10px;
+  }
+}
+
+.vp-doc table {
+  font-size: 14px;
+}
+
+.vp-doc th {
+  font-family: var(--vp-font-family-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc kbd {
+  padding: 2px 6px;
+  border: 1px solid var(--vp-c-border);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--vp-c-bg-soft);
+  font-family: var(--vp-font-family-mono);
+  font-size: 12px;
+}
+
+/* Home: the demo page. Sections are further apart, and h2s carry no rule. */
+
+.VPHome .vp-doc h2 {
+  margin-top: 96px;
+}
+
+.VPHome .vp-doc h2 + p {
+  margin-top: 8px;
+  max-width: 48rem;
+  color: var(--vp-c-text-2);
+}
+
+.VPHome .vp-doc .vp-code-group {
+  max-width: 48rem;
+}
+
+.VPHome .vp-doc .credit {
+  margin-top: 96px;
+  padding-top: 24px;
+  border-top: 1px solid var(--vp-c-divider);
+  max-width: 48rem;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+}
+
+.VPHome .vp-doc .credit p {
+  margin: 0;
+  line-height: 1.6;
+}

@@ -1,0 +1,92 @@
+/*
+ * Design tokens for the site.
+ *
+ * Light mode is a photographer's light table: a cool, luminous surface with
+ * white "slides" (cards, code blocks) resting on it. Dark mode is the darkroom:
+ * warm near-black under the red safelight, which is also Glare's brand accent.
+ *
+ * Site-specific tokens are prefixed `--g-`. Everything else maps those onto
+ * VitePress's own `--vp-*` variables so the default theme picks them up.
+ */
+
+:root {
+  --g-font-display: 'Archivo', var(--vp-font-family-base);
+  --g-font-display-stretch: 118%;
+
+  --vp-font-family-base: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --vp-font-family-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Light table */
+  --g-table: #f3f4f6;
+  --g-table-deep: #e7e9ee;
+  --g-slide: #ffffff;
+  --g-ink: #17191e;
+  --g-ink-2: #5b6170;
+  --g-ink-3: #8a8f9c;
+  --g-line: rgba(23, 25, 30, 0.1);
+  --g-line-strong: rgba(23, 25, 30, 0.2);
+  --g-glow: rgba(255, 255, 255, 0.9);
+  --g-shadow: 0 1px 2px rgba(23, 25, 30, 0.06), 0 12px 32px -12px rgba(23, 25, 30, 0.18);
+
+  --g-red: #d43a2f;
+  --g-red-hover: #e04a3f;
+  --g-red-deep: #c4302a;
+  --g-red-soft: rgba(212, 58, 47, 0.12);
+}
+
+.dark {
+  /* Darkroom */
+  --g-table: #131215;
+  --g-table-deep: #0e0d10;
+  --g-slide: #1c1b1f;
+  --g-ink: #ecebe7;
+  --g-ink-2: #a09da5;
+  --g-ink-3: #6f6c75;
+  --g-line: rgba(236, 235, 231, 0.09);
+  --g-line-strong: rgba(236, 235, 231, 0.18);
+  --g-glow: rgba(255, 77, 77, 0.1);
+  --g-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -12px rgba(0, 0, 0, 0.6);
+
+  --g-red: #ff5f5f;
+  --g-red-hover: #ff7a7a;
+  --g-red-deep: #ff4d4d;
+  --g-red-soft: rgba(255, 77, 77, 0.16);
+}
+
+/* Map onto VitePress. Both modes read the same names, so this block is written once. */
+:root,
+.dark {
+  --vp-c-bg: var(--g-table);
+  --vp-c-bg-alt: var(--g-table-deep);
+  --vp-c-bg-soft: var(--g-slide);
+  --vp-c-bg-elv: var(--g-slide);
+
+  --vp-c-text-1: var(--g-ink);
+  --vp-c-text-2: var(--g-ink-2);
+  --vp-c-text-3: var(--g-ink-3);
+
+  --vp-c-divider: var(--g-line);
+  --vp-c-border: var(--g-line-strong);
+  --vp-c-gutter: var(--g-line);
+
+  --vp-c-brand-1: var(--g-red);
+  --vp-c-brand-2: var(--g-red-hover);
+  --vp-c-brand-3: var(--g-red-deep);
+  --vp-c-brand-soft: var(--g-red-soft);
+
+  --vp-button-brand-bg: var(--g-red-deep);
+  --vp-button-brand-hover-bg: var(--g-red-hover);
+  --vp-button-brand-active-bg: var(--g-red);
+
+  --vp-code-block-bg: var(--g-slide);
+  --vp-code-bg: var(--g-table-deep);
+  --vp-code-copy-code-bg: var(--g-slide);
+  --vp-code-copy-code-hover-bg: var(--g-table);
+
+  --vp-sidebar-bg-color: var(--g-table);
+  --vp-nav-bg-color: var(--g-table);
+  --vp-local-search-bg: var(--g-slide);
+
+  /* The lightbox itself follows the site's type. Its dark stage stays as shipped. */
+  --glare-font: var(--vp-font-family-base);
+}

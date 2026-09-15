@@ -65,8 +65,7 @@ Glare.open(
 
 ## Demo & docs
 
-- Docs: [redot-src.github.io/glare](https://redot-src.github.io/glare/)
-- Live demo: [redot-src.github.io/glare/demo](https://redot-src.github.io/glare/demo/)
+Docs and live demo: [redot-src.github.io/glare](https://redot-src.github.io/glare/)
 
 ## Built by Redot
 
@@ -76,11 +75,12 @@ Glare is created by [Redot](https://redot.dev). Building a Laravel app? [Redot D
 
 ```bash
 npm install
-npm run dev          # interactive demo with live reload
+npm run dev          # docs + interactive demo with live reload
 npm run build        # typecheck + library build → dist/
-npm run docs:dev     # VitePress documentation
-npm run pages:build  # docs + demo, as deployed to GitHub Pages
+npm run docs:build   # static site, as deployed to GitHub Pages
 ```
+
+Inside the docs, `@/` resolves to `src/`, so the demo imports the library the same way users do (`import Glare from '@/index'`).
 
 ### Project structure
 
@@ -109,8 +109,15 @@ src/
   modules/        optional features: fullscreen, gestures, hash, share, slideshow, thumbs, wheel
   styles/         stylesheet split by concern; tokens.css holds the public CSS variables
   utils/          small DOM, object, environment, and template helpers
-demo/             Vite demo site (npm run dev)
-docs/             VitePress documentation
+docs/             VitePress site: guides, API reference, and the demo home page
+  index.md        the demo page; prose in markdown, interactive parts as components
+  .vitepress/
+    config.ts       site config and the `@` alias
+    theme/
+      index.ts        extends the default theme and registers the demo components
+      styles/         tokens.css (palette, type) and docs.css (default theme adjustments)
+      demo/           content.ts (what the demo shows) and the components that render it
+  public/demo/    static files the demo fetches
 ```
 
 ## License

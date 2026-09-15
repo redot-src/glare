@@ -53,14 +53,11 @@
     "./dist/*": "./dist/*"
   },
   "scripts": {
-    "dev": "vite --mode demo",
+    "dev": "vitepress dev docs",
     "build": "npm run typecheck && vite build && vite build --mode umd && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
-    "demo:build": "vite build --mode demo",
-    "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "pages:build": "npm run docs:build && npm run demo:build",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {

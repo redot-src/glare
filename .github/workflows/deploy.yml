@@ -30,7 +30,7 @@ jobs:
       - uses: actions/configure-pages@v6
 
       - run: npm ci
-      - run: npm run pages:build
+      - run: npm run docs:build
 
       - uses: actions/upload-pages-artifact@v3
         with:

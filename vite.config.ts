@@ -2,8 +2,8 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig, type UserConfig } from 'vite'
 
+// Library builds only. The docs and demo site is built by VitePress (see docs/.vitepress/config.ts).
 const root = dirname(fileURLToPath(import.meta.url))
-const pagesBase = process.env.GITHUB_PAGES === 'true' ? '/glare/' : '/'
 
 /** ESM build for bundlers, with named exports and one extracted stylesheet. */
 const esm: UserConfig = {
@@ -40,16 +40,4 @@ const umd: UserConfig = {
   },
 }
 
-/** Demo site: served in dev, and built into the VitePress output for GitHub Pages. */
-const demo: UserConfig = {
-  root: resolve(root, 'demo'),
-  base: `${pagesBase}demo/`,
-  build: {
-    outDir: resolve(root, 'docs/.vitepress/dist/demo'),
-    emptyOutDir: true,
-  },
-}
-
-const configs: Record<string, UserConfig> = { demo, umd }
-
-export default defineConfig(({ mode }) => configs[mode] ?? esm)
+export default defineConfig(({ mode }) => (mode === 'umd' ? umd : esm))
