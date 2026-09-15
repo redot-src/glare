@@ -105,6 +105,22 @@ a {
   font-size: 1.125rem;
 }
 
+.credit {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.credit a {
+  color: var(--fg);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.credit a:hover {
+  color: var(--accent);
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -280,6 +296,81 @@ kbd {
   font-size: 12px;
 }
 
+.redot-ad {
+  margin-top: 72px;
+}
+
+.redot-ad-link {
+  display: grid;
+  grid-template-areas:
+    "kicker cta"
+    "brand cta"
+    "copy cta";
+  grid-template-columns: 1fr auto;
+  gap: 2px 24px;
+  align-items: center;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease;
+}
+
+.redot-ad-link:hover {
+  border-color: var(--line-hover);
+  transform: translateY(-2px);
+}
+
+.redot-ad-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.redot-ad-kicker {
+  grid-area: kicker;
+  color: var(--accent-2);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.redot-ad-brand {
+  grid-area: brand;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.redot-ad-copy {
+  grid-area: copy;
+  max-width: 42rem;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.redot-ad-cta {
+  grid-area: cta;
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.redot-ad-link:hover .redot-ad-cta {
+  background: var(--accent);
+  color: #fff;
+}
+
 .footer {
   display: flex;
   justify-content: space-between;
@@ -298,6 +389,23 @@ kbd {
 @media (max-width: 800px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .redot-ad-link {
+    grid-template-areas:
+      "kicker"
+      "brand"
+      "copy"
+      "cta";
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .redot-ad-cta {
+    justify-self: start;
+    margin-top: 10px;
   }
 }
 

@@ -2,6 +2,8 @@
 
 Modern, touch-enabled lightbox for the web. **Zero dependencies.** MIT licensed.
 
+Created by [Redot](https://redot.dev).
+
 Open images, HTML5 video, YouTube/Vimeo, maps, iframes, inline nodes, AJAX fragments, and custom HTML, with galleries, zoom, thumbnails, slideshow, fullscreen, deep links, and a polished toolbar.
 
 ## Features
@@ -65,6 +67,10 @@ Glare.open(
 
 - Docs: [redot-src.github.io/glare](https://redot-src.github.io/glare/)
 - Live demo: [redot-src.github.io/glare/demo](https://redot-src.github.io/glare/demo/)
+
+## Built by Redot
+
+Glare is created by [Redot](https://redot.dev). Building a Laravel app? [Redot Dashboard](https://redot.dev) is a production-ready admin foundation with auth, roles, CRUD, and datatables — so you ship faster.
 
 ## Development
 

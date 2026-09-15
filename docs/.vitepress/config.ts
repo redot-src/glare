@@ -47,7 +47,7 @@ export default defineConfig({
     ],
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © Glare Contributors',
+      copyright: 'Created by <a href="https://redot.dev" target="_blank" rel="noopener noreferrer">Redot</a>',
     },
     search: {
       provider: 'local',

@@ -4,7 +4,10 @@
   "description": "Modern, touch-enabled, fully customizable lightbox for the web — zero dependencies.",
   "type": "module",
   "license": "MIT",
-  "author": "Glare Contributors",
+  "author": {
+    "name": "Redot",
+    "url": "https://redot.dev"
+  },
   "homepage": "https://redot-src.github.io/glare/",
   "repository": {
     "type": "git",
