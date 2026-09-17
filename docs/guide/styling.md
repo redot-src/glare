@@ -26,7 +26,7 @@ Override on `:root` or `.glare-container`:
 | `--glare-button-bg`        | `rgba(255, 255, 255, 0.08)`                          | Button background.                        |
 | `--glare-button-hover`     | `rgba(255, 255, 255, 0.16)`                          | Button background on hover.               |
 | `--glare-button-size`      | `44px`                                               | Toolbar button size.                      |
-| `--glare-caption-bg`       | `transparent`                                        | Caption band, below the slide.            |
+| `--glare-caption-bg`       | `transparent`                                        | Caption backdrop, under the media.        |
 | `--glare-radius`           | `14px`                                               | Corner radius.                            |
 | `--glare-shadow`           | large dark shadow                                    | Panel shadow.                             |
 | `--glare-backdrop`         | `blur(14px)`                                         | Backdrop filter.                          |
