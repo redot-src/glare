@@ -3,7 +3,7 @@
  * hand it to Glare unchanged, so what you see on the page is what runs.
  */
 import { withBase } from 'vitepress'
-import type { Anchor, AnchorPosition, ContentType, CustomButton, GlareOptions, SlideSource } from '@/types'
+import type { AnchorPosition, ContentType, CustomButton, GlareOptions, SlideSource, TransitionEffect } from '@/types'
 
 const unsplash = (id: string, width: number): string =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=80`
@@ -117,6 +117,17 @@ export interface Recipe {
   index?: number
   /** Shown instead of the generated call, for options that do not print well (functions, markup). */
   code?: string
+  /** Adds a select to the card. The picked value becomes `options[pick.option]` in the call and the code. */
+  pick?: RecipePick
+  /** `id` for the card's Open button, when the recipe needs to point at it. */
+  buttonId?: string
+}
+
+export interface RecipePick {
+  option: keyof GlareOptions
+  initial: string
+  /** Values in select order; a group with a label renders as an `<optgroup>`. */
+  groups: Array<{ label?: string; values: string[] }>
 }
 
 const shuffleIcon =
@@ -133,6 +144,13 @@ const shuffle: CustomButton = {
   },
 }
 
+/** The Anchor recipe's Open button, which its selector choice flies from. */
+const anchorTargetId = 'demo-anchor-open'
+
+const anchorPositions: AnchorPosition[] = (['top', 'center', 'bottom'] as const).flatMap((y) =>
+  (['left', 'center', 'right'] as const).map((x): AnchorPosition => `${y}-${x}`),
+)
+
 export const recipes: Recipe[] = [
   {
     title: 'Slideshow',
@@ -147,10 +165,15 @@ export const recipes: Recipe[] = [
     options: { loop: true, thumbs: { autoStart: true } },
   },
   {
-    title: 'Circular transition',
-    summary: 'Slides rotate through; the dialog fades in instead of zooming.',
+    title: 'Transition',
+    summary: 'The effect between slides. Pick one, open, then use the arrows.',
     slides: frameSlides,
-    options: { loop: true, transitionEffect: 'circular', animationEffect: 'fade' },
+    options: { loop: true },
+    pick: {
+      option: 'transitionEffect',
+      initial: 'circular',
+      groups: [{ values: ['fade', 'slide', 'circular', 'tube', 'rotate', 'zoom-in-out'] satisfies TransitionEffect[] }],
+    },
   },
   {
     title: 'Start at a slide',
@@ -188,17 +211,19 @@ Glare.open(slides, {
     ],
     options: { modal: true },
   },
-]
-
-/** The anchor picker's Open button, which its selector choice flies from. */
-export const anchorTargetId = 'demo-anchor-open'
-
-const anchorPositions: AnchorPosition[] = (['top', 'center', 'bottom'] as const).flatMap((y) =>
-  (['left', 'center', 'right'] as const).map((x): AnchorPosition => `${y}-${x}`),
-)
-
-/** Choices in the anchor picker, grouped the way its select shows them. */
-export const anchorChoices: Array<{ label: string; anchors: Anchor[] }> = [
-  { label: 'Position', anchors: anchorPositions },
-  { label: 'Selector', anchors: [`#${anchorTargetId}`] },
+  {
+    title: 'Anchor',
+    summary: 'Where the zoom starts: a position in the lightbox, or an element by selector. Here, this Open button.',
+    slides: frameSlides,
+    options: {},
+    buttonId: anchorTargetId,
+    pick: {
+      option: 'anchor',
+      initial: 'center-center',
+      groups: [
+        { label: 'Position', values: anchorPositions },
+        { label: 'Selector', values: [`#${anchorTargetId}`] },
+      ],
+    },
+  },
 ]
