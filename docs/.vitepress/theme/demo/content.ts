@@ -3,7 +3,7 @@
  * hand it to Glare unchanged, so what you see on the page is what runs.
  */
 import { withBase } from 'vitepress'
-import type { Anchor, AnchorPosition, ContentType, GlareOptions, SlideSource } from '@/types'
+import type { Anchor, AnchorPosition, ContentType, CustomButton, GlareOptions, SlideSource } from '@/types'
 
 const unsplash = (id: string, width: number): string =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=80`
@@ -115,6 +115,22 @@ export interface Recipe {
   options: GlareOptions
   /** Start index; omitted from the code when it is 0. */
   index?: number
+  /** Shown instead of the generated call, for options that do not print well (functions, markup). */
+  code?: string
+}
+
+const shuffleIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"/><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"/><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"/></svg>'
+
+/** The custom toolbar button of the 'Custom button' recipe: jumps to a random other slide. */
+const shuffle: CustomButton = {
+  name: 'shuffle',
+  label: 'Random slide',
+  icon: shuffleIcon,
+  click: (instance) => {
+    const step = 1 + Math.floor(Math.random() * (instance.group.length - 1))
+    instance.jumpTo(instance.currIndex + step)
+  },
 }
 
 export const recipes: Recipe[] = [
@@ -148,6 +164,18 @@ export const recipes: Recipe[] = [
     summary: 'Blocks the context menu and dragging. Only zoom and close remain.',
     slides: frameSlides.slice(0, 2),
     options: { protect: true, buttons: ['zoom', 'close'] },
+  },
+  {
+    title: 'Custom button',
+    summary: 'shuffle is an object: { name, label, icon, click }. It looks like the built-in buttons and runs click.',
+    slides: frameSlides,
+    options: { loop: true, buttons: ['zoom', shuffle, 'close'] },
+    code: `let shuffle = { ... };
+
+Glare.open(slides, {
+  loop: true,
+  buttons: ['zoom', shuffle, 'close'],
+})`,
   },
   {
     title: 'Modal',

@@ -1,4 +1,4 @@
-import type { GlareRefs, I18nDict, ResolvedOptions, SlideItem } from '../types'
+import type { CustomButton, GlareRefs, I18nDict, ResolvedOptions, SlideItem } from '../types'
 import { icons } from '../icons'
 import { $, $$, createEl, fromHtml, toText } from '../utils/dom'
 import { supportsFullscreen } from '../utils/env'
@@ -44,6 +44,11 @@ function buildToolbar(toolbar: HTMLElement, opts: ResolvedOptions, dict: I18nDic
   menu.id = `glare-toolbar-menu-${toolbar.closest<HTMLElement>('.glare-container')?.dataset.glareId ?? ''}`
 
   for (const name of opts.buttons) {
+    if (typeof name !== 'string') {
+      menu.appendChild(createCustomButton(name))
+      continue
+    }
+
     if (single && (name === 'thumbs' || name === 'slideshow')) continue
     if (name === 'fullscreen' && !supportsFullscreen()) continue
     if (name === 'more' || name === 'close') continue
@@ -65,6 +70,18 @@ function buildToolbar(toolbar: HTMLElement, opts: ResolvedOptions, dict: I18nDic
     const closeTpl = opts.btnTpl.close
     if (closeTpl) toolbar.insertAdjacentHTML('beforeend', translate(closeTpl, dict))
   }
+}
+
+/** A button defined inline in `buttons`: the built-in markup, matched back to its `click` by name. */
+function createCustomButton({ name, label, icon }: CustomButton): HTMLElement {
+  const button = createEl('button', `glare-button glare-button--${name}`, icon)
+
+  button.type = 'button'
+  button.title = label
+  button.dataset.glareCustom = name
+  button.setAttribute('aria-label', label)
+
+  return button
 }
 
 /** Creates a hidden slide with an empty content box and appends it to the stage. */

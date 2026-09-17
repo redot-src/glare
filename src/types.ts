@@ -31,6 +31,17 @@ export type ClickAction =
   | ClickActionName
   | ((current: SlideItem, event: Event) => ClickActionName | false | void)
 
+/** A toolbar button defined inline: rendered like the built-in ones and wired to `click`. */
+export interface CustomButton {
+  /** Identifies the button; also its `glare-button--{name}` class. */
+  name: string
+  /** Tooltip and accessible name. */
+  label: string
+  /** The button's content as HTML, usually an inline `<svg>`. */
+  icon: string
+  click: (instance: GlareInstance, current: SlideItem, event: MouseEvent) => void
+}
+
 export type ToolbarButton =
   | 'zoom'
   | 'slideshow'
@@ -40,6 +51,7 @@ export type ToolbarButton =
   | 'more'
   | 'close'
   | (string & {})
+  | CustomButton
 
 export interface MediaProvider {
   matcher: RegExp

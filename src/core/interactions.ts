@@ -1,4 +1,4 @@
-import type { ClickAction, ClickActionName } from '../types'
+import type { ClickAction, ClickActionName, CustomButton } from '../types'
 import type { Glare } from './glare'
 import { $$, on } from '../utils/dom'
 import { registry } from './registry'
@@ -48,6 +48,9 @@ export function bindInteractions(glare: Glare, container: HTMLElement, onActivit
       }
 
       closeToolbarMenu(container)
+      const custom = target.closest<HTMLElement>('[data-glare-custom]')
+      if (custom) return runCustomButton(glare, custom.dataset.glareCustom, event)
+
       const button = BUTTONS.find(([selector]) => target.closest(selector))
       if (button) return button[1](glare)
       if (target.closest('.glare-button')) return
@@ -92,6 +95,12 @@ export function bindInteractions(glare: Glare, container: HTMLElement, onActivit
     cancelPending()
     offs.forEach((off) => off())
   }
+}
+
+/** Runs the `click` of the inline button called `name`. */
+function runCustomButton(glare: Glare, name: string | undefined, event: MouseEvent): void {
+  const button = glare.opts.buttons.find((b): b is CustomButton => typeof b !== 'string' && b.name === name)
+  if (button && glare.current) button.click(glare, glare.current, event)
 }
 
 /** Picks the content action or the slide action for `target`; modal mode ignores the slide area. */

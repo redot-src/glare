@@ -15,6 +15,7 @@ import type {
   ClickAction,
   ClickActionName,
   ToolbarButton,
+  CustomButton,
   MediaProvider,
   AnimationEffect,
   Anchor,
@@ -155,7 +156,18 @@ type ToolbarButton =
   | 'more'
   | 'close'
   | (string & {})
+  | CustomButton
+
+interface CustomButton {
+  name: string
+  label: string
+  /** The button's content as HTML, usually an inline `<svg>`. */
+  icon: string
+  click: (instance: GlareInstance, current: SlideItem, event: MouseEvent) => void
+}
 ```
+
+See [Custom buttons](/guide/toolbar#custom-buttons).
 
 ## `MediaProvider`
 

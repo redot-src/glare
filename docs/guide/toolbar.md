@@ -18,6 +18,27 @@ On screens up to 720px wide, Close stays visible and every other available actio
 
 The download button targets `downloadSrc`, or the image URL for image slides. Browsers ignore the `download` attribute for cross-origin files unless the server sends `Content-Disposition: attachment`, so the link opens in a new tab rather than navigating away from your page.
 
+### Custom buttons
+
+Put an object in `buttons` to add your own. Glare renders it with the same markup as the built-in buttons, so it is styled, labelled, and folded into the More options menu like them, and calls `click` with the instance, the current slide, and the event:
+
+```js
+{
+  buttons: [
+    'zoom',
+    {
+      name: 'shuffle',
+      label: 'Random slide',
+      icon: '<svg viewBox="0 0 24 24">…</svg>',
+      click: (instance) => instance.jumpTo(Math.floor(Math.random() * instance.group.length)),
+    },
+    'close',
+  ],
+}
+```
+
+`name` identifies the button and becomes its `glare-button--{name}` class. `icon` is inserted as HTML, so only pass markup you trust.
+
 ## Toolbar visibility
 
 | Option     | Default  | What it does                                                                                                                              |
@@ -55,7 +76,7 @@ Every piece of markup is an option. Placeholders in `{{UPPER_CASE}}` come from t
 | Option                                    | Placeholders                                                                 | Must contain                                                                                                      |
 | ----------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `baseTpl`                                 | dictionary                                                                   | `.glare-bg`, `.glare-inner`, `.glare-stage`, plus `.glare-toolbar`, `.glare-infobar`, `.glare-navigation`, `.glare-caption`, `.glare-live` for the matching features |
-| `btnTpl[name]`                            | dictionary                                                                   | a `data-glare-{name}` attribute, which wires the click; `smallBtn` is the compact close button                    |
+| `btnTpl[name]`                            | dictionary                                                                   | the built-in button's `data-glare-{name}` attribute, which wires its click; `smallBtn` is the compact close button |
 | `spinnerTpl`                              | dictionary                                                                   | —                                                                                                                 |
 | `errorTpl`                                | dictionary                                                                   | —                                                                                                                 |
 | `video.tpl`                               | dictionary, `{{src}}`, `{{format}}`, `{{poster}}`                            | a `<video>`                                                                                                       |

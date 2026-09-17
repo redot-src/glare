@@ -19,7 +19,7 @@ function open(recipe: Recipe): void {
       :key="recipe.title"
       :title="recipe.title"
       :summary="recipe.summary"
-      :code="formatCall(recipe)"
+      :code="recipe.code ?? formatCall(recipe)"
     >
       <button type="button" class="g-button" @click="open(recipe)">Open</button>
     </RecipeCard>

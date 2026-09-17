@@ -9,6 +9,7 @@ export type {
   ClickAction,
   ClickActionName,
   ContentType,
+  CustomButton,
   EventHandler,
   EventName,
   FullscreenOptions,

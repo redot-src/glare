@@ -43,7 +43,7 @@ The chrome is everything around the media: arrows, counter, caption, and toolbar
 | `infobar`  | `true`     | The `2 / 12` counter. Hidden automatically for single-slide groups.                                                                                          |
 | `toolbar`  | `'auto'`   | `'auto'` shows the toolbar on image slides only; `true` on every slide; `false` never. Slides without a toolbar get a compact close button.                  |
 | `smallBtn` | `'auto'`   | The compact close button on the slide itself. `'auto'` uses it whenever the toolbar is hidden.                                                                |
-| `buttons`  | see below  | Toolbar buttons, in order. Buttons that do not apply (thumbnails for one slide, fullscreen without browser support) are skipped.                              |
+| `buttons`  | see below  | Toolbar buttons, in order: built-in names, or [objects for your own](/guide/toolbar#custom-buttons). Buttons that do not apply (thumbnails for one slide, fullscreen without browser support) are skipped.                              |
 | `caption`  | —          | A string, or `(instance, current) => string`, that replaces the slide's own caption.                                                                          |
 
 The default `buttons` list is `['zoom', 'slideshow', 'thumbs', 'download', 'fullscreen', 'close']`. Read more in [Toolbar & UI](/guide/toolbar).
