@@ -60,7 +60,7 @@ export const contentExamples: ContentExample[] = [
     type: 'embed',
     title: 'YouTube',
     note: 'Detected from the watch URL',
-    slide: { src: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', caption: 'YouTube embed' },
+    slide: { src: 'https://www.youtube.com/watch?v=fdROzfNYtQY', caption: 'YouTube embed' },
   },
   {
     type: 'embed',
