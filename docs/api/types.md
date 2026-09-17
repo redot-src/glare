@@ -108,8 +108,10 @@ type ContentType = 'image' | 'video' | 'embed' | 'iframe' | 'inline' | 'ajax' | 
 ## `AnimationEffect`
 
 ```ts
-type AnimationEffect = false | 'fade' | 'zoom'
+type AnimationEffect = false | 'fade' | 'zoom' | (string & {})
 ```
+
+Any other name is a [custom effect](/guide/styling#custom-effects).
 
 ## `Anchor`
 
@@ -132,6 +134,7 @@ type TransitionEffect =
   | 'tube'
   | 'zoom-in-out'
   | 'rotate'
+  | (string & {})
 ```
 
 ## `ClickAction`

@@ -5,8 +5,8 @@ import type { Thumbs } from './modules/thumbs'
 
 export type ContentType = 'image' | 'video' | 'embed' | 'iframe' | 'inline' | 'ajax' | 'html'
 
-/** Effect played when the lightbox opens. */
-export type AnimationEffect = false | 'fade' | 'zoom'
+/** Effect played when the lightbox opens and closes. Any other name is a custom effect, written in CSS. */
+export type AnimationEffect = false | 'fade' | 'zoom' | (string & {})
 
 /** A spot in the lightbox the opening image can grow from, as `<vertical>-<horizontal>`. */
 export type AnchorPosition = `${'top' | 'center' | 'bottom'}-${'left' | 'center' | 'right'}`
@@ -14,7 +14,7 @@ export type AnchorPosition = `${'top' | 'center' | 'bottom'}-${'left' | 'center'
 /** Where the `'zoom'` effect starts: the slide's trigger, a position, an element, or a selector. */
 export type Anchor = 'trigger' | AnchorPosition | HTMLElement | (string & {})
 
-/** Effect played when moving between slides. */
+/** Effect played when moving between slides. Any other name is a custom effect, written in CSS. */
 export type TransitionEffect =
   | false
   | 'fade'
@@ -23,6 +23,7 @@ export type TransitionEffect =
   | 'tube'
   | 'zoom-in-out'
   | 'rotate'
+  | (string & {})
 
 export type ClickActionName = 'close' | 'next' | 'nextOrClose' | 'toggleControls' | 'zoom'
 

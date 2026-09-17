@@ -1,28 +1,47 @@
-/* Slide-change effects, selected via data-transition on the container. */
+/*
+ * Slide-change effects, selected via data-transition on the container. Each slide carries
+ * --glare-direction: 1 when moving to a later slide, -1 to an earlier one, so every effect
+ * mirrors itself when going back. A slide entering through a slide change is .glare-slide--in
+ * and the one leaving is .glare-slide--out; the first slide is .glare-slide--opening instead,
+ * so these never play on open. A custom effect is a name plus rules like these.
+ */
 
-[data-transition="slide"] .glare-slide--out {
-  transform: translate3d(-40px, 0, 0);
+[data-transition="slide"] .glare-slide--in {
+  animation: glare-slide var(--glare-transition-duration) var(--glare-ease);
 }
 
-[data-transition="circular"] .glare-slide--current {
+[data-transition="slide"] .glare-slide--out {
+  transform: translate3d(calc(var(--glare-direction, 1) * -40px), 0, 0);
+}
+
+[data-transition="circular"] .glare-slide--in {
   animation: glare-circular var(--glare-transition-duration) var(--glare-ease);
 }
 
-[data-transition="tube"] .glare-slide--current {
+/* Unrolls from the side the slide comes from. */
+[data-transition="tube"] .glare-slide--in {
+  transform-origin: calc(50% + var(--glare-direction, 1) * 50%) 50%;
   animation: glare-tube var(--glare-transition-duration) var(--glare-ease);
 }
 
-[data-transition="rotate"] .glare-slide--current {
+[data-transition="rotate"] .glare-slide--in {
   animation: glare-rotate var(--glare-transition-duration) var(--glare-ease);
 }
 
-[data-transition="zoom-in-out"] .glare-slide--current {
+[data-transition="zoom-in-out"] .glare-slide--in {
   animation: glare-zoom-in-out var(--glare-transition-duration) var(--glare-ease);
+}
+
+@keyframes glare-slide {
+  from {
+    transform: translate3d(calc(var(--glare-direction, 1) * 40px), 0, 0);
+    opacity: 0;
+  }
 }
 
 @keyframes glare-circular {
   from {
-    transform: scale(0.85) rotate(-8deg);
+    transform: scale(0.85) rotate(calc(var(--glare-direction, 1) * -8deg));
     opacity: 0;
   }
 }
@@ -36,14 +55,15 @@
 
 @keyframes glare-rotate {
   from {
-    transform: rotate(12deg) scale(0.92);
+    transform: rotate(calc(var(--glare-direction, 1) * 12deg)) scale(0.92);
     opacity: 0;
   }
 }
 
+/* Forward settles down from larger; back grows up from smaller. */
 @keyframes glare-zoom-in-out {
   from {
-    transform: scale(1.18);
+    transform: scale(calc(1 + var(--glare-direction, 1) * 0.18));
     opacity: 0;
   }
 }

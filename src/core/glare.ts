@@ -60,6 +60,7 @@ export class Glare implements GlareInstance {
   private cleanups: Array<() => void> = []
   private captionTracker: ReturnType<typeof dom.trackCaption> | null = null
   private previouslyFocused: HTMLElement | null = null
+  private direction: dom.Direction = 1
 
   constructor(
     items: Array<SlideSource | string> | HTMLElement[],
@@ -152,6 +153,8 @@ export class Glare implements GlareInstance {
     const target = this.opts.loop ? ((index % total) + total) % total : clamp(index, 0, total - 1)
     if (target === this.currIndex) return
 
+    // Compared before wrapping, so next() off the last slide still counts as forward.
+    this.direction = index > this.currIndex ? 1 : -1
     this.prevIndex = this.currIndex
     this.currIndex = target
     this.zoom.reset()
@@ -217,9 +220,9 @@ export class Glare implements GlareInstance {
     // The previous slide stays visible until the new content is ready, then they cross-fade.
     dom.hideSpinner(stage)
     if (!opening) enableTransitions(container, this.opts)
-    dom.revealSlide(slide, opening)
+    dom.revealSlide(slide, opening, this.direction)
     this.captionTracker?.follow(slide)
-    dom.retireSlides(stage, slide, resolveMotion(this.opts).transitionDuration)
+    dom.retireSlides(stage, slide, resolveMotion(this.opts).transitionDuration, this.direction)
     this.syncZoomState(this.zoom.isZoomed)
 
     if (failed) return

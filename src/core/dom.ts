@@ -85,10 +85,23 @@ function createCustomButton({ name, label, icon }: CustomButton): HTMLElement {
 }
 
 /**
+ * Distance from `el`'s top edge to `ancestor`'s, from layout alone. Unlike a bounding rect it
+ * ignores transforms, so an effect, swipe or zoom that is moving `el` does not skew it.
+ */
+function layoutTop(el: HTMLElement, ancestor: Element | null): number {
+  let top = 0
+  for (let node: Element | null = el; node instanceof HTMLElement && node !== ancestor; node = node.offsetParent) {
+    top += node.offsetTop
+  }
+
+  return top
+}
+
+/**
  * Lays out the caption: slides reserve its height through `--glare-caption-inset`, and it sits
  * right under the media of the slide passed to `follow`. Until then it rests at the bottom.
  */
-export function trackCaption({ container, stage, caption }: GlareRefs): { follow(slide: HTMLElement): void; destroy(): void } {
+export function trackCaption({ container, caption }: GlareRefs): { follow(slide: HTMLElement): void; destroy(): void } {
   let slide: HTMLElement | null = null
 
   const sync = () => {
@@ -97,9 +110,7 @@ export function trackCaption({ container, stage, caption }: GlareRefs): { follow
 
     const content = slide && $('.glare-content', slide)
     if (!content) return
-    // Measured against the stage, so a swipe that is moving both does not skew the result.
-    const top = content.getBoundingClientRect().bottom - stage.getBoundingClientRect().top
-    Object.assign(caption.style, { top: `${Math.round(top)}px`, bottom: 'auto' })
+    Object.assign(caption.style, { top: `${layoutTop(content, caption.offsetParent) + content.offsetHeight}px`, bottom: 'auto' })
   }
 
   // The slide's content box changes with the insets, and the content's with the media.
@@ -132,25 +143,36 @@ export function mountSlide(stage: HTMLElement, item: SlideItem, opts: ResolvedOp
   return slide
 }
 
-/** Makes a mounted slide the current one, fading it in unless `instant`. */
-export function revealSlide(slide: HTMLElement, instant: boolean): void {
-  if (instant) slide.style.transition = 'none'
+/** Which way a slide change goes: 1 towards later slides, -1 towards earlier ones. */
+export type Direction = 1 | -1
+
+/**
+ * Makes a mounted slide the current one, fading it in unless `opening`. The first slide is
+ * marked `--opening` and later ones `--in`, so open animations and slide-change effects each
+ * have their own target. Every slide carries the direction it arrived from, for effects to mirror.
+ */
+export function revealSlide(slide: HTMLElement, opening: boolean, direction: Direction): void {
+  slide.style.setProperty('--glare-direction', String(direction))
+  slide.classList.add(opening ? 'glare-slide--opening' : 'glare-slide--in')
+  if (opening) slide.style.transition = 'none'
 
   // Force a style flush so the opacity change below is transitioned (or not) as intended.
   void slide.offsetWidth
   slide.classList.add('glare-slide--current')
 
-  if (instant) {
+  if (opening) {
     void slide.offsetWidth
     slide.style.transition = ''
   }
 }
 
 /** Fades out every slide except `keep` and removes it after `delay`. */
-export function retireSlides(stage: HTMLElement, keep: HTMLElement, delay: number): void {
+export function retireSlides(stage: HTMLElement, keep: HTMLElement, delay: number, direction: Direction): void {
   for (const slide of $$('.glare-slide', stage)) {
     if (slide === keep) continue
-    slide.classList.remove('glare-slide--current')
+    // A slide that is already leaving keeps the direction it left in.
+    if (!slide.classList.contains('glare-slide--out')) slide.style.setProperty('--glare-direction', String(direction))
+    slide.classList.remove('glare-slide--current', 'glare-slide--in', 'glare-slide--opening')
     slide.classList.add('glare-slide--out')
     setTimeout(() => slide.remove(), delay)
   }

@@ -69,11 +69,73 @@ The space reserved around the media is driven by three variables on `.glare-cont
 | `.glare-can-zoom-in` / `.glare-can-zoom-out` | Current image can zoom in or is zoomed.                             |
 | `.glare-show-thumbs` with `.glare-thumbs-axis-x` / `-y` | Thumbnail strip visible and its axis.                  |
 | `.glare-type-image` (and other `.glare-type-*`) | Current slide type on the container.                             |
-| `[data-animation]` / `[data-transition]` | Active open and slide-change effects.                                   |
+| `[data-animation]` / `[data-transition]` | Active open and slide-change effects. `data-transition` appears with the first slide change. |
 | `[data-glare-id]`                        | Instance id, for `Glare.getInstance(id)`.                               |
 | `.glare-is-active`                       | Toolbar toggles while on, and the current thumbnail.                    |
 | `.glare-is-disabled`                     | Prev/next at the ends of a non-looping gallery.                         |
 | `.glare-slide--image` / `.glare-content--image` | Type variants on the slide and content box.                      |
+
+## Custom effects
+
+`animationEffect` and `transitionEffect` accept any name. Glare writes it to `data-animation` or `data-transition` on the container, and your CSS does the rest, the same way the built-in effects work.
+
+| Hook                           | What it is                                                                                     |
+| ------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `.glare-slide--in`             | The slide entering through a slide change.                                                     |
+| `.glare-slide--out`            | The slide leaving. It fades out and is removed after `transitionDuration`.                     |
+| `.glare-slide--opening`        | The first slide, shown as the lightbox opens. Slide-change effects never touch it.             |
+| `--glare-direction`            | On every slide: `1` when moving to a later slide, `-1` to an earlier one. Multiply by it to mirror an effect. |
+| `--glare-transition-duration`  | `transitionDuration`, or `0ms` when the effect is off or the user prefers reduced motion.      |
+| `--glare-duration`             | The same for `animationDuration`.                                                              |
+| `--glare-ease`                 | The easing the built-in effects use.                                                           |
+
+A slide-change effect animates the entering slide with a keyframe and gives the leaving one a target to transition to:
+
+```css
+[data-transition='flip'] .glare-slide--in {
+  animation: flip-in var(--glare-transition-duration) var(--glare-ease);
+}
+
+[data-transition='flip'] .glare-slide--out {
+  transform: perspective(1200px) rotateY(calc(var(--glare-direction) * -70deg));
+}
+
+@keyframes flip-in {
+  from {
+    transform: perspective(1200px) rotateY(calc(var(--glare-direction) * 70deg));
+    opacity: 0;
+  }
+}
+```
+
+```js
+Glare.bind('[data-glare]', { transitionEffect: 'flip' })
+```
+
+An open animation targets the opening slide, and the current slide while the container is `.glare-is-closing`. The backdrop and chrome fade in and out on their own:
+
+```css
+[data-animation='drop'] .glare-slide--opening {
+  animation: drop-in var(--glare-duration) var(--glare-ease);
+}
+
+[data-animation='drop'].glare-is-closing .glare-slide--current {
+  transform: translate3d(0, 60px, 0);
+  transition: transform var(--glare-duration) var(--glare-ease);
+}
+
+@keyframes drop-in {
+  from {
+    transform: translate3d(0, -60px, 0);
+  }
+}
+```
+
+```js
+Glare.bind('[data-glare]', { animationEffect: 'drop' })
+```
+
+Set `animationDuration` and `transitionDuration` as usual; a duration of `0`, or `prefers-reduced-motion`, turns a custom effect off like any other.
 
 ## Class hooks
 

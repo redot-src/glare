@@ -52,11 +52,11 @@ The default `buttons` list is `['zoom', 'slideshow', 'thumbs', 'download', 'full
 
 | Option               | Default   | What it does                                                                                                                  |
 | -------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `animationEffect`    | `'zoom'`  | Open and close animation. `'zoom'` flies the image from its `anchor`; `'fade'` cross-fades; `false` opens instantly.         |
+| `animationEffect`    | `'zoom'`  | Open and close animation. `'zoom'` flies the image from its `anchor`; `'fade'` cross-fades; `false` opens instantly. Any other name is a [custom effect](/guide/styling#custom-effects). |
 | `animationDuration`  | `366`     | Open and close duration in milliseconds.                                                                                      |
 | `anchor`             | `'trigger'` | Where `'zoom'` starts: `'trigger'`, a position such as `'center-center'`, an element, or a selector. See below.             |
 | `zoomOpacity`        | `true`    | Also fade the image while it flies in with `'zoom'`.                                                                          |
-| `transitionEffect`   | `'fade'`  | Effect between slides: `'fade'`, `'slide'`, `'circular'`, `'tube'`, `'rotate'`, `'zoom-in-out'`, or `false`.                 |
+| `transitionEffect`   | `'fade'`  | Effect between slides: `'fade'`, `'slide'`, `'circular'`, `'tube'`, `'rotate'`, `'zoom-in-out'`, or `false`. They mirror when going back. Any other name is a [custom effect](/guide/styling#custom-effects). |
 | `transitionDuration` | `366`     | Slide change duration in milliseconds.                                                                                        |
 
 `anchor` accepts:

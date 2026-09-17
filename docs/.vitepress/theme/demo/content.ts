@@ -3,7 +3,7 @@
  * hand it to Glare unchanged, so what you see on the page is what runs.
  */
 import { withBase } from 'vitepress'
-import type { AnchorPosition, ContentType, CustomButton, GlareOptions, SlideSource, TransitionEffect } from '@/types'
+import type { AnchorPosition, AnimationEffect, ContentType, CustomButton, GlareOptions, SlideSource, TransitionEffect } from '@/types'
 
 const unsplash = (id: string, width: number): string =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=80`
@@ -166,13 +166,30 @@ export const recipes: Recipe[] = [
   },
   {
     title: 'Transition',
-    summary: 'The effect between slides. Pick one, open, then use the arrows.',
+    summary: 'The effect between slides; it mirrors when you go back. flip is custom: a name plus a few lines of CSS.',
     slides: frameSlides,
     options: { loop: true },
     pick: {
       option: 'transitionEffect',
       initial: 'circular',
-      groups: [{ values: ['fade', 'slide', 'circular', 'tube', 'rotate', 'zoom-in-out'] satisfies TransitionEffect[] }],
+      groups: [
+        { label: 'Built in', values: ['fade', 'slide', 'circular', 'tube', 'rotate', 'zoom-in-out'] satisfies TransitionEffect[] },
+        { label: 'Custom', values: ['flip'] },
+      ],
+    },
+  },
+  {
+    title: 'Open animation',
+    summary: 'How the lightbox opens and closes. drop is custom: it lives in this site\'s CSS.',
+    slides: frameSlides,
+    options: {},
+    pick: {
+      option: 'animationEffect',
+      initial: 'drop',
+      groups: [
+        { label: 'Built in', values: ['zoom', 'fade'] satisfies AnimationEffect[] },
+        { label: 'Custom', values: ['drop'] },
+      ],
     },
   },
   {

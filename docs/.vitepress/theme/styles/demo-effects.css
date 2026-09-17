@@ -1,0 +1,34 @@
+/*
+ * Custom Glare effects for the demo recipes: a name in animationEffect / transitionEffect
+ * plus these rules. Global on purpose, since the lightbox is mounted on <body>.
+ */
+
+[data-transition='flip'] .glare-slide--in {
+  animation: demo-flip-in var(--glare-transition-duration) var(--glare-ease);
+}
+
+[data-transition='flip'] .glare-slide--out {
+  transform: perspective(1200px) rotateY(calc(var(--glare-direction) * -70deg));
+}
+
+@keyframes demo-flip-in {
+  from {
+    transform: perspective(1200px) rotateY(calc(var(--glare-direction) * 70deg));
+    opacity: 0;
+  }
+}
+
+[data-animation='drop'] .glare-slide--opening {
+  animation: demo-drop-in var(--glare-duration) var(--glare-ease);
+}
+
+[data-animation='drop'].glare-is-closing .glare-slide--current {
+  transform: translate3d(0, 60px, 0);
+  transition: transform var(--glare-duration) var(--glare-ease);
+}
+
+@keyframes demo-drop-in {
+  from {
+    transform: translate3d(0, -60px, 0);
+  }
+}
