@@ -22,7 +22,7 @@ Most lightboxes were built for one job, images, and everything else got bolted o
 | Galleries    | Group links with `data-glare="name"`, or pass an array. Loop, arrows, counter, captions. |
 | Content      | `image`, `video`, `embed`, `iframe`, `inline`, `ajax`, `html`. Providers for YouTube, Vimeo, Google Maps. |
 | Zoom         | Click or pinch to zoom, drag to pan, mouse wheel to change slides.                       |
-| Modules      | Thumbnail strip, slideshow with progress bar, fullscreen, share overlay, URL hash deep links. |
+| Modules      | Thumbnail strip, slideshow with progress bar, fullscreen, URL hash deep links. |
 | Toolbar      | Configurable buttons that collapse into a menu on small screens.                        |
 | Events       | Lifecycle and per-slide callbacks; `beforeClose` can cancel.                             |
 
@@ -89,7 +89,7 @@ src/
   templates.ts    HTML templates for the dialog and buttons
   core/           the Glare class and its collaborators (lifecycle, DOM, loaders, zoom, bind)
   media/          URL type detection, providers (YouTube, Vimeo, Maps), item normalization
-  modules/        optional features: fullscreen, gestures, hash, share, slideshow, thumbs, wheel
+  modules/        optional features: fullscreen, gestures, hash, slideshow, thumbs, wheel
   styles/         stylesheet split by concern; tokens.css holds the public CSS variables
   utils/          small DOM, object, environment, and template helpers
 docs/

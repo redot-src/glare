@@ -14,7 +14,6 @@ const BUTTONS: Array<[selector: string, handler: ButtonHandler]> = [
   ['[data-glare-slideshow]', (g) => g.slideshow?.toggle()],
   ['[data-glare-thumbs]', (g) => g.thumbs?.toggle()],
   ['[data-glare-fullscreen]', (g) => g.fullscreen?.toggle()],
-  ['[data-glare-share]', (g) => g.share?.open()],
 ]
 
 const CONTENT = '.glare-content'
@@ -133,11 +132,6 @@ function onKeydown(glare: Glare, event: KeyboardEvent): void {
     return
   }
 
-  // The share overlay is its own small dialog: Escape dismisses it even from its input.
-  if (event.key === 'Escape' && glare.share?.isOpen) {
-    event.preventDefault()
-    return glare.share.close()
-  }
   if (!glare.opts.keyboard || glare.opts.modal) return
 
   const target = event.target as HTMLElement

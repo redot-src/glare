@@ -16,7 +16,7 @@ Controls hidden by the idle fade leave the tab order until the next key press, p
 
 | Key                         | Action                                                              |
 | --------------------------- | ------------------------------------------------------------------- |
-| <kbd>Esc</kbd>              | Close. Closes the share overlay first when it is open; also collapses the More options menu. |
+| <kbd>Esc</kbd>              | Close. Collapses the More options menu first when it is open.                                |
 | <kbd>←</kbd> / <kbd>↑</kbd> | Previous slide.                                                     |
 | <kbd>→</kbd> / <kbd>↓</kbd> | Next slide.                                                         |
 | <kbd>Space</kbd>            | Toggle slideshow.                                                   |
@@ -44,9 +44,7 @@ Every built-in string comes from the i18n dictionary. Provide translations under
 | `FULL_SCREEN_EXIT`  | Exit full screen                                             |
 | `THUMBS`            | Thumbnails                                                   |
 | `DOWNLOAD`          | Download                                                     |
-| `SHARE`             | Share                                                        |
 | `MORE`              | More options                                                 |
-| `COPY`              | Copy link                                                    |
 | `ZOOM`              | Zoom                                                         |
 | `ZOOM_OUT`          | Zoom out                                                     |
 
@@ -69,9 +67,7 @@ Glare.bind('[data-glare]', {
       FULL_SCREEN_EXIT: 'Salir de pantalla completa',
       THUMBS: 'Miniaturas',
       DOWNLOAD: 'Descargar',
-      SHARE: 'Compartir',
       MORE: 'Más opciones',
-      COPY: 'Copiar enlace',
       ZOOM: 'Zoom',
       ZOOM_OUT: 'Alejar',
     },

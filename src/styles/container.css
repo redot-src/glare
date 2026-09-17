@@ -37,8 +37,7 @@
 
 .glare-is-closing .glare-bg,
 .glare-is-closing .glare-inner,
-.glare-is-closing .glare-thumbs,
-.glare-is-closing .glare-share-overlay {
+.glare-is-closing .glare-thumbs {
   opacity: 0;
   pointer-events: none;
 }

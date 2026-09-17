@@ -1,6 +1,5 @@
 import type { Point, Zoom } from './core/zoom'
 import type { Fullscreen } from './modules/fullscreen'
-import type { Share } from './modules/share'
 import type { Slideshow } from './modules/slideshow'
 import type { Thumbs } from './modules/thumbs'
 
@@ -36,7 +35,6 @@ export type ToolbarButton =
   | 'zoom'
   | 'slideshow'
   | 'thumbs'
-  | 'share'
   | 'download'
   | 'fullscreen'
   | 'more'
@@ -132,11 +130,6 @@ export interface FullscreenOptions {
   autoStart?: boolean
 }
 
-export interface ShareOptions {
-  url?: string | ((item: SlideItem) => string)
-  tpl?: string
-}
-
 export type I18nDict = {
   CLOSE: string
   NEXT: string
@@ -152,9 +145,7 @@ export type I18nDict = {
   FULL_SCREEN_EXIT: string
   THUMBS: string
   DOWNLOAD: string
-  SHARE: string
   MORE: string
-  COPY: string
   ZOOM: string
   ZOOM_OUT: string
 }
@@ -238,7 +229,6 @@ export interface GlareOptions extends EventHandlers {
   slideshow?: SlideshowOptions | boolean
   thumbs?: ThumbsOptions | boolean
   fullscreen?: FullscreenOptions | boolean
-  share?: ShareOptions | boolean
 
   // Text and templates
   lang?: string
@@ -289,7 +279,6 @@ export interface GlareInstance {
   slideshow?: Slideshow
   thumbs?: Thumbs
   fullscreen?: Fullscreen
-  share?: Share
 
   open(index?: number): void
   close(): void

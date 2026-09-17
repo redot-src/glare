@@ -22,7 +22,6 @@ export type {
   LifecycleHandler,
   MediaProvider,
   ResolvedOptions,
-  ShareOptions,
   SlideEvent,
   SlideItem,
   SlideSource,

@@ -49,7 +49,7 @@ export const defaults: ResolvedOptions = {
   infobar: true,
   toolbar: 'auto',
   smallBtn: 'auto',
-  buttons: ['zoom', 'slideshow', 'thumbs', 'share', 'download', 'fullscreen', 'close'],
+  buttons: ['zoom', 'slideshow', 'thumbs', 'download', 'fullscreen', 'close'],
 
   animationEffect: 'zoom',
   animationDuration: 366,
@@ -87,7 +87,6 @@ export const defaults: ResolvedOptions = {
   slideshow: slideshowDefaults,
   thumbs: thumbsDefaults,
   fullscreen: fullscreenDefaults,
-  share: true,
 
   lang: 'en',
   i18n: { en: i18nEn },

@@ -8,7 +8,7 @@ The default `buttons` list is, in order:
 
 ```js
 {
-  buttons: ['zoom', 'slideshow', 'thumbs', 'share', 'download', 'fullscreen', 'close'],
+  buttons: ['zoom', 'slideshow', 'thumbs', 'download', 'fullscreen', 'close'],
 }
 ```
 
@@ -29,7 +29,7 @@ With `toolbar: true`, the toolbar stays on every type and only the zoom button i
 
 ## Caption
 
-Captions come from `data-caption` (or `title`), or from a string / function option that replaces the slide's own caption. HTML is allowed in the caption area; where a plain string is needed (dialog label, image `alt`, share text) the markup is stripped.
+Captions come from `data-caption` (or `title`), or from a string / function option that replaces the slide's own caption. HTML is allowed in the caption area; where a plain string is needed (dialog label, image `alt`) the markup is stripped.
 
 ```html
 <a data-glare href="a.jpg" data-caption="Shot on film · <em>2024</em>"></a>
@@ -60,7 +60,6 @@ Every piece of markup is an option. Placeholders in `{{UPPER_CASE}}` come from t
 | `errorTpl`                                | dictionary                                                                   | —                                                                                                                 |
 | `video.tpl`                               | dictionary, `{{src}}`, `{{format}}`, `{{poster}}`                            | a `<video>`                                                                                                       |
 | `iframe.tpl`                              | —                                                                            | an `<iframe>`                                                                                                     |
-| `share.tpl`                               | dictionary, `{{url_direct}}`, `{{url_facebook}}`, `{{url_twitter}}`, `{{url_pinterest}}` | `data-glare-share-close` and `data-glare-share-copy` for the close and copy buttons                      |
 
 Override one button without replacing the rest:
 

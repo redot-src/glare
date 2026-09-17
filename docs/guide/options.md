@@ -6,7 +6,7 @@ Every option, grouped the way you will reach for it. Pass options to `Glare.bind
 Glare.open(slides, { loop: true, buttons: ['zoom', 'close'] })
 ```
 
-Options given to `bind()` or `open()` are merged over `Glare.defaults`. Module options (`slideshow`, `thumbs`, `fullscreen`, `share`) merge one level deeper, so `{ slideshow: { speed: 5000 } }` keeps `autoStart` at its default.
+Options given to `bind()` or `open()` are merged over `Glare.defaults`. Module options (`slideshow`, `thumbs`, `fullscreen`) merge one level deeper, so `{ slideshow: { speed: 5000 } }` keeps `autoStart` at its default.
 
 ## Behavior
 
@@ -46,7 +46,7 @@ The chrome is everything around the media: arrows, counter, caption, and toolbar
 | `buttons`  | see below  | Toolbar buttons, in order. Buttons that do not apply (thumbnails for one slide, fullscreen without browser support) are skipped.                              |
 | `caption`  | —          | A string, or `(instance, current) => string`, that replaces the slide's own caption.                                                                          |
 
-The default `buttons` list is `['zoom', 'slideshow', 'thumbs', 'share', 'download', 'fullscreen', 'close']`. Read more in [Toolbar & UI](/guide/toolbar).
+The default `buttons` list is `['zoom', 'slideshow', 'thumbs', 'download', 'fullscreen', 'close']`. Read more in [Toolbar & UI](/guide/toolbar).
 
 ## Motion
 
@@ -117,7 +117,6 @@ Each module accepts `true` for its defaults, `false` to turn it off, or an objec
 | `slideshow`  | `{ autoStart: false, speed: 3000 }`  | Autoplay. `speed` is the time per slide in milliseconds.                             |
 | `thumbs`     | `{ autoStart: false, axis: 'x' }`    | Thumbnail strip. `axis: 'y'` places it on the side.                                  |
 | `fullscreen` | `{ autoStart: false }`               | Fullscreen toggle. Not created where the browser lacks the Fullscreen API.          |
-| `share`      | `true`                               | Share overlay. Accepts `{ url, tpl }`.                                               |
 
 Details for each live in [Modules](/guide/modules).
 

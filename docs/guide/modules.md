@@ -56,29 +56,6 @@ instance.fullscreen?.isFullscreen()
 
 Press <kbd>F</kbd> while open. Where the browser has no Fullscreen API the module is not created, so `instance.fullscreen` is `undefined`.
 
-## Share
-
-Opens an overlay with Facebook, X/Twitter, Pinterest, a copyable URL, and a Copy button. <kbd>Esc</kbd> or the close button dismisses it.
-
-| Option | Default                         | What it does                                      |
-| ------ | ------------------------------- | ------------------------------------------------- |
-| `url`  | absolute `src`, else page URL   | String or `(item) => string` used as the share URL. |
-| `tpl`  | built in                        | Overlay markup. See [Templates](/guide/toolbar#templates). |
-
-```js
-{
-  share: {
-    url: (item) => item.src || location.href,
-  },
-}
-```
-
-```js
-instance.share?.open()
-instance.share?.close()
-instance.share?.isOpen
-```
-
 ## Hash
 
 | Option | Default | What it does                                                                 |

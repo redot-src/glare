@@ -16,7 +16,6 @@ import { createItems } from '../media/items'
 import { Fullscreen } from '../modules/fullscreen'
 import { Gestures } from '../modules/gestures'
 import { Hash } from '../modules/hash'
-import { Share } from '../modules/share'
 import { Slideshow } from '../modules/slideshow'
 import { Thumbs } from '../modules/thumbs'
 import { WheelNav } from '../modules/wheel'
@@ -52,7 +51,6 @@ export class Glare implements GlareInstance {
   slideshow?: Slideshow
   thumbs?: Thumbs
   fullscreen?: Fullscreen
-  share?: Share
 
   private readonly galleryName: string
   private readonly idle: IdleTimer
@@ -257,9 +255,6 @@ export class Glare implements GlareInstance {
     const fullscreen = moduleOptions(opts.fullscreen, fullscreenDefaults)
     if (fullscreen && supportsFullscreen()) this.fullscreen = new Fullscreen(this, container, fullscreen)
 
-    const share = moduleOptions(opts.share, {})
-    if (share) this.share = new Share(this, container, share)
-
     if (opts.hash && this.galleryName) this.hash = new Hash(this, this.galleryName)
 
     if (opts.wheel) {
@@ -295,7 +290,6 @@ export class Glare implements GlareInstance {
       this.gestures,
       this.wheel,
       this.hash,
-      this.share,
       this.thumbs,
       this.slideshow,
       this.fullscreen,
@@ -303,7 +297,7 @@ export class Glare implements GlareInstance {
       module?.destroy()
     }
     this.gestures = this.wheel = this.hash = null
-    this.share = this.thumbs = this.slideshow = this.fullscreen = undefined
+    this.thumbs = this.slideshow = this.fullscreen = undefined
 
     this.cleanups.forEach((off) => off())
     this.cleanups = []

@@ -24,7 +24,6 @@ export const buttonTemplates: Record<string, string> = {
   zoom: button('zoom', 'ZOOM', icons.zoomIn),
   slideshow: button('slideshow', 'PLAY_START', icons.play),
   thumbs: button('thumbs', 'THUMBS', icons.thumbs, ' aria-expanded="false"'),
-  share: button('share', 'SHARE', icons.share),
   fullscreen: button('fullscreen', 'FULL_SCREEN', icons.fullscreen),
   more: button('more', 'MORE', icons.more, ' aria-expanded="false" aria-haspopup="true"'),
   close: button('close', 'CLOSE', icons.close),
@@ -43,18 +42,3 @@ export const videoTemplate =
   '</video>'
 
 export const iframeTemplate = '<iframe class="glare-iframe"></iframe>'
-
-export const shareTemplate = `
-<div class="glare-share" role="dialog" aria-label="{{SHARE}}">
-  <div class="glare-share-head">
-    <h4 class="glare-share-title">{{SHARE}}</h4>
-    <button type="button" class="glare-button glare-share-close" data-glare-share-close title="{{CLOSE}}" aria-label="{{CLOSE}}">${icons.close}</button>
-  </div>
-  <p><a class="glare-share-link" href="{{url_facebook}}" target="_blank" rel="noopener">Facebook</a></p>
-  <p><a class="glare-share-link" href="{{url_twitter}}" target="_blank" rel="noopener">X / Twitter</a></p>
-  <p><a class="glare-share-link" href="{{url_pinterest}}" target="_blank" rel="noopener">Pinterest</a></p>
-  <div class="glare-share-row">
-    <input class="glare-share-input" type="text" value="{{url_direct}}" readonly />
-    <button type="button" class="glare-share-copy" data-glare-share-copy>{{COPY}}</button>
-  </div>
-</div>`

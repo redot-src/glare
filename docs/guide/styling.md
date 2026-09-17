@@ -17,7 +17,7 @@ Override on `:root` or `.glare-container`:
 | `--glare-bg`               | `rgba(12, 14, 18, 0.92)`                             | Backdrop color.                           |
 | `--glare-fg`               | `#f4f6f8`                                            | Primary foreground text and icons.        |
 | `--glare-muted`            | `rgba(244, 246, 248, 0.62)`                          | Secondary text.                           |
-| `--glare-surface`          | `#11151c`                                            | HTML, share, and error panels.            |
+| `--glare-surface`          | `#11151c`                                            | HTML and error panels.                    |
 | `--glare-border`           | `rgba(255, 255, 255, 0.08)`                          | Panel borders.                            |
 | `--glare-accent`           | `#ff4d4d`                                            | Accent color (progress bar, links).       |
 | `--glare-accent-soft`      | `rgba(255, 77, 77, 0.18)`                            | Soft accent fill.                         |

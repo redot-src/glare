@@ -21,7 +21,6 @@ An instance is returned from `Glare.open()` and available via `Glare.getInstance
 | `slideshow` | `Slideshow \| undefined` | Present when the slideshow module is enabled. |
 | `thumbs` | `Thumbs \| undefined` | Present when thumbnails are enabled. |
 | `fullscreen` | `Fullscreen \| undefined` | Present when fullscreen is enabled and supported. |
-| `share` | `Share \| undefined` | Present when share is enabled. |
 
 ## Methods
 
@@ -61,8 +60,4 @@ instance.fullscreen?.request()
 instance.fullscreen?.exit()
 instance.fullscreen?.toggle()
 instance.fullscreen?.isFullscreen()
-
-instance.share?.open()
-instance.share?.close()
-instance.share?.isOpen
 ```

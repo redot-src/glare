@@ -28,7 +28,6 @@ import type {
   ThumbsOptions,
   SlideshowOptions,
   FullscreenOptions,
-  ShareOptions,
   I18nDict,
   EventName,
   LifecycleEvent,
@@ -151,7 +150,6 @@ type ToolbarButton =
   | 'zoom'
   | 'slideshow'
   | 'thumbs'
-  | 'share'
   | 'download'
   | 'fullscreen'
   | 'more'
