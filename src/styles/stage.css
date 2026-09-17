@@ -1,12 +1,14 @@
 /*
  * Slide layout. The insets describe the space reserved for chrome; the media
- * elements use the same values so they never overlap the toolbar or thumbs.
+ * elements use the same values so they never overlap the toolbar, caption or thumbs.
+ * The runtime keeps --glare-caption-inset equal to the caption's height.
  */
 .glare-container {
   --glare-thumbs-inset: 0px;
+  --glare-caption-inset: 0px;
   --glare-inset-top: 64px;
   --glare-inset-x: 72px;
-  --glare-inset-bottom: max(88px, var(--glare-thumbs-inset));
+  --glare-inset-bottom: max(88px, var(--glare-thumbs-inset) + var(--glare-caption-inset));
 }
 
 .glare-show-thumbs.glare-thumbs-axis-x {
@@ -21,7 +23,7 @@
 .glare-slide:where(:not(.glare-slide--image)) {
   --glare-inset-top: 30px;
   --glare-inset-x: 30px;
-  --glare-inset-bottom: max(30px, var(--glare-thumbs-inset));
+  --glare-inset-bottom: max(30px, var(--glare-thumbs-inset) + var(--glare-caption-inset));
 }
 
 .glare-stage {

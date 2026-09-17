@@ -58,6 +58,7 @@ export class Glare implements GlareInstance {
   private gestures: Gestures | null = null
   private wheel: WheelNav | null = null
   private cleanups: Array<() => void> = []
+  private captionTracker: ReturnType<typeof dom.trackCaption> | null = null
   private previouslyFocused: HTMLElement | null = null
 
   constructor(
@@ -93,9 +94,13 @@ export class Glare implements GlareInstance {
     const refs = dom.buildContainer(this.opts, this.dict, this.id, this.group.length)
     const { container } = refs
     this.$refs = refs
+
     applyMotionSettings(container, this.opts)
+
     this.syncChrome()
     this.resolveParent().appendChild(container)
+    this.captionTracker = dom.trackCaption(refs)
+    this.cleanups.push(() => this.captionTracker?.destroy())
 
     this.isActive = true
     registry.add(this)
@@ -213,6 +218,7 @@ export class Glare implements GlareInstance {
     dom.hideSpinner(stage)
     if (!opening) enableTransitions(container, this.opts)
     dom.revealSlide(slide, opening)
+    this.captionTracker?.follow(slide)
     dom.retireSlides(stage, slide, resolveMotion(this.opts).transitionDuration)
     this.syncZoomState(this.zoom.isZoomed)
 

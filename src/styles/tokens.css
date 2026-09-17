@@ -21,7 +21,7 @@
   --glare-button-bg: rgba(255, 255, 255, 0.08);
   --glare-button-hover: rgba(255, 255, 255, 0.16);
   --glare-button-size: 44px;
-  --glare-caption-bg: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.72));
+  --glare-caption-bg: transparent;
 
   --glare-radius: 14px;
   --glare-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);

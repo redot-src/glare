@@ -84,6 +84,40 @@ function createCustomButton({ name, label, icon }: CustomButton): HTMLElement {
   return button
 }
 
+/**
+ * Lays out the caption: slides reserve its height through `--glare-caption-inset`, and it sits
+ * right under the media of the slide passed to `follow`. Until then it rests at the bottom.
+ */
+export function trackCaption({ container, stage, caption }: GlareRefs): { follow(slide: HTMLElement): void; destroy(): void } {
+  let slide: HTMLElement | null = null
+
+  const sync = () => {
+    if (!caption) return
+    container.style.setProperty('--glare-caption-inset', `${caption.offsetHeight}px`)
+
+    const content = slide && $('.glare-content', slide)
+    if (!content) return
+    // Measured against the stage, so a swipe that is moving both does not skew the result.
+    const top = content.getBoundingClientRect().bottom - stage.getBoundingClientRect().top
+    Object.assign(caption.style, { top: `${Math.round(top)}px`, bottom: 'auto' })
+  }
+
+  // The slide's content box changes with the insets, and the content's with the media.
+  const observer = new ResizeObserver(sync)
+  if (caption) observer.observe(caption)
+  sync()
+
+  return {
+    follow(next) {
+      if (slide) for (const el of [slide, $('.glare-content', slide)]) if (el) observer.unobserve(el)
+      slide = next
+      for (const el of [next, $('.glare-content', next)]) if (el) observer.observe(el)
+      sync()
+    },
+    destroy: () => observer.disconnect(),
+  }
+}
+
 /** Creates a hidden slide with an empty content box and appends it to the stage. */
 export function mountSlide(stage: HTMLElement, item: SlideItem, opts: ResolvedOptions): HTMLElement {
   const slide = createEl('div', `glare-slide glare-slide--${item.type}`)

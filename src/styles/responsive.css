@@ -3,13 +3,13 @@
     --glare-button-size: 40px;
     --glare-inset-top: 56px;
     --glare-inset-x: 16px;
-    --glare-inset-bottom: max(96px, var(--glare-thumbs-inset));
+    --glare-inset-bottom: max(96px, var(--glare-thumbs-inset) + var(--glare-caption-inset));
   }
 
   .glare-slide:where(:not(.glare-slide--image)) {
     --glare-inset-top: 15px;
     --glare-inset-x: 15px;
-    --glare-inset-bottom: max(15px, var(--glare-thumbs-inset));
+    --glare-inset-bottom: max(15px, var(--glare-thumbs-inset) + var(--glare-caption-inset));
   }
 
   .glare-toolbar {

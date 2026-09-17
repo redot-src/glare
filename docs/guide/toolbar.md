@@ -50,6 +50,8 @@ With `toolbar: true`, the toolbar stays on every type and only the zoom button i
 
 ## Caption
 
+The caption is a band below the slide and above the thumbnail strip. Slides shrink to make room for it, however many lines it takes, so it never covers the media.
+
 Captions come from `data-caption` (or `title`), or from a string / function option that replaces the slide's own caption. HTML is allowed in the caption area; where a plain string is needed (dialog label, image `alt`) the markup is stripped.
 
 ```html

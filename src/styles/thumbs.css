@@ -19,7 +19,7 @@
 .glare-thumbs--y {
   top: 72px;
   right: 12px;
-  bottom: 88px;
+  bottom: max(88px, var(--glare-caption-inset, 0px) + 16px);
   width: 88px;
   transform: translateX(12px);
 }
