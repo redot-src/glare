@@ -2,6 +2,8 @@ import { Glare } from './core/glare'
 
 export type {
   AjaxOptions,
+  Anchor,
+  AnchorPosition,
   AnimationEffect,
   BoundGroup,
   ClickAction,

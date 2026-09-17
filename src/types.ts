@@ -9,6 +9,12 @@ export type ContentType = 'image' | 'video' | 'embed' | 'iframe' | 'inline' | 'a
 /** Effect played when the lightbox opens. */
 export type AnimationEffect = false | 'fade' | 'zoom'
 
+/** A spot in the lightbox the opening image can grow from, as `<vertical>-<horizontal>`. */
+export type AnchorPosition = `${'top' | 'center' | 'bottom'}-${'left' | 'center' | 'right'}`
+
+/** Where the `'zoom'` effect starts: the slide's trigger, a position, an element, or a selector. */
+export type Anchor = 'trigger' | AnchorPosition | HTMLElement | (string & {})
+
 /** Effect played when moving between slides. */
 export type TransitionEffect =
   | false
@@ -205,6 +211,7 @@ export interface GlareOptions extends EventHandlers {
   // Motion
   animationEffect?: AnimationEffect
   animationDuration?: number
+  anchor?: Anchor
   zoomOpacity?: boolean
   transitionEffect?: TransitionEffect
   transitionDuration?: number

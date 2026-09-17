@@ -16,7 +16,7 @@ export function formatObject(value: unknown, indent = ''): string {
 }
 
 /** The `Glare.open(...)` call a recipe performs, as it would appear in user code. */
-export function formatCall(recipe: Recipe): string {
+export function formatCall(recipe: Pick<Recipe, 'options' | 'index'>): string {
   const args = ['slides', formatObject(recipe.options)]
   if (recipe.index) args.push(String(recipe.index))
   return `Glare.open(${args.join(', ')})`

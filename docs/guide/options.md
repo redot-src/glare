@@ -52,11 +52,23 @@ The default `buttons` list is `['zoom', 'slideshow', 'thumbs', 'share', 'downloa
 
 | Option               | Default   | What it does                                                                                                                  |
 | -------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `animationEffect`    | `'zoom'`  | Open and close animation. `'zoom'` flies the image from its trigger; `'fade'` cross-fades; `false` opens instantly.          |
+| `animationEffect`    | `'zoom'`  | Open and close animation. `'zoom'` flies the image from its `anchor`; `'fade'` cross-fades; `false` opens instantly.         |
 | `animationDuration`  | `366`     | Open and close duration in milliseconds.                                                                                      |
+| `anchor`             | `'trigger'` | Where `'zoom'` starts: `'trigger'`, a position such as `'center-center'`, an element, or a selector. See below.             |
 | `zoomOpacity`        | `true`    | Also fade the image while it flies in with `'zoom'`.                                                                          |
 | `transitionEffect`   | `'fade'`  | Effect between slides: `'fade'`, `'slide'`, `'circular'`, `'tube'`, `'rotate'`, `'zoom-in-out'`, or `false`.                 |
 | `transitionDuration` | `366`     | Slide change duration in milliseconds.                                                                                        |
+
+`anchor` accepts:
+
+- `'trigger'`: the element that opened the slide (its `$trigger`). Slides without one fade in.
+- A position, written `<vertical>-<horizontal>` from `top`/`center`/`bottom` and `left`/`center`/`right`, such as `'top-left'` or `'center-center'`. The image grows from that spot of the lightbox.
+- An element, or any other string as a selector. The image flies from that element; if it is missing or not rendered, the trigger is used instead.
+
+```js
+Glare.bind('[data-glare]', { anchor: 'center-center' })
+Glare.open(items, { anchor: '#gallery-cover' })
+```
 
 Both durations are written to the container as `--glare-duration` and `--glare-transition-duration`, so custom CSS can reuse them. Users with `prefers-reduced-motion` get instant changes regardless.
 

@@ -53,6 +53,7 @@ export const defaults: ResolvedOptions = {
 
   animationEffect: 'zoom',
   animationDuration: 366,
+  anchor: 'trigger',
   zoomOpacity: true,
   transitionEffect: 'fade',
   transitionDuration: 366,

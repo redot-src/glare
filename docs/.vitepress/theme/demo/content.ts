@@ -3,7 +3,7 @@
  * hand it to Glare unchanged, so what you see on the page is what runs.
  */
 import { withBase } from 'vitepress'
-import type { ContentType, GlareOptions, SlideSource } from '@/types'
+import type { Anchor, AnchorPosition, ContentType, GlareOptions, SlideSource } from '@/types'
 
 const unsplash = (id: string, width: number): string =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=80`
@@ -160,4 +160,17 @@ export const recipes: Recipe[] = [
     ],
     options: { modal: true },
   },
+]
+
+/** The anchor picker's Open button, which its selector choice flies from. */
+export const anchorTargetId = 'demo-anchor-open'
+
+const anchorPositions: AnchorPosition[] = (['top', 'center', 'bottom'] as const).flatMap((y) =>
+  (['left', 'center', 'right'] as const).map((x): AnchorPosition => `${y}-${x}`),
+)
+
+/** Choices in the anchor picker, grouped the way its select shows them. */
+export const anchorChoices: Array<{ label: string; anchors: Anchor[] }> = [
+  { label: 'Position', anchors: anchorPositions },
+  { label: 'Selector', anchors: [`#${anchorTargetId}`] },
 ]

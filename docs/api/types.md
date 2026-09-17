@@ -17,6 +17,8 @@ import type {
   ToolbarButton,
   MediaProvider,
   AnimationEffect,
+  Anchor,
+  AnchorPosition,
   TransitionEffect,
   ImageOptions,
   VideoOptions,
@@ -107,6 +109,16 @@ type ContentType = 'image' | 'video' | 'embed' | 'iframe' | 'inline' | 'ajax' | 
 ```ts
 type AnimationEffect = false | 'fade' | 'zoom'
 ```
+
+## `Anchor`
+
+```ts
+type AnchorPosition = `${'top' | 'center' | 'bottom'}-${'left' | 'center' | 'right'}`
+
+type Anchor = 'trigger' | AnchorPosition | HTMLElement | (string & {})
+```
+
+Any string that is not `'trigger'` or a position is treated as a selector.
 
 ## `TransitionEffect`
 

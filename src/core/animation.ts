@@ -1,5 +1,5 @@
-import type { ResolvedOptions, SlideItem } from '../types'
-import { nextFrame } from '../utils/dom'
+import type { Anchor, ResolvedOptions, SlideItem } from '../types'
+import { nextFrame, resolveElement } from '../utils/dom'
 import { prefersReducedMotion } from '../utils/env'
 
 /** Writes the effect and duration settings onto the container for the stylesheet to use. */
@@ -19,13 +19,34 @@ export function enableTransitions(container: HTMLElement, opts: ResolvedOptions)
   container.dataset.transition = transition || 'none'
 }
 
-/** Flies the opened image in from its trigger element. */
+const POSITION = /^(top|center|bottom)-(left|center|right)$/
+const FRACTION: Record<string, number> = { top: 0, left: 0, center: 0.5, bottom: 1, right: 1 }
+
+/** Resolves an anchor to the rectangle the image starts from; a position yields a zero-size one. */
+function anchorRect(container: HTMLElement, item: SlideItem, anchor: Anchor): DOMRect | null {
+  const position = typeof anchor === 'string' ? POSITION.exec(anchor) : null
+  if (position) {
+    const box = container.getBoundingClientRect()
+    const x = box.left + box.width * FRACTION[position[2]]
+    const y = box.top + box.height * FRACTION[position[1]]
+    return new DOMRect(x, y, 0, 0)
+  }
+
+  // An element that is not rendered has no box to fly from.
+  const rendered = (el?: HTMLElement | null) => (el?.getClientRects().length ? el : null)
+  const el = (anchor !== 'trigger' && rendered(resolveElement(anchor))) || rendered(item.$trigger)
+
+  return el ? el.getBoundingClientRect() : null
+}
+
+/** Flies the opened image in from its anchor. */
 export function animateOpen(container: HTMLElement, item: SlideItem, opts: ResolvedOptions): void {
   const image = item.$image
-  const trigger = item.$trigger
-  if (container.dataset.animation !== 'zoom' || !image || !trigger) return
+  if (container.dataset.animation !== 'zoom' || !image) return
 
-  const from = trigger.getBoundingClientRect()
+  const from = anchorRect(container, item, opts.anchor)
+  if (!from) return
+
   const to = image.getBoundingClientRect()
   const scale = Math.max(from.width / Math.max(to.width, 1), from.height / Math.max(to.height, 1))
   const dx = from.left + from.width / 2 - (to.left + to.width / 2)
