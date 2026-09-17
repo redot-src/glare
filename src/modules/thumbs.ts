@@ -19,6 +19,7 @@ export class Thumbs {
     this.axis = opts.axis === 'y' ? 'y' : 'x'
     this.list = createEl('div', 'glare-thumbs-list')
     this.strip = createEl('div', `glare-thumbs glare-thumbs--${this.axis}`)
+    this.strip.style.setProperty('--glare-thumbs-fit', opts.fit ?? 'cover')
     this.strip.appendChild(this.list)
     this.build()
   }

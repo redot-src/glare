@@ -170,7 +170,7 @@ export const recipes: Recipe[] = [
     summary: 'shuffle is an object: { name, label, icon, click }. It looks like the built-in buttons and runs click.',
     slides: frameSlides,
     options: { loop: true, buttons: ['zoom', shuffle, 'close'] },
-    code: `let shuffle = { ... };
+    code: `const shuffle = { ... }
 
 Glare.open(slides, {
   loop: true,

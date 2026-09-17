@@ -1,8 +1,8 @@
 /*
  * Public theming hooks. Override on :root or on .glare-container.
- * Durations are not here: the runtime writes --glare-duration and
- * --glare-transition-duration from the animationDuration and
- * transitionDuration options.
+ * Values that come from options are not here. The runtime writes --glare-duration and
+ * --glare-transition-duration from animationDuration and transitionDuration, and
+ * --glare-thumbs-fit from thumbs.fit.
  */
 :root {
   --glare-z: 100000;

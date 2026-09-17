@@ -84,7 +84,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: var(--glare-thumbs-fit, cover);
 }
 
 .glare-thumbs-item.glare-is-active {

@@ -27,6 +27,7 @@ import type {
   AjaxOptions,
   TouchOptions,
   ThumbsOptions,
+  ThumbsFit,
   SlideshowOptions,
   FullscreenOptions,
   I18nDict,

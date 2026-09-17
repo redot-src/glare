@@ -27,6 +27,7 @@ export type {
   SlideItem,
   SlideSource,
   SlideshowOptions,
+  ThumbsFit,
   ThumbsOptions,
   ToolbarButton,
   TouchOptions,

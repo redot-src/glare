@@ -18,6 +18,7 @@ import {
 export const thumbsDefaults: Required<Omit<ThumbsOptions, 'parentEl'>> & ThumbsOptions = {
   autoStart: false,
   axis: 'x',
+  fit: 'cover',
 }
 
 export const slideshowDefaults: Required<SlideshowOptions> = {

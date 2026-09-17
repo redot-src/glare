@@ -9,10 +9,11 @@ Optional features you turn on or configure through options. Each accepts `true` 
 | `autoStart` | `false`     | Show the strip as soon as the lightbox opens.             |
 | `axis`      | `'x'`       | `'x'` for a horizontal strip; `'y'` for a side strip.     |
 | `parentEl`  | lightbox    | Where to mount the strip: a selector, element, or the lightbox container. |
+| `fit`       | `'cover'`   | How each image fills its square, as CSS `object-fit`: `'cover'` crops to fill, `'contain'` shows the whole image; also `'fill'`, `'none'`, `'scale-down'`. |
 
 ```js
 Glare.bind('[data-glare="catalog"]', {
-  thumbs: { autoStart: true, axis: 'x' },
+  thumbs: { autoStart: true, axis: 'x', fit: 'contain' },
 })
 ```
 

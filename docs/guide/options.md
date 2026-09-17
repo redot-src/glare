@@ -115,7 +115,7 @@ Each module accepts `true` for its defaults, `false` to turn it off, or an objec
 | ------------ | ------------------------------------ | ------------------------------------------------------------------------------------ |
 | `hash`       | `true`                               | Keep the URL hash in sync with the current slide of a named gallery.                 |
 | `slideshow`  | `{ autoStart: false, speed: 3000 }`  | Autoplay. `speed` is the time per slide in milliseconds.                             |
-| `thumbs`     | `{ autoStart: false, axis: 'x' }`    | Thumbnail strip. `axis: 'y'` places it on the side.                                  |
+| `thumbs`     | `{ autoStart: false, axis: 'x', fit: 'cover' }` | Thumbnail strip. `axis: 'y'` places it on the side; `fit` sets the images' `object-fit`. |
 | `fullscreen` | `{ autoStart: false }`               | Fullscreen toggle. Not created where the browser lacks the Fullscreen API.          |
 
 Details for each live in [Modules](/guide/modules).

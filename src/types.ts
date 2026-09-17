@@ -127,10 +127,14 @@ export interface VideoOptions {
   autoStart?: boolean
 }
 
+/** How a thumbnail image fills its square, as CSS `object-fit`. */
+export type ThumbsFit = 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
+
 export interface ThumbsOptions {
   autoStart?: boolean
   parentEl?: string | HTMLElement
   axis?: 'x' | 'y'
+  fit?: ThumbsFit
 }
 
 export interface SlideshowOptions {
