@@ -2,21 +2,36 @@ import type { Anchor, ResolvedOptions, SlideItem } from '../types'
 import { nextFrame, resolveElement } from '../utils/dom'
 import { prefersReducedMotion } from '../utils/env'
 
+/**
+ * The motion actually in effect. An effect is off when it is disabled, its duration is zero,
+ * or the user prefers reduced motion; its duration is then zero too. Timers must wait on these
+ * values rather than the raw options, since a 0ms transition never fires `transitionend`.
+ */
+export function resolveMotion(opts: ResolvedOptions) {
+  const reduced = prefersReducedMotion()
+  const animationDuration = reduced || !opts.animationEffect ? 0 : Math.max(0, opts.animationDuration)
+  const transitionDuration = reduced || !opts.transitionEffect ? 0 : Math.max(0, opts.transitionDuration)
+
+  return {
+    animationEffect: animationDuration ? opts.animationEffect : false,
+    animationDuration,
+    transitionEffect: transitionDuration ? opts.transitionEffect : false,
+    transitionDuration,
+  }
+}
+
 /** Writes the effect and duration settings onto the container for the stylesheet to use. */
 export function applyMotionSettings(container: HTMLElement, opts: ResolvedOptions): void {
-  const reduced = prefersReducedMotion()
-  const effect = reduced ? false : opts.animationEffect
-  const transition = reduced ? false : opts.transitionEffect
+  const motion = resolveMotion(opts)
 
-  container.dataset.animation = effect || 'none'
-  container.style.setProperty('--glare-duration', `${effect ? opts.animationDuration : 0}ms`)
-  container.style.setProperty('--glare-transition-duration', `${transition ? opts.transitionDuration : 0}ms`)
+  container.dataset.animation = motion.animationEffect || 'none'
+  container.style.setProperty('--glare-duration', `${motion.animationDuration}ms`)
+  container.style.setProperty('--glare-transition-duration', `${motion.transitionDuration}ms`)
 }
 
 /** Marks the container so slide-change keyframes apply from now on. */
 export function enableTransitions(container: HTMLElement, opts: ResolvedOptions): void {
-  const transition = prefersReducedMotion() ? false : opts.transitionEffect
-  container.dataset.transition = transition || 'none'
+  container.dataset.transition = resolveMotion(opts).transitionEffect || 'none'
 }
 
 const POSITION = /^(top|center|bottom)-(left|center|right)$/

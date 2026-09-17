@@ -21,9 +21,9 @@ import { Slideshow } from '../modules/slideshow'
 import { Thumbs } from '../modules/thumbs'
 import { WheelNav } from '../modules/wheel'
 import { afterTransition, nextFrame } from '../utils/dom'
-import { lockScroll, prefersReducedMotion, supportsFullscreen } from '../utils/env'
+import { lockScroll, supportsFullscreen } from '../utils/env'
 import { clamp } from '../utils/object'
-import { animateOpen, applyMotionSettings, enableTransitions } from './animation'
+import { animateOpen, applyMotionSettings, enableTransitions, resolveMotion } from './animation'
 import { bind, unbindAll, type BindTarget } from './bind'
 import * as dom from './dom'
 import { IdleTimer } from './idle'
@@ -126,7 +126,7 @@ export class Glare implements GlareInstance {
     this.idle.stop()
 
     const { container, bg } = this.$refs
-    const duration = prefersReducedMotion() ? 0 : this.opts.animationDuration
+    const duration = resolveMotion(this.opts).animationDuration
     if (duration === 0) return this.teardown()
 
     container.classList.remove('glare-is-open')
@@ -215,7 +215,7 @@ export class Glare implements GlareInstance {
     dom.hideSpinner(stage)
     if (!opening) enableTransitions(container, this.opts)
     dom.revealSlide(slide, opening)
-    dom.retireSlides(stage, slide, this.opts.transitionDuration)
+    dom.retireSlides(stage, slide, resolveMotion(this.opts).transitionDuration)
     this.syncZoomState(this.zoom.isZoomed)
 
     if (failed) return

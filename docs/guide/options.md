@@ -70,7 +70,7 @@ Glare.bind('[data-glare]', { anchor: 'center-center' })
 Glare.open(items, { anchor: '#gallery-cover' })
 ```
 
-Both durations are written to the container as `--glare-duration` and `--glare-transition-duration`, so custom CSS can reuse them. Users with `prefers-reduced-motion` get instant changes regardless.
+Both durations are written to the container as `--glare-duration` and `--glare-transition-duration`, so custom CSS can reuse them. Setting an effect to `false` and setting its duration to `0` are the same thing: nothing animates and nothing waits. Users with `prefers-reduced-motion` get instant changes regardless.
 
 ## Interaction
 
