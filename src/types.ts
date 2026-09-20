@@ -205,6 +205,8 @@ export interface GlareOptions extends EventHandlers {
   trapFocus?: boolean
   defaultType?: ContentType
   parentEl?: string | HTMLElement
+  /** Same-origin window (e.g. `window.parent`) whose own `window.Glare` opens the lightbox instead. */
+  delegate?: Window
   baseClass?: string
   slideClass?: string
 
@@ -256,7 +258,7 @@ export interface GlareOptions extends EventHandlers {
   errorTpl?: string
 }
 
-type DefaultedKey = Exclude<keyof GlareOptions, keyof EventHandlers | 'caption'>
+type DefaultedKey = Exclude<keyof GlareOptions, keyof EventHandlers | 'caption' | 'delegate'>
 
 /** Options after the defaults have been merged in: everything but callbacks is present. */
 export type ResolvedOptions = GlareOptions &

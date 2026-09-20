@@ -24,6 +24,7 @@ Options given to `bind()` or `open()` are merged over `Glare.defaults`. Module o
 | `backFocus`     | `true`     | Return focus to the trigger on close.                                                                                     |
 | `defaultType`   | `'image'`  | Type to assume when the URL has no recognizable extension. See [detection rules](/guide/content-types#detection-rules).  |
 | `parentEl`      | `'body'`   | Where the dialog is mounted: a selector or an element.                                                                    |
+| `delegate`      | —          | A same-origin window, e.g. `window.parent`, that opens the lightbox instead. See [below](#opening-in-another-window).    |
 | `baseClass`     | `''`       | Extra class for the container, for scoping your CSS.                                                                      |
 | `slideClass`    | `''`       | Extra class for every slide.                                                                                              |
 
@@ -32,6 +33,16 @@ A one-slide dialog that only the close button can dismiss:
 ```js
 Glare.open([{ type: 'html', html: '<h3>Saved</h3><p>Your changes are live.</p>' }], { modal: true })
 ```
+
+### Opening in another window
+
+Inside a same-origin iframe, `delegate` hands the lightbox to another window so it covers the whole page rather than just the frame:
+
+```js
+Glare.bind('[data-glare]', { delegate: window.parent })
+```
+
+That window must have Glare loaded, stylesheet included, and exposed as `window.Glare` — the CDN build does this already; with a bundler, set `window.Glare = Glare` yourself. When it is missing, or the page is not framed, the lightbox opens in place. Selectors (`parentEl`, `anchor`, inline `#id` sources) and the `hash` module resolve against the delegate window.
 
 ## Chrome
 

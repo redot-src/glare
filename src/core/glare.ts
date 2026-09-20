@@ -344,15 +344,26 @@ export class Glare implements GlareInstance {
     options: GlareOptions = {},
     index = 0,
   ): Glare {
-    const instance = new Glare(items, options, index)
+    const instance = Glare.create(items, options, index)
     instance.open()
     return instance
   }
 
   static bind(target: BindTarget, options: GlareOptions = {}): BoundGroup {
     return bind(target, options, (elements, index, gallery) => {
-      new Glare(elements, options, index, gallery).open()
+      Glare.create(elements, options, index, gallery).open()
     })
+  }
+
+  /** Builds the instance here, or in the `delegate` window when that window has Glare loaded. */
+  private static create(
+    items: Array<SlideSource | string> | HTMLElement[],
+    { delegate, ...options }: GlareOptions,
+    index: number,
+    gallery = '',
+  ): Glare {
+    const Host = (delegate as (Window & { Glare?: typeof Glare }) | undefined)?.Glare ?? Glare
+    return new Host(items, options, index, gallery)
   }
 
   static close(all = false): void {

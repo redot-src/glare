@@ -81,7 +81,9 @@ export const contentExamples: ContentExample[] = [
     type: 'iframe',
     title: 'Any page',
     note: 'type: "iframe" with a URL',
-    slide: { type: 'iframe', src: 'https://example.com', caption: 'example.com in an iframe' },
+    // A same-origin page (FramedPage.vue) that opens itself again through `delegate`. The `.html`
+    // URL resolves with and without `cleanUrls`.
+    slide: { type: 'iframe', src: withBase('/demo/frame.html'), caption: 'A page that opens itself' },
   },
   {
     type: 'html',

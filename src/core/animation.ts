@@ -51,7 +51,13 @@ function anchorRect(container: HTMLElement, item: SlideItem, anchor: Anchor): DO
   const rendered = (el?: HTMLElement | null) => (el?.getClientRects().length ? el : null)
   const el = (anchor !== 'trigger' && rendered(resolveElement(anchor))) || rendered(item.$trigger)
 
-  return el ? el.getBoundingClientRect() : null
+  if (!el) return null
+
+  // A trigger inside an iframe (see `delegate`) reports its box relative to that frame.
+  const rect = el.getBoundingClientRect()
+  const frame = el.ownerDocument === container.ownerDocument ? null : el.ownerDocument.defaultView?.frameElement
+  const offset = frame?.getBoundingClientRect()
+  return offset ? new DOMRect(rect.x + offset.x, rect.y + offset.y, rect.width, rect.height) : rect
 }
 
 /** Flies the opened image in from its anchor. */

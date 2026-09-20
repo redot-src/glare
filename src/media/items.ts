@@ -65,7 +65,8 @@ export function createItems(
   items: Array<SlideSource | string> | HTMLElement[],
   opts: GlareOptions,
 ): SlideItem[] {
-  if (items.length && items[0] instanceof HTMLElement) {
+  // `nodeType` rather than `instanceof`, so elements from another window (see `delegate`) still count.
+  if (items.length && (items[0] as Node).nodeType === 1) {
     return itemsFromElements(items as HTMLElement[], opts)
   }
   return (items as Array<SlideSource | string>).map((item, i) => normalizeItem(item, i, opts))

@@ -153,7 +153,7 @@ const ajax: Loader = async (item, content, opts) => {
 }
 
 const html: Loader = (item, content) => {
-  if (item.content instanceof HTMLElement) {
+  if (item.content && typeof item.content === 'object') {
     content.appendChild(item.content)
   } else {
     content.innerHTML = item.html ?? item.content ?? item.src
