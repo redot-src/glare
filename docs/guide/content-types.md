@@ -39,6 +39,8 @@ Uses `src`, optional `poster`, `format`, `autoStart`, and `ratio`. `format` is i
 }
 ```
 
+When `thumb` is omitted, `poster` is also used in the thumbnail strip.
+
 ## Iframe
 
 Uses `src`, optional `width` / `height`. Iframe slides fill the padded stage (about 30px on each side, 15px on small screens) and sit on `--glare-iframe-bg`:

@@ -26,6 +26,8 @@ instance.thumbs?.focus(index?)
 
 The vertical strip is hidden on screens narrower than 720px, together with its toolbar button. Thumbnails need at least two slides.
 
+Each item uses its explicit `thumb` first. Image slides otherwise use their source, video slides use their `poster`, and YouTube links use the preview supplied by the built-in provider. Slides without an image preview show an icon for their content type instead of a number. A missing or failed preview also falls back to that icon; unknown types use a generic slide icon.
+
 ## Slideshow
 
 | Option      | Default | What it does                                      |

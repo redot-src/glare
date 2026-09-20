@@ -1,7 +1,27 @@
-import type { ThumbsOptions } from '../types'
+import type { ContentType, SlideItem, ThumbsOptions } from '../types'
 import type { Glare } from '../core/glare'
+import { icons } from '../icons'
 import { $, $$, createEl, on, resolveElement, toText } from '../utils/dom'
 import { translate } from '../utils/template'
+
+const placeholderIcons: Record<ContentType, string> = {
+  image: icons.thumbImage,
+  video: icons.thumbVideo,
+  embed: icons.thumbEmbed,
+  iframe: icons.thumbIframe,
+  inline: icons.thumbInline,
+  ajax: icons.thumbAjax,
+  html: icons.thumbHtml,
+}
+
+function thumbnailSource(item: SlideItem): string {
+  return item.thumb || (item.type === 'video' ? item.poster : '') || (item.type === 'image' ? item.src : '')
+}
+
+function showPlaceholder(button: HTMLButtonElement, type: ContentType): void {
+  button.classList.add('glare-thumbs-item--placeholder')
+  button.innerHTML = placeholderIcons[type] ?? icons.thumbSlide
+}
 
 /** Clickable thumbnail strip, horizontal (`x`) or vertical (`y`). */
 export class Thumbs {
@@ -75,15 +95,16 @@ export class Thumbs {
       button.dataset.index = String(item.index)
       button.setAttribute('aria-label', translate(dict.GO_TO_SLIDE, { index: String(item.index + 1) }))
 
-      const src = item.thumb || (item.type === 'image' ? item.src : '')
+      const src = thumbnailSource(item)
       if (src) {
         const img = createEl('img')
         img.src = src
         img.alt = item.alt || toText(item.caption)
         img.loading = 'lazy'
+        img.onerror = () => showPlaceholder(button, item.type)
         button.appendChild(img)
       } else {
-        button.textContent = String(item.index + 1)
+        showPlaceholder(button, item.type)
       }
 
       this.list.appendChild(button)

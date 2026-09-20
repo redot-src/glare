@@ -87,6 +87,17 @@
   object-fit: var(--glare-thumbs-fit, cover);
 }
 
+.glare-thumbs-item--placeholder {
+  display: grid;
+  place-items: center;
+}
+
+.glare-thumbs-item--placeholder svg {
+  width: 30px;
+  height: 30px;
+  opacity: 0.72;
+}
+
 .glare-thumbs-item.glare-is-active {
   border-color: var(--glare-accent);
 }

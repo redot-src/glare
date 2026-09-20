@@ -108,7 +108,7 @@ When you open from markup, these attributes describe each slide. Everything exce
 | `data-thumb`                 | Thumbnail URL for the thumbnail strip. Falls back to the `src` of a nested `<img>`.                    |
 | `data-width`, `data-height`  | Size of iframe and embed slides.                                                                       |
 | `data-ratio`                 | Aspect ratio for video and embed slides, such as `4 / 3`.                                              |
-| `data-poster`                | Poster image shown before a video plays.                                                               |
+| `data-poster`                | Poster image shown before a video plays and used as its thumbnail when `data-thumb` is omitted.         |
 | `data-download-src`          | File the download button points to.                                                                    |
 | `data-html`                  | HTML string for `data-type="html"` slides.                                                             |
 
