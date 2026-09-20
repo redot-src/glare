@@ -34,6 +34,15 @@ import { Zoom, type Point } from './zoom'
 
 let nextId = 0
 
+/** The `Glare` class loaded in another window. A cross-origin window throws on access and counts as having none. */
+function glareOf(target?: Window): typeof Glare | undefined {
+  try {
+    return (target as (Window & { Glare?: typeof Glare }) | undefined)?.Glare
+  } catch {
+    return undefined
+  }
+}
+
 export class Glare implements GlareInstance {
   readonly id = ++nextId
   readonly opts: ResolvedOptions
@@ -358,12 +367,11 @@ export class Glare implements GlareInstance {
   /** Builds the instance here, or in the `delegate` window when that window has Glare loaded. */
   private static create(
     items: Array<SlideSource | string> | HTMLElement[],
-    { delegate, ...options }: GlareOptions,
+    { delegate = defaults.delegate, ...options }: GlareOptions,
     index: number,
     gallery = '',
   ): Glare {
-    const Host = (delegate as (Window & { Glare?: typeof Glare }) | undefined)?.Glare ?? Glare
-    return new Host(items, options, index, gallery)
+    return new (glareOf(delegate) ?? Glare)(items, options, index, gallery)
   }
 
   static close(all = false): void {

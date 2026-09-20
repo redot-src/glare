@@ -42,7 +42,7 @@ Inside a same-origin iframe, `delegate` hands the lightbox to another window so 
 Glare.bind('[data-glare]', { delegate: window.parent })
 ```
 
-That window must have Glare loaded, stylesheet included, and exposed as `window.Glare` — the CDN build does this already; with a bundler, set `window.Glare = Glare` yourself. When it is missing, or the page is not framed, the lightbox opens in place. Selectors (`parentEl`, `anchor`, inline `#id` sources) and the `hash` module resolve against the delegate window.
+That window must have Glare loaded, stylesheet included, and exposed as `window.Glare` — the CDN build does this already; with a bundler, set `window.Glare = Glare` yourself. Both windows need a Glare version that has `delegate`. When the window has no Glare, is cross-origin, or the page is not framed, the lightbox opens in place. Selectors (`parentEl`, `anchor`, inline `#id` sources) and the `hash` module resolve against the delegate window.
 
 ## Chrome
 
