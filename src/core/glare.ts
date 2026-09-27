@@ -209,6 +209,7 @@ export class Glare implements GlareInstance {
     const { container, stage } = this.$refs
     const slide = dom.mountSlide(stage, item, this.opts)
     if (dom.usesSmallButton(this.opts, item)) dom.addSmallButton(slide, this.opts, this.dict)
+    if (!opening) dom.retireSlides(stage, slide, 0, this.direction)
     dom.showSpinner(stage, this.opts, this.dict)
     this.emitSlide('beforeLoad', item)
     if (this.opts.image.preload) preloadNeighbours(this.group, index)
@@ -226,7 +227,6 @@ export class Glare implements GlareInstance {
     if (!this.isActive || this.currIndex !== index) return slide.remove()
     if (!failed) this.emitSlide('afterLoad', item)
 
-    // The previous slide stays visible until the new content is ready, then they cross-fade.
     dom.hideSpinner(stage)
     if (!opening) enableTransitions(container, this.opts)
     dom.revealSlide(slide, opening, this.direction)
