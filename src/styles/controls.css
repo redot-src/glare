@@ -180,10 +180,16 @@
 .glare-is-idle .glare-infobar,
 .glare-is-idle .glare-navigation,
 .glare-is-idle .glare-caption:not(:hover),
+.glare-is-loading .glare-caption,
 .glare-can-zoom-out .glare-caption {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+/* Hide the old caption immediately while the next slide has no media to follow. */
+.glare-is-loading .glare-caption {
+  transition: none;
 }
 
 /* Progress, spinner, error */

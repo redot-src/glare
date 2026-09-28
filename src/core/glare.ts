@@ -103,6 +103,7 @@ export class Glare implements GlareInstance {
 
     const refs = dom.buildContainer(this.opts, this.dict, this.id, this.group.length)
     const { container } = refs
+    container.classList.add('glare-is-loading')
     this.$refs = refs
 
     applyMotionSettings(container, this.opts)
@@ -168,6 +169,7 @@ export class Glare implements GlareInstance {
     this.currIndex = target
     this.zoom.reset()
     this.current = this.group[target]
+    this.$refs?.container.classList.add('glare-is-loading')
     this.syncChrome()
     this.showSlide(target, false)
 
@@ -231,6 +233,7 @@ export class Glare implements GlareInstance {
     if (!opening) enableTransitions(container, this.opts)
     dom.revealSlide(slide, opening, this.direction)
     this.captionTracker?.follow(slide)
+    container.classList.remove('glare-is-loading')
     dom.retireSlides(stage, slide, resolveMotion(this.opts).transitionDuration, this.direction)
     this.syncZoomState(this.zoom.isZoomed)
 
