@@ -1,7 +1,7 @@
 import { icons } from './icons'
 
 const button = (name: string, label: string, icon: string, attrs = ''): string =>
-  `<button type="button" class="glare-button glare-button--${name}" data-glare-${name} title="{{${label}}}" aria-label="{{${label}}}"${attrs}>${icon}</button>`
+  `<button type="button" class="glare-button glare-button--${name}" data-glare-${name} title="{{${label}}}" aria-label="{{${label}}}"${attrs}>${icon.replace('<svg', '<svg data-glare-icon')}</button>`
 
 export const baseTemplate = `
 <div class="glare-container" role="dialog" aria-modal="true" tabindex="-1">

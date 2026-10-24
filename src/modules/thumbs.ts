@@ -95,8 +95,13 @@ export class Thumbs {
       button.dataset.index = String(item.index)
       button.setAttribute('aria-label', translate(dict.GO_TO_SLIDE, { index: String(item.index + 1) }))
 
+      const rendered = this.opts.render?.(item)
       const src = thumbnailSource(item)
-      if (src) {
+      if (typeof rendered === 'string') {
+        button.innerHTML = rendered
+      } else if (rendered) {
+        button.appendChild(rendered)
+      } else if (src) {
         const img = createEl('img')
         img.src = src
         img.alt = item.alt || toText(item.caption)

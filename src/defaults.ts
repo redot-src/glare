@@ -15,7 +15,7 @@ import {
   videoTemplate,
 } from './templates'
 
-export const thumbsDefaults: Required<Omit<ThumbsOptions, 'parentEl'>> & ThumbsOptions = {
+export const thumbsDefaults: Required<Omit<ThumbsOptions, 'parentEl' | 'render'>> & ThumbsOptions = {
   autoStart: false,
   axis: 'x',
   fit: 'cover',

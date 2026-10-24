@@ -57,6 +57,19 @@ The space reserved around the media is driven by three variables on `.glare-cont
 }
 ```
 
+## Caption placement
+
+The default absolute caption follows the media and reserves its height in the slide insets. Tracking writes `--glare-caption-top` and `--glare-caption-bottom` on the caption, so ordinary CSS positioning rules can override it without `!important`. For example, pin it to the bottom instead:
+
+```css
+.store-lightbox .glare-caption {
+  top: auto;
+  bottom: 0;
+}
+```
+
+For a custom `baseTpl` that places the caption in normal flow, set its `position` to `static` or `relative`. Glare then leaves positioning and space allocation to your layout and clears its automatic caption inset. Your template and CSS must size the stage and media to leave room for the caption. The `.glare-caption` hook still receives caption text and visibility state.
+
 ## State classes
 
 | Selector / class                         | Meaning                                                                 |

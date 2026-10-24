@@ -10,6 +10,7 @@ Optional features you turn on or configure through options. Each accepts `true` 
 | `axis`      | `'x'`       | `'x'` for a horizontal strip; `'y'` for a side strip.     |
 | `parentEl`  | lightbox    | Where to mount the strip: a selector, element, or the lightbox container. |
 | `fit`       | `'cover'`   | How each image fills its square, as CSS `object-fit`: `'cover'` crops to fill, `'contain'` shows the whole image; also `'fill'`, `'none'`, `'scale-down'`. |
+| `render`    | —           | `(item: SlideItem) => string \| HTMLElement \| null \| undefined`. Customize the contents of each thumbnail button; `null` or `undefined` uses the built-in preview. |
 
 ```js
 Glare.bind('[data-glare="catalog"]', {
@@ -27,6 +28,25 @@ instance.thumbs?.focus(index?)
 The vertical strip is hidden on screens narrower than 720px, together with its toolbar button. Thumbnails need at least two slides.
 
 Each item uses its explicit `thumb` first. Image slides otherwise use their source, video slides use their `poster`, and YouTube links use the preview supplied by the built-in provider. Slides without an image preview show an icon for their content type instead of a number. A missing or failed preview also falls back to that icon; unknown types use a generic slide icon.
+
+### Custom thumbnail contents
+
+`thumbs.render` is called once per item when the strip is built on open. Return trusted HTML or a fresh element for each item. Return `null` or `undefined` for the default image/icon; an empty string leaves the button empty. Glare keeps the outer button, its translated accessible name, click navigation, active state, and cleanup. Returned elements are moved into the button, so create a new element for each call and avoid nested interactive controls.
+
+```js
+Glare.bind('[data-glare="catalog"]', {
+  thumbs: {
+    render(item) {
+      if (item.type === 'image') return null // Keep the image preview.
+      const label = document.createElement('span')
+      label.textContent = `${item.index + 1}: ${item.type}`
+      return label
+    },
+  },
+})
+```
+
+Custom contents own their image loading and error handling. Returning `null` keeps Glare's built-in lazy loading and failed-preview fallback.
 
 ## Slideshow
 
