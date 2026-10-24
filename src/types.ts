@@ -136,6 +136,8 @@ export interface ThumbsOptions {
   parentEl?: string | HTMLElement
   axis?: 'x' | 'y'
   fit?: ThumbsFit
+  /** Thumbnail button contents. Return null/undefined to use the built-in preview. HTML must be trusted. */
+  render?: (item: SlideItem) => string | HTMLElement | null | undefined
 }
 
 export interface SlideshowOptions {

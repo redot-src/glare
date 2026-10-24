@@ -73,6 +73,7 @@ Glare is created by [Redot](https://redot.dev). Building a Laravel app? Redot sh
 npm install
 npm run dev          # docs + interactive demo with live reload
 npm run build        # typecheck + library build → dist/
+npm test             # library build + customization regression tests (Node 24)
 npm run docs:build   # static site, as deployed to GitHub Pages
 ```
 

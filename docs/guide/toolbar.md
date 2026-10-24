@@ -16,6 +16,8 @@ Omit a name to hide it. `thumbs` and `slideshow` are skipped for single-item gro
 
 On screens up to 720px wide, Close stays visible and every other available action moves into an animated More options menu. That keeps the toolbar clear of the slide counter without changing the configured `buttons` list.
 
+This collapse is controlled entirely by CSS in `src/styles/responsive.css`. Override `.glare-toolbar-menu`, `.glare-button--more`, and the menu's button rules in your own media queries to change the breakpoint or layout. The JavaScript only toggles `.glare-toolbar--expanded` and `aria-expanded`.
+
 The download button targets `downloadSrc`, or the image URL for image slides. Browsers ignore the `download` attribute for cross-origin files unless the server sends `Content-Disposition: attachment`, so the link opens in a new tab rather than navigating away from your page.
 
 ### Custom buttons
@@ -95,3 +97,27 @@ Override one button without replacing the rest:
 ```
 
 The defaults live in `src/templates.ts`.
+
+### Toggle icons
+
+Custom `btnTpl.zoom`, `btnTpl.slideshow`, and `btnTpl.fullscreen` contents survive state changes. Glare updates the button's `title`, `aria-label`, and `.glare-is-active` class. Use the class to switch your own icons:
+
+```js
+{
+  btnTpl: {
+    slideshow: `<button type="button" class="glare-button" data-glare-slideshow aria-label="{{PLAY_START}}">
+      <span class="play-icon" aria-hidden="true">▶</span>
+      <span class="pause-icon" aria-hidden="true">Ⅱ</span>
+    </button>`,
+  },
+}
+```
+
+```css
+[data-glare-slideshow]:not(.glare-is-active) .pause-icon,
+[data-glare-slideshow].glare-is-active .play-icon {
+  display: none;
+}
+```
+
+The default templates mark their SVG with `data-glare-icon`. Only this marked element is replaced with the built-in state icon. Omit the marker to keep your custom icons; include it on a child element to opt into the built-in icons while preserving surrounding markup.

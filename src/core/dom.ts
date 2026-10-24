@@ -106,11 +106,19 @@ export function trackCaption({ container, caption }: GlareRefs): { follow(slide:
 
   const sync = () => {
     if (!caption) return
+    // A caption in normal flow is laid out by the host's CSS, including its space in the stage.
+    if (getComputedStyle(caption).position !== 'absolute') {
+      container.style.removeProperty('--glare-caption-inset')
+      caption.style.removeProperty('--glare-caption-top')
+      caption.style.removeProperty('--glare-caption-bottom')
+      return
+    }
     container.style.setProperty('--glare-caption-inset', `${caption.offsetHeight}px`)
 
     const content = slide && $('.glare-content', slide)
     if (!content) return
-    Object.assign(caption.style, { top: `${layoutTop(content, caption.offsetParent) + content.offsetHeight}px`, bottom: 'auto' })
+    caption.style.setProperty('--glare-caption-top', `${layoutTop(content, caption.offsetParent) + content.offsetHeight}px`)
+    caption.style.setProperty('--glare-caption-bottom', 'auto')
   }
 
   // The slide's content box changes with the insets, and the content's with the media.
@@ -300,10 +308,15 @@ export function syncZoomButton(container: HTMLElement, dict: I18nDict, zoomed: b
   setToggleState(button, zoomed, zoomed ? dict.ZOOM_OUT : dict.ZOOM, zoomed ? icons.zoomOut : icons.zoomIn)
 }
 
-/** Swaps a toolbar toggle's label and icon and marks it active. */
+/** Updates toggle state, replacing only the built-in icon slot when present. */
 export function setToggleState(button: HTMLElement, active: boolean, label: string, icon: string): void {
   button.setAttribute('title', label)
   button.setAttribute('aria-label', label)
-  button.innerHTML = icon
+  const currentIcon = $('[data-glare-icon]', button)
+  if (currentIcon) {
+    const nextIcon = fromHtml(icon)
+    nextIcon.setAttribute('data-glare-icon', '')
+    currentIcon.replaceWith(nextIcon)
+  }
   button.classList.toggle('glare-is-active', active)
 }

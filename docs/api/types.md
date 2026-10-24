@@ -173,6 +173,20 @@ interface CustomButton {
 
 See [Custom buttons](/guide/toolbar#custom-buttons).
 
+## `ThumbsOptions`
+
+```ts
+interface ThumbsOptions {
+  autoStart?: boolean
+  parentEl?: string | HTMLElement
+  axis?: 'x' | 'y'
+  fit?: ThumbsFit
+  render?: (item: SlideItem) => string | HTMLElement | null | undefined
+}
+```
+
+`render` supplies the contents of Glare's thumbnail button. Return `null` or `undefined` to keep the default preview. See [Custom thumbnail contents](/guide/modules#custom-thumbnail-contents).
+
 ## `MediaProvider`
 
 ```ts

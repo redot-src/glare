@@ -144,11 +144,11 @@
   z-index: 6;
 }
 
-/* Caption: sits right under the media (the runtime sets `top`). Slides reserve its height, so it covers nothing. */
+/* Caption: follows the media by default; explicit top/bottom rules can override it. */
 
 .glare-caption {
   position: absolute;
-  inset: auto 0 0;
+  inset: var(--glare-caption-top, auto) 0 var(--glare-caption-bottom, 0px);
   z-index: 5;
   box-sizing: border-box;
   max-height: 35vh;
